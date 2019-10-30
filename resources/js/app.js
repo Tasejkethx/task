@@ -19,11 +19,13 @@ const routes = [
   { path: '/employees/create', component: require('./components/Employee/CreateEmployee').default },
   { path: '/employees/edit/:id', component: require('./components/Employee/EditEmployee').default },
   { path: '/departments', component: require('./components/Department/IndexDepartment').default },
-  { path: '/departments/create', component: require('./components/Department/CreateDepartment').default }
+  { path: '/departments/create', component: require('./components/Department/CreateDepartment').default },
+  { path: '/departments/edit/:id', component: require('./components/Department/EditDepartment').default }
 
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 /**

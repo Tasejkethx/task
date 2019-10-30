@@ -19,8 +19,8 @@
                     <td> {{department.name}}</td>
                     <td> {{department.amount}}</td>
                     <td> {{department.max_salary}}$</td>
-                    <td>    <a :href="'/department/edit/' + department.id" class="btn btn-sm btn-info">
-                        <i class="fas fa-edit"></i> Редактировать</a>
+                    <td>    <router-link :to="'/departments/edit/' + department.id" class="btn btn-sm btn-info">
+                        <i class="fas fa-edit"></i> Редактировать</router-link>
                         <a  href="#" @click.prevent="deleteDepartment(department.id)" class="btn btn-sm btn-danger">
                             <i class="fas fa-trash-alt"></i> Удалить </a></td>
                 </tr>

@@ -85,7 +85,7 @@
                 }
             },
             editEmployee(){
-                Axios.put('../../employee/' + this.employee.id ,this.employee)
+                Axios.put('../employee/' + this.employee.id ,this.employee)
                     .then((response) => {
 
                 })
