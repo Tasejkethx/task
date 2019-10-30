@@ -26,7 +26,7 @@ class EmployeeController extends Controller
         if($request->expectsJson()){
             return response()->json($employees);
         }
-        return view('employee.index');
+       // return view('employee.index');
     }
 
 

@@ -15,7 +15,7 @@ class DepartmentController extends Controller
         if($request->expectsJson()){
             return response()->json($departments);
         }
-        return view('department.index');
+      //  return view('department.index');
     }
 
 
@@ -43,20 +43,29 @@ class DepartmentController extends Controller
     }
 
 
-    public function edit(Department $department)
+    public function edit(Request $request, $id)
     {
-        //
+        $department = Department::findOrFail($id);
+        if($request->expectsJson()){
+            return response()->json($department);
+        }
+       // return view('department.edit');
     }
 
 
-    public function update(Request $request, Department $department)
+    public function update(DepartmentRequest $request, $id)
     {
-        //
+        $department = Department::findOrFail($id);
+        $department->name=$request->get('name');
+        $department->save();
+        return response()->json(['success'=>true]);
     }
 
 
-    public function destroy(Department $department)
+    public function destroy($id)
     {
-        //
+        $department= Department::findOrFail($id);
+        $department->delete();
+        return response()->json(['success'=>true]);
     }
 }
