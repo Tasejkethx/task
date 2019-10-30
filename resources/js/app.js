@@ -8,8 +8,10 @@ import VueRouter from 'vue-router'
 require('./bootstrap')
 
 window.Vue = require('vue')
+window.VueAxios = require('vue-axios').default
+window.Axios = require('axios').default
 /* eslint no-undef:0 */
-Vue.use(VueRouter)
+Vue.use(VueRouter, VueAxios, axios)
 
 const routes = [
   { path: '/', component: require('./components/MainPage').default },
@@ -17,7 +19,7 @@ const routes = [
   { path: '/employees/create', component: require('./components/Employee/CreateEmployee').default },
   { path: '/employees/edit/:id', component: require('./components/Employee/EditEmployee').default },
   { path: '/departments', component: require('./components/Department/IndexDepartment').default },
-  { path: '/departments/create', component: require('./components/Department/CreateDepartment').default },
+  { path: '/departments/create', component: require('./components/Department/CreateDepartment').default }
 
 ]
 

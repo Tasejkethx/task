@@ -2238,16 +2238,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     editEmployee: function editEmployee() {
-      Axios.put('../../employee/' + this.employee.id, this.employee).then(function (response) {
-        var item = document.getElementById('new_employee');
-        var div = document.createElement('div');
-        div.className = "alert alert-success";
-        div.id = 'success';
-        div.innerHTML = "Сотрудник успешно добавлен";
-        item.insertAdjacentElement("afterend", div); //this.insertAdjacentHTML('afterend', '<div class="alert alert-success" id="success">User created successfully!</div>')
-
-        document.getElementById('success').scrollIntoView();
-      })["catch"](function (error) {
+      Axios.put('../../employee/' + this.employee.id, this.employee).then(function (response) {})["catch"](function (error) {
         // clear error messages
         var errorMessages = document.querySelectorAll('.text-danger');
         errorMessages.forEach(function (el) {
@@ -2274,12 +2265,12 @@ __webpack_require__.r(__webpack_exports__);
     fetch: function fetch() {
       var _this = this;
 
-      Axios.get(window.location.href).then(function (response) {
+      Axios.get('../employee/' + this.$route.params.id + '/edit').then(function (response) {
         return _this.employee = response.data;
       })["catch"](function (error) {
         return console.log(error);
       });
-      Axios.get('../../department').then(function (response) {
+      Axios.get('../department').then(function (response) {
         return _this.departments = response.data;
       })["catch"](function (error) {
         return console.log(error);
@@ -38523,6 +38514,19 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-axios/dist/vue-axios.min.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vue-axios/dist/vue-axios.min.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var _typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(o){return typeof o}:function(o){return o&&"function"==typeof Symbol&&o.constructor===Symbol&&o!==Symbol.prototype?"symbol":typeof o};!function(){function o(e,t){if(!o.installed){if(o.installed=!0,!t)return void console.error("You have to install axios");e.axios=t,Object.defineProperties(e.prototype,{axios:{get:function(){return t}},$http:{get:function(){return t}}})}}"object"==( false?undefined:_typeof(exports))?module.exports=o: true?!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function(){return o}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)):undefined}();
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Department/CreateDepartment.vue?vue&type=template&id=72e48be0&scoped=true&":
 /*!******************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Department/CreateDepartment.vue?vue&type=template&id=72e48be0&scoped=true& ***!
@@ -39184,7 +39188,7 @@ var render = function() {
               { staticClass: "font-weight-bold", attrs: { for: "name" } },
               [_vm._v(" Имя ")]
             ),
-            _vm._v("\n                <"),
+            _vm._v(" "),
             _c("input", {
               directives: [
                 {
@@ -54793,9 +54797,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+window.VueAxios = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.min.js")["default"];
+window.Axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js")["default"];
 /* eslint no-undef:0 */
 
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
+Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"], VueAxios, axios);
 var routes = [{
   path: '/',
   component: __webpack_require__(/*! ./components/MainPage */ "./resources/js/components/MainPage.vue")["default"]

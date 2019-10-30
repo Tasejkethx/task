@@ -7,7 +7,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="name" class="font-weight-bold"> Имя </label>
-                    <<input type="text" class="form-control" @input="delete_error_message('name')" id="name" name='name' v-model="employee.name">
+                    <input type="text" class="form-control" @input="delete_error_message('name')" id="name" name='name' v-model="employee.name">
                 </div>
                 <div class="mb-3">
                     <label for="surname" class="font-weight-bold"> Фамилия </label>
@@ -87,14 +87,7 @@
             editEmployee(){
                 Axios.put('../../employee/' + this.employee.id ,this.employee)
                     .then((response) => {
-                    const item = document.getElementById('new_employee');
-                    const div = document.createElement('div');
-                    div.className = "alert alert-success";
-                    div.id= 'success';
-                    div.innerHTML = "Сотрудник успешно добавлен";
-                    item.insertAdjacentElement("afterend", div);
-                    //this.insertAdjacentHTML('afterend', '<div class="alert alert-success" id="success">User created successfully!</div>')
-                    document.getElementById('success').scrollIntoView()
+
                 })
                     .catch(error=>{
                         // clear error messages
@@ -121,10 +114,10 @@
                     });
             },
             fetch() {
-                Axios.get(window.location.href)
+                Axios.get('../employee/'+this.$route.params.id+'/edit')
                     .then(response=>this.employee=response.data)
                     .catch(error=>console.log(error));
-                Axios.get('../../department')
+                Axios.get('../department')
                     .then(response=>this.departments=response.data)
                     .catch(error=>console.log(error));
             },
