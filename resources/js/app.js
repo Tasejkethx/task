@@ -12,10 +12,12 @@ window.Vue = require('vue')
 Vue.use(VueRouter)
 
 const routes = [
+  { path: '/', component: require('./components/MainPage').default },
   { path: '/employees', component: require('./components/Employee/IndexEmployee').default },
   { path: '/employees/create', component: require('./components/Employee/CreateEmployee').default },
   { path: '/employees/edit/:id', component: require('./components/Employee/EditEmployee').default },
-  { path: '/', component: require('./components/MainPage').default }
+  { path: '/departments', component: require('./components/Department/IndexDepartment').default },
+
 
 ]
 
