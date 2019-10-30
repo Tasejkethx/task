@@ -17,7 +17,7 @@ const routes = [
   { path: '/employees/create', component: require('./components/Employee/CreateEmployee').default },
   { path: '/employees/edit/:id', component: require('./components/Employee/EditEmployee').default },
   { path: '/departments', component: require('./components/Department/IndexDepartment').default },
-
+  { path: '/departments/create', component: require('./components/Department/CreateDepartment').default },
 
 ]
 

@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <a href = "/department/create" class="btn btn-dark mb-5" ><i class="fas fa-plus"></i> Добавить отдел</a>
+        <router-link to = "/departments/create" class="btn btn-dark mb-5" ><i class="fas fa-plus"></i> Добавить отдел</router-link>
 
         <div class="table-responsive">
             <table class="table table-striped table-sm">
