@@ -4,10 +4,24 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+import VueRouter from 'vue-router'
+
 require('./bootstrap');
 
 window.Vue = require('vue');
 
+/*eslint no-undef:0*/
+Vue.use(VueRouter);
+
+const routes = [
+  { path: '/employees', component: require('./components/Employee/IndexEmployee') },
+  { path: '/departments', component: require('./components/Department/IndexDepartment') },
+  { path: '/employees/create', component: require('./components/Employee/CreateEmployee') }
+];
+
+const router = new VueRouter({
+    routes
+});
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -27,6 +41,8 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+/*eslint no-unused-vars:0*/
 const app = new Vue({
-    el: '#app',
+  el: '#app',
+    router
 });
