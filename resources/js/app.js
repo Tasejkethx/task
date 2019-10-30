@@ -13,6 +13,7 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/employees', component: require('./components/Employee/IndexEmployee').default },
+  { path: '/employees/create', component: require('./components/Employee/CreateEmployee').default },
   { path: '/', component: require('./components/MainPage').default }
 
 ]

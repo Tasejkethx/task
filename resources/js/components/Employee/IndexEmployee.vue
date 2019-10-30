@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <a href = "/employee/create" class="btn btn-dark mb-5" ><i class="fas fa-plus"></i> Добавить сотрудника</a>
+        <router-link to="/employees/create" class="btn btn-dark mb-5" ><i class="fas fa-plus"></i> Добавить сотрудника</router-link>
 
         <div class="table-responsive">
             <table class="table table-striped table-sm">
