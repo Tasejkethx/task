@@ -26,8 +26,8 @@
                     <td v-else> женщина </td>
                     <td>{{employee.salary}}$ </td>
                     <td>{{employee.department_id}} </td>
-                    <td> <a :href="'/employee/edit/' + employee.id" class="btn btn-sm btn-info">
-                        <i class="fas fa-edit"></i> Редактировать</a>
+                    <td> <router-link :to="'/employees/edit/' + employee.id" class="btn btn-sm btn-info">
+                        <i class="fas fa-edit"></i> Редактировать</router-link>
                         <a  href="#" @click.prevent="deleteEmployee(employee.id)" class="btn btn-sm btn-danger">
                             <i class="fas fa-trash-alt"></i> Удалить </a></td>
                 </tr>
