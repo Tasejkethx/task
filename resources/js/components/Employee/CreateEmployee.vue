@@ -93,14 +93,8 @@
             create(){
                 Axios.post('../employee' , this.employee)
                     .then((response) => {
-                        const item = document.getElementById('new_employee');
-                        const div = document.createElement('div');
-                        div.className = "alert alert-success";
-                        div.id= 'success';
-                        div.innerHTML = "Сотрудник успешно добавлен";
-                        item.insertAdjacentElement("afterend", div);
-                        //this.insertAdjacentHTML('afterend', '<div class="alert alert-success" id="success">User created successfully!</div>')
-                        document.getElementById('success').scrollIntoView()
+                        this.$router.push({path: '/employees'});
+                        alert('Сотрудник добавлен');
                     })
                     .catch(error=>{
                         // clear error messages

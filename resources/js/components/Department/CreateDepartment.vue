@@ -45,6 +45,7 @@
             create(){
                 axios.post('../department' ,this.department)
                     .then((response) => {
+                        this.$router.push({path: '/departments'});
                 })
                     .catch(error=>{
                         // clear error messages

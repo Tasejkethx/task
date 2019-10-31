@@ -50,11 +50,18 @@
                     .catch(error => console.log(error));
             },
             deleteDepartment(id){
+                if(confirm("Вы действительно хотите удалить отдел?")){
                 Axios.delete('../department/'+id)
-                    .then(response=> this.delstatus=response.data['status'])
+                    .then((response)=> {
+                        console.log(response.data);
+                        if(response.data.amount ===true){
+                            alert("Невозможно удалить отдел, т.к в нем есть сотрудники");
+                        }
+                    })
                     .catch(error =>console.log(error));
                 console.log(this.delstatus);
                 this.fetch();
+                }
             },
         }
     }

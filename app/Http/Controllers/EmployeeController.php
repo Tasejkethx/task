@@ -47,11 +47,10 @@ class EmployeeController extends Controller
         ]);
 
         $mass= $request->get('department_id');
-        $employee->save();
-        $employee=Employee::latest()->first();
-
         self::set_department_after_create($employee, $mass);
 
+        $employee->save();
+        $employee=Employee::latest()->first();
         $employee->departments()->sync($mass);
 
         return response()->json(['success'=>true]);

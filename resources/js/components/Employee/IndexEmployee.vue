@@ -2,7 +2,7 @@
     <div class="container">
         <router-link to="/employees/create" class="btn btn-dark mb-5" ><i class="fas fa-plus"></i> Добавить сотрудника</router-link>
 
-        <div class="table-responsive">
+        <div class="table-responsive" id="success_message">
             <table class="table table-striped table-sm">
                 <thead>
                 <tr>
@@ -64,11 +64,13 @@
                     .catch(error=>consoloe.log(error));
             },
             deleteEmployee(id){
-                Axios.delete('../employee/'+id)
-                    .then(response=> this.delstatus=response.data['status'])
-                    .catch(error =>console.log(error));
-                console.log(this.delstatus);
-                this.fetch();
+                if (confirm("Вы действительно хотите удалить сотрудника?")) {
+                    Axios.delete('../employee/' + id)
+                        .then(response => this.delstatus = response.data['status'])
+                        .catch(error => console.log(error));
+                    console.log(this.delstatus);
+                    this.fetch();
+                }
             },
         }
     }

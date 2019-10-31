@@ -6,6 +6,7 @@ services:
     build:
       context: .
       dockerfile: docker/php-fpm.docker
+    image: php:7.3-fpm
     container_name: app
     restart: unless-stopped
     tty: true
@@ -36,17 +37,20 @@ services:
 
   #MySQL Service
   db:
-    image: mysql:5.7.22
+    image: mysql:5.7.24
     container_name: db
     restart: unless-stopped
     tty: true
     ports:
-      - "3306:3306"
+      - "33061:3306"
     environment:
       MYSQL_DATABASE: laravel
       MYSQL_ROOT_PASSWORD: root
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    volumes:
+      - dbdata:/var/lib/mysql/
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - app-network
 

@@ -1883,7 +1883,13 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     create: function create() {
-      axios.post('../department', this.department).then(function (response) {})["catch"](function (error) {
+      var _this = this;
+
+      axios.post('../department', this.department).then(function (response) {
+        _this.$router.push({
+          path: '/departments'
+        });
+      })["catch"](function (error) {
         // clear error messages
         var errorMessages = document.querySelectorAll('.text-danger');
         errorMessages.forEach(function (el) {
@@ -2071,15 +2077,19 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     deleteDepartment: function deleteDepartment(id) {
-      var _this2 = this;
+      if (confirm("Вы действительно хотите удалить отдел?")) {
+        Axios["delete"]('../department/' + id).then(function (response) {
+          console.log(response.data);
 
-      Axios["delete"]('../department/' + id).then(function (response) {
-        return _this2.delstatus = response.data['status'];
-      })["catch"](function (error) {
-        return console.log(error);
-      });
-      console.log(this.delstatus);
-      this.fetch();
+          if (response.data.amount === true) {
+            alert("Невозможно удалить отдел, т.к в нем есть сотрудники");
+          }
+        })["catch"](function (error) {
+          return console.log(error);
+        });
+        console.log(this.delstatus);
+        this.fetch();
+      }
     }
   }
 });
@@ -2189,15 +2199,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     create: function create() {
-      Axios.post('../employee', this.employee).then(function (response) {
-        var item = document.getElementById('new_employee');
-        var div = document.createElement('div');
-        div.className = "alert alert-success";
-        div.id = 'success';
-        div.innerHTML = "Сотрудник успешно добавлен";
-        item.insertAdjacentElement("afterend", div); //this.insertAdjacentHTML('afterend', '<div class="alert alert-success" id="success">User created successfully!</div>')
+      var _this = this;
 
-        document.getElementById('success').scrollIntoView();
+      Axios.post('../employee', this.employee).then(function (response) {
+        _this.$router.push({
+          path: '/employees'
+        });
+
+        alert('Сотрудник добавлен');
       })["catch"](function (error) {
         // clear error messages
         var errorMessages = document.querySelectorAll('.text-danger');
@@ -2223,10 +2232,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     fetch: function fetch() {
-      var _this = this;
+      var _this2 = this;
 
       Axios.get('../department').then(function (response) {
-        return _this.departments = response.data;
+        return _this2.departments = response.data;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2458,13 +2467,15 @@ __webpack_require__.r(__webpack_exports__);
     deleteEmployee: function deleteEmployee(id) {
       var _this2 = this;
 
-      Axios["delete"]('../employee/' + id).then(function (response) {
-        return _this2.delstatus = response.data['status'];
-      })["catch"](function (error) {
-        return console.log(error);
-      });
-      console.log(this.delstatus);
-      this.fetch();
+      if (confirm("Вы действительно хотите удалить сотрудника?")) {
+        Axios["delete"]('../employee/' + id).then(function (response) {
+          return _this2.delstatus = response.data['status'];
+        })["catch"](function (error) {
+          return console.log(error);
+        });
+        console.log(this.delstatus);
+        this.fetch();
+      }
     }
   }
 });
@@ -39799,71 +39810,75 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "table-responsive" }, [
-        _c("table", { staticClass: "table table-striped table-sm" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.employees, function(employee) {
-              return _c("tr", { key: employee.id }, [
-                _c("td", [_vm._v(_vm._s(employee.id) + " ")]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(employee.name) + " ")]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(employee.surname) + " ")]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(employee.patronymic) + " ")]),
-                _vm._v(" "),
-                employee.sex == "male"
-                  ? _c("td", [_vm._v("мужчина ")])
-                  : _c("td", [_vm._v(" женщина ")]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(employee.salary) + "$ ")]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(employee.department_id) + " ")]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-sm btn-info",
-                        attrs: { to: "/employees/edit/" + employee.id }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-edit" }),
-                        _vm._v(" Редактировать")
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-sm btn-danger",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.deleteEmployee(employee.id)
+      _c(
+        "div",
+        { staticClass: "table-responsive", attrs: { id: "success_message" } },
+        [
+          _c("table", { staticClass: "table table-striped table-sm" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.employees, function(employee) {
+                return _c("tr", { key: employee.id }, [
+                  _c("td", [_vm._v(_vm._s(employee.id) + " ")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(employee.name) + " ")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(employee.surname) + " ")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(employee.patronymic) + " ")]),
+                  _vm._v(" "),
+                  employee.sex == "male"
+                    ? _c("td", [_vm._v("мужчина ")])
+                    : _c("td", [_vm._v(" женщина ")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(employee.salary) + "$ ")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(employee.department_id) + " ")]),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-sm btn-info",
+                          attrs: { to: "/employees/edit/" + employee.id }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-edit" }),
+                          _vm._v(" Редактировать")
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-sm btn-danger",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.deleteEmployee(employee.id)
+                            }
                           }
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-trash-alt" }),
-                        _vm._v(" Удалить ")
-                      ]
-                    )
-                  ],
-                  1
-                )
-              ])
-            }),
-            0
-          )
-        ])
-      ])
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-trash-alt" }),
+                          _vm._v(" Удалить ")
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ])
+              }),
+              0
+            )
+          ])
+        ]
+      )
     ],
     1
   )
