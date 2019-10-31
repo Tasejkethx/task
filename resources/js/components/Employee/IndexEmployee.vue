@@ -25,7 +25,7 @@
                     <td v-if="employee.sex=='male'">мужчина </td>
                     <td v-else> женщина </td>
                     <td>{{employee.salary}}$ </td>
-                    <td >{{employee.department_id}} </td>
+                    <td >{{employee.department_name}} </td>
                     <td> <router-link :to="'/employees/edit/' + employee.id" class="btn btn-sm btn-info">
                         <i class="fas fa-edit"></i> Редактировать</router-link>
                         <a  href="#" @click.prevent="confirmDelete(employee.id)" class="btn btn-sm btn-danger">
@@ -47,9 +47,7 @@
         data(){
             return {
                 employees:{},
-                delstatus:{},
                 departments:{},
-                departmentNames:'',
             }
         },
         mounted() {

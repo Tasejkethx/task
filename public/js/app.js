@@ -2588,9 +2588,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       employees: {},
-      delstatus: {},
-      departments: {},
-      departmentNames: ''
+      departments: {}
     };
   },
   mounted: function mounted() {
@@ -2699,7 +2697,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Axios.get('../department').then(function (response) {
-        return _this.departments = response.data;
+        console.log(response.data);
+        _this.departments = response.data;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -39978,7 +39977,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(employee.salary) + "$ ")]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(employee.department_id) + " ")]),
+                  _c("td", [_vm._v(_vm._s(employee.department_name) + " ")]),
                   _vm._v(" "),
                   _c(
                     "td",
@@ -40120,7 +40119,7 @@ var render = function() {
                         staticClass: "col py-2 px-lg-2 border"
                       },
                       _vm._l(employee.department_id, function(dep) {
-                        return dep === department.name
+                        return dep === department.id
                           ? _c("div", { staticClass: "text-center" }, [
                               _c("i", { staticClass: "fas fa-check" })
                             ])

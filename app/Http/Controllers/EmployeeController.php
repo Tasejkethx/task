@@ -18,9 +18,14 @@ class EmployeeController extends Controller
         foreach ($employees as & $employee){
             foreach(Employee::findOrFail($employee->id)->departments()->get()as $item){
                 $mass[]=$item->pivot->department_id;
+                $mass1[]=$item->pivot->department_name;
             }
             $employee['department_id'] = $mass;
+            if (count($mass1)>1){
+                $employee['department_name'] = join(', ', $mass1);
+            } else {$employee['department_name']=$mass1[0];}
             unset($mass);
+            unset($mass1);
         }
 
         if($request->expectsJson()){
