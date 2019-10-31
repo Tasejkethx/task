@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div v-if="departments.length">
+
         <div class = "flex-center">
             <form  v-on:submit.prevent="create" id="newForm" >
                 <div class="text-center py-3 mb-2">
@@ -52,8 +52,7 @@
             </form>
         </div>
         </div>
-        <div v-else class="font-weight-bold"> Добавьте отделы ! </div>
-    </div>
+
 </template>
 
 <script>
@@ -93,8 +92,16 @@
             create(){
                 Axios.post('../employee' , this.employee)
                     .then((response) => {
+                        Swal.fire({
+                            text: 'Сотрудник успешно добавлен',
+                            type: 'success',
+                            toast: true,
+                            position: 'top-end',
+                            background: '#e4ede6',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        });
                         this.$router.push({path: '/employees'});
-                        alert('Сотрудник добавлен');
                     })
                     .catch(error=>{
                         // clear error messages
@@ -122,8 +129,21 @@
             },
             fetch(){
                 Axios.get('../department')
-                    .then(response=>this.departments=response.data)
-                    .catch(error=>console.log(error));
+                    .then(response=>{
+                        this.departments=response.data
+                        if (!this.departments.length) {
+                            Swal.fire({
+                                title: 'Предупреждение',
+                                text: "Сперва добавьте отделы",
+                                type: 'warning',
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'Ок'
+                            }).then((result) => {
+                                this.$router.push({path: '/employees'});
+                            })
+                        }
+                    })
+                    .catch(error=>{console.log(error)});
             },
 
         },

@@ -2207,7 +2207,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2247,11 +2246,19 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Axios.post('../employee', this.employee).then(function (response) {
+        Swal.fire({
+          text: 'Сотрудник успешно добавлен',
+          type: 'success',
+          toast: true,
+          position: 'top-end',
+          background: '#e4ede6',
+          showConfirmButton: false,
+          timer: 3000
+        });
+
         _this.$router.push({
           path: '/employees'
         });
-
-        alert('Сотрудник добавлен');
       })["catch"](function (error) {
         // clear error messages
         var errorMessages = document.querySelectorAll('.text-danger');
@@ -2280,9 +2287,23 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       Axios.get('../department').then(function (response) {
-        return _this2.departments = response.data;
+        _this2.departments = response.data;
+
+        if (!_this2.departments.length) {
+          Swal.fire({
+            title: 'Предупреждение',
+            text: "Сперва добавьте отделы",
+            type: 'warning',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'Ок'
+          }).then(function (result) {
+            _this2.$router.push({
+              path: '/employees'
+            });
+          });
+        }
       })["catch"](function (error) {
-        return console.log(error);
+        console.log(error);
       });
     }
   }
@@ -2387,7 +2408,23 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     editEmployee: function editEmployee() {
-      Axios.put('../employee/' + this.employee.id, this.employee).then(function (response) {})["catch"](function (error) {
+      var _this = this;
+
+      Axios.put('../../employee/' + this.employee.id, this.employee).then(function (response) {
+        Swal.fire({
+          text: 'Сотрудник успешно отредактирован',
+          type: 'success',
+          toast: true,
+          position: 'top-end',
+          background: '#e4ede6',
+          showConfirmButton: false,
+          timer: 3000
+        });
+
+        _this.$router.push({
+          path: '/employees'
+        });
+      })["catch"](function (error) {
         // clear error messages
         var errorMessages = document.querySelectorAll('.text-danger');
         errorMessages.forEach(function (el) {
@@ -2412,15 +2449,15 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     fetch: function fetch() {
-      var _this = this;
+      var _this2 = this;
 
-      Axios.get('../employee/' + this.$route.params.id + '/edit').then(function (response) {
-        return _this.employee = response.data;
+      Axios.get('../../employee/' + this.$route.params.id + '/edit').then(function (response) {
+        return _this2.employee = response.data;
       })["catch"](function (error) {
         return console.log(error);
       });
-      Axios.get('../department').then(function (response) {
-        return _this.departments = response.data;
+      Axios.get('../../department').then(function (response) {
+        return _this2.departments = response.data;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2521,6 +2558,36 @@ __webpack_require__.r(__webpack_exports__);
         console.log(this.delstatus);
         this.fetch();
       }
+    },
+    confirmDelete: function confirmDelete(id) {
+      var _this3 = this;
+
+      Swal.fire({
+        title: 'Вы уверены?',
+        text: "Подтвердите удаление сотрудника ",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Отмена',
+        confirmButtonText: 'Удалить'
+      }).then(function (result) {
+        if (result.value) {
+          Axios["delete"]('../employee/' + id).then(function (response) {
+            console.log(response.data);
+
+            if (response.data.success === true) {
+              Swal.fire('Удалено!', "Сотрудник был удален", 'success');
+
+              _this3.fetch();
+            } else if (response.data.doesNotExist === true) {
+              Swal.fire('Ошибка!', 'Не удалось удалить. Попробуйте обновить страницу', 'error');
+            }
+          })["catch"](function (error) {
+            Swal.fire('Ошибка!', '' + error, 'error');
+          });
+        }
+      });
     }
   }
 });
@@ -39052,388 +39119,351 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _vm.departments.length
-      ? _c("div", [
-          _c("div", { staticClass: "flex-center" }, [
+    _c("div", { staticClass: "flex-center" }, [
+      _c(
+        "form",
+        {
+          attrs: { id: "newForm" },
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.create($event)
+            }
+          }
+        },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3" }, [
             _c(
-              "form",
-              {
-                attrs: { id: "newForm" },
+              "label",
+              { staticClass: "font-weight-bold", attrs: { for: "name" } },
+              [_vm._v(" Имя ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.employee.name,
+                  expression: "employee.name"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "name", name: "name" },
+              domProps: { value: _vm.employee.name },
+              on: {
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.employee, "name", $event.target.value)
+                  },
+                  function($event) {
+                    return _vm.delete_error_message("name")
+                  }
+                ]
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3" }, [
+            _c(
+              "label",
+              { staticClass: "font-weight-bold", attrs: { for: "surname" } },
+              [_vm._v(" Фамилия ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.employee.surname,
+                  expression: "employee.surname"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "surname", name: "surname" },
+              domProps: { value: _vm.employee.surname },
+              on: {
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.employee, "surname", $event.target.value)
+                  },
+                  function($event) {
+                    return _vm.delete_error_message("surname")
+                  }
+                ]
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3" }, [
+            _c(
+              "label",
+              { staticClass: "font-weight-bold", attrs: { for: "patronymic" } },
+              [_vm._v(" Отчество ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.employee.patronymic,
+                  expression: "employee.patronymic"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "patronymic", name: "patronymic" },
+              domProps: { value: _vm.employee.patronymic },
+              on: {
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.employee, "patronymic", $event.target.value)
+                  },
+                  function($event) {
+                    return _vm.delete_error_message("patronymic")
+                  }
+                ]
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3 mt-3 font-weight-bold" }, [
+            _vm._v(" Пол")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "d-block my-2 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-radio" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.employee.sex,
+                    expression: "employee.sex"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: {
+                  type: "radio",
+                  id: "male",
+                  name: "sex",
+                  value: "male"
+                },
+                domProps: { checked: _vm._q(_vm.employee.sex, "male") },
                 on: {
-                  submit: function($event) {
-                    $event.preventDefault()
-                    return _vm.create($event)
+                  click: function($event) {
+                    return _vm.delete_error_message("sex")
+                  },
+                  change: function($event) {
+                    return _vm.$set(_vm.employee, "sex", "male")
                   }
                 }
-              },
-              [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("div", { staticClass: "mb-3" }, [
-                  _c(
-                    "label",
-                    { staticClass: "font-weight-bold", attrs: { for: "name" } },
-                    [_vm._v(" Имя ")]
-                  ),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.employee.name,
-                        expression: "employee.name"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", id: "name", name: "name" },
-                    domProps: { value: _vm.employee.name },
-                    on: {
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.employee, "name", $event.target.value)
-                        },
-                        function($event) {
-                          return _vm.delete_error_message("name")
-                        }
-                      ]
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "mb-3" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "font-weight-bold",
-                      attrs: { for: "surname" }
-                    },
-                    [_vm._v(" Фамилия ")]
-                  ),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.employee.surname,
-                        expression: "employee.surname"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", id: "surname", name: "surname" },
-                    domProps: { value: _vm.employee.surname },
-                    on: {
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.employee, "surname", $event.target.value)
-                        },
-                        function($event) {
-                          return _vm.delete_error_message("surname")
-                        }
-                      ]
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "mb-3" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "font-weight-bold",
-                      attrs: { for: "patronymic" }
-                    },
-                    [_vm._v(" Отчество ")]
-                  ),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.employee.patronymic,
-                        expression: "employee.patronymic"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      id: "patronymic",
-                      name: "patronymic"
-                    },
-                    domProps: { value: _vm.employee.patronymic },
-                    on: {
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.employee,
-                            "patronymic",
-                            $event.target.value
-                          )
-                        },
-                        function($event) {
-                          return _vm.delete_error_message("patronymic")
-                        }
-                      ]
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "mb-3 mt-3 font-weight-bold" }, [
-                  _vm._v(" Пол")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "d-block my-2 mb-2" }, [
-                  _c("div", { staticClass: "custom-control custom-radio" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.employee.sex,
-                          expression: "employee.sex"
-                        }
-                      ],
-                      staticClass: "custom-control-input",
-                      attrs: {
-                        type: "radio",
-                        id: "male",
-                        name: "sex",
-                        value: "male"
-                      },
-                      domProps: { checked: _vm._q(_vm.employee.sex, "male") },
-                      on: {
-                        click: function($event) {
-                          return _vm.delete_error_message("sex")
-                        },
-                        change: function($event) {
-                          return _vm.$set(_vm.employee, "sex", "male")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "custom-control-label",
-                        attrs: { for: "male" }
-                      },
-                      [_vm._v(" Мужчина ")]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "custom-control custom-radio" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.employee.sex,
-                          expression: "employee.sex"
-                        }
-                      ],
-                      staticClass: "custom-control-input",
-                      attrs: {
-                        type: "radio",
-                        id: "female",
-                        name: "sex",
-                        value: "female"
-                      },
-                      domProps: { checked: _vm._q(_vm.employee.sex, "female") },
-                      on: {
-                        click: function($event) {
-                          return _vm.delete_error_message("sex")
-                        },
-                        change: function($event) {
-                          return _vm.$set(_vm.employee, "sex", "female")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "custom-control-label",
-                        attrs: { for: "female" }
-                      },
-                      [_vm._v(" Женщина ")]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "mb-2 mt-2", attrs: { id: "sex" } })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "mb-3 mt-3" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "font-weight-bold",
-                      attrs: { for: "salary" }
-                    },
-                    [_vm._v(" Заработная плата ")]
-                  ),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.employee.salary,
-                        expression: "employee.salary"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", id: "salary", name: "salary" },
-                    domProps: { value: _vm.employee.salary },
-                    on: {
-                      input: [
-                        function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.employee, "salary", $event.target.value)
-                        },
-                        function($event) {
-                          return _vm.delete_error_message("salary")
-                        }
-                      ]
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", [
-                  _vm.departments.length
-                    ? _c(
-                        "div",
-                        [
-                          _c(
-                            "div",
-                            { staticClass: "mb-3 mt-3 font-weight-bold" },
-                            [_vm._v(" Отделения")]
-                          ),
-                          _vm._v(" "),
-                          _vm._l(_vm.departments, function(department) {
-                            return _c(
-                              "div",
-                              {
-                                key: department.id,
-                                staticClass:
-                                  "custom-control custom-checkbox mb-1"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.employee.department_id,
-                                      expression: "employee.department_id"
-                                    }
-                                  ],
-                                  staticClass: "custom-control-input",
-                                  attrs: {
-                                    type: "checkbox",
-                                    name: "department_id",
-                                    id: department.id
-                                  },
-                                  domProps: {
-                                    value: department.id,
-                                    checked: Array.isArray(
-                                      _vm.employee.department_id
-                                    )
-                                      ? _vm._i(
-                                          _vm.employee.department_id,
-                                          department.id
-                                        ) > -1
-                                      : _vm.employee.department_id
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.delete_error_message(
-                                        "department_id"
-                                      )
-                                    },
-                                    change: function($event) {
-                                      var $$a = _vm.employee.department_id,
-                                        $$el = $event.target,
-                                        $$c = $$el.checked ? true : false
-                                      if (Array.isArray($$a)) {
-                                        var $$v = department.id,
-                                          $$i = _vm._i($$a, $$v)
-                                        if ($$el.checked) {
-                                          $$i < 0 &&
-                                            _vm.$set(
-                                              _vm.employee,
-                                              "department_id",
-                                              $$a.concat([$$v])
-                                            )
-                                        } else {
-                                          $$i > -1 &&
-                                            _vm.$set(
-                                              _vm.employee,
-                                              "department_id",
-                                              $$a
-                                                .slice(0, $$i)
-                                                .concat($$a.slice($$i + 1))
-                                            )
-                                        }
-                                      } else {
-                                        _vm.$set(
-                                          _vm.employee,
-                                          "department_id",
-                                          $$c
-                                        )
-                                      }
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "custom-control-label",
-                                    attrs: { for: department.id }
-                                  },
-                                  [_vm._v(" " + _vm._s(department.name))]
-                                )
-                              ]
-                            )
-                          })
-                        ],
-                        2
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("span", {
-                    staticClass: "mb-2 mt-2",
-                    attrs: { id: "department_id" }
-                  })
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                { staticClass: "custom-control-label", attrs: { for: "male" } },
+                [_vm._v(" Мужчина ")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "custom-control custom-radio" }, [
+              _c("input", {
+                directives: [
                   {
-                    staticClass: "btn btn-primary mt-3 mr-2",
-                    attrs: { type: "submit" }
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.employee.sex,
+                    expression: "employee.sex"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: {
+                  type: "radio",
+                  id: "female",
+                  name: "sex",
+                  value: "female"
+                },
+                domProps: { checked: _vm._q(_vm.employee.sex, "female") },
+                on: {
+                  click: function($event) {
+                    return _vm.delete_error_message("sex")
                   },
-                  [_vm._v(" Создать ")]
+                  change: function($event) {
+                    return _vm.$set(_vm.employee, "sex", "female")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "female" }
+                },
+                [_vm._v(" Женщина ")]
+              )
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "mb-2 mt-2", attrs: { id: "sex" } })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3 mt-3" }, [
+            _c(
+              "label",
+              { staticClass: "font-weight-bold", attrs: { for: "salary" } },
+              [_vm._v(" Заработная плата ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.employee.salary,
+                  expression: "employee.salary"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", id: "salary", name: "salary" },
+              domProps: { value: _vm.employee.salary },
+              on: {
+                input: [
+                  function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.employee, "salary", $event.target.value)
+                  },
+                  function($event) {
+                    return _vm.delete_error_message("salary")
+                  }
+                ]
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", [
+            _vm.departments.length
+              ? _c(
+                  "div",
+                  [
+                    _c("div", { staticClass: "mb-3 mt-3 font-weight-bold" }, [
+                      _vm._v(" Отделения")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.departments, function(department) {
+                      return _c(
+                        "div",
+                        {
+                          key: department.id,
+                          staticClass: "custom-control custom-checkbox mb-1"
+                        },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.employee.department_id,
+                                expression: "employee.department_id"
+                              }
+                            ],
+                            staticClass: "custom-control-input",
+                            attrs: {
+                              type: "checkbox",
+                              name: "department_id",
+                              id: department.id
+                            },
+                            domProps: {
+                              value: department.id,
+                              checked: Array.isArray(_vm.employee.department_id)
+                                ? _vm._i(
+                                    _vm.employee.department_id,
+                                    department.id
+                                  ) > -1
+                                : _vm.employee.department_id
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.delete_error_message("department_id")
+                              },
+                              change: function($event) {
+                                var $$a = _vm.employee.department_id,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = department.id,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      _vm.$set(
+                                        _vm.employee,
+                                        "department_id",
+                                        $$a.concat([$$v])
+                                      )
+                                  } else {
+                                    $$i > -1 &&
+                                      _vm.$set(
+                                        _vm.employee,
+                                        "department_id",
+                                        $$a
+                                          .slice(0, $$i)
+                                          .concat($$a.slice($$i + 1))
+                                      )
+                                  }
+                                } else {
+                                  _vm.$set(_vm.employee, "department_id", $$c)
+                                }
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "custom-control-label",
+                              attrs: { for: department.id }
+                            },
+                            [_vm._v(" " + _vm._s(department.name))]
+                          )
+                        ]
+                      )
+                    })
+                  ],
+                  2
                 )
-              ]
-            )
-          ])
-        ])
-      : _c("div", { staticClass: "font-weight-bold" }, [
-          _vm._v(" Добавьте отделы ! ")
-        ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("span", {
+              staticClass: "mb-2 mt-2",
+              attrs: { id: "department_id" }
+            })
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary mt-3 mr-2",
+              attrs: { type: "submit" }
+            },
+            [_vm._v(" Создать ")]
+          )
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -39908,7 +39938,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.deleteEmployee(employee.id)
+                              return _vm.confirmDelete(employee.id)
                             }
                           }
                         },

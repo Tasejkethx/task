@@ -28,7 +28,7 @@
                     <td>{{employee.department_id}} </td>
                     <td> <router-link :to="'/employees/edit/' + employee.id" class="btn btn-sm btn-info">
                         <i class="fas fa-edit"></i> Редактировать</router-link>
-                        <a  href="#" @click.prevent="deleteEmployee(employee.id)" class="btn btn-sm btn-danger">
+                        <a  href="#" @click.prevent="confirmDelete(employee.id)" class="btn btn-sm btn-danger">
                             <i class="fas fa-trash-alt"></i> Удалить </a></td>
                 </tr>
                 </tbody>
@@ -71,6 +71,46 @@
                     console.log(this.delstatus);
                     this.fetch();
                 }
+            },
+
+            confirmDelete(id){
+                Swal.fire({
+                    title: 'Вы уверены?',
+                    text: "Подтвердите удаление сотрудника "  ,
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'Отмена',
+                    confirmButtonText: 'Удалить'
+                }).then((result) => {
+                    if (result.value) {
+                        Axios.delete('../employee/' + id)
+                            .then((response)=> {
+                                console.log(response.data);
+                                if (response.data.success===true){
+                                    Swal.fire(
+                                        'Удалено!',
+                                        "Сотрудник был удален",
+                                        'success');
+                                    this.fetch();
+                                } else if (response.data.doesNotExist===true){
+                                    Swal.fire(
+                                        'Ошибка!',
+                                        'Не удалось удалить. Попробуйте обновить страницу',
+                                        'error'
+                                    );
+                                }
+                            })
+                            .catch(error =>{
+                                Swal.fire(
+                                    'Ошибка!',
+                                    ''+ error,
+                                    'error'
+                                );
+                            });
+                    }
+                })
             },
         }
     }

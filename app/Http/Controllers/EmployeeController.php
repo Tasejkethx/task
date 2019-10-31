@@ -161,9 +161,6 @@ class EmployeeController extends Controller
         foreach($employee->departments()->get()as $item){
             $new_department_id[]=$item->pivot->department_id;
         }
-        if ($old_department_id==$new_department_id){
-            return;
-        }
 
         self::set_department_after_delete($employee,$old_department_id);
         self::set_department_after_create($employee,$new_department_id);

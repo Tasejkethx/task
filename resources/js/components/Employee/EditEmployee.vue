@@ -85,8 +85,18 @@
                 }
             },
             editEmployee(){
-                Axios.put('../employee/' + this.employee.id ,this.employee)
+                Axios.put('../../employee/' + this.employee.id ,this.employee)
                     .then((response) => {
+                        Swal.fire({
+                            text: 'Сотрудник успешно отредактирован',
+                            type: 'success',
+                            toast: true,
+                            position: 'top-end',
+                            background: '#e4ede6',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        });
+                        this.$router.push({path: '/employees'});
 
                 })
                     .catch(error=>{
@@ -114,10 +124,10 @@
                     });
             },
             fetch() {
-                Axios.get('../employee/'+this.$route.params.id+'/edit')
+                Axios.get('../../employee/'+this.$route.params.id+'/edit')
                     .then(response=>this.employee=response.data)
                     .catch(error=>console.log(error));
-                Axios.get('../department')
+                Axios.get('../../department')
                     .then(response=>this.departments=response.data)
                     .catch(error=>console.log(error));
             },
