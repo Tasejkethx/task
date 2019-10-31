@@ -9,7 +9,7 @@ class Employee extends Model
    protected $guarded =[];
 
     public function departments(){
-        return $this->belongsToMany(Department::class);
+        return $this->belongsToMany(Department::class)->withPivot('department_name');
     }
 
 }

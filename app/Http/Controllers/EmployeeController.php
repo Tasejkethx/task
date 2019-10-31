@@ -51,7 +51,14 @@ class EmployeeController extends Controller
 
         $employee->save();
         $employee=Employee::latest()->first();
-        $employee->departments()->sync($mass);
+
+        $departments = Department::whereIn('id', $mass)->pluck('name')->toArray();
+        $temp = array_map(function($department){
+            return ['department_name' => $department];
+        }, $departments);
+        $pivotData = array_combine($mass, $temp);
+
+        $employee->departments()->sync($pivotData);
 
         return response()->json(['success'=>true]);
     }
@@ -97,7 +104,13 @@ class EmployeeController extends Controller
 
         $employee->save();
         $mass= $request->get('department_id');
-        $employee->departments()->sync($mass);
+            $departments = Department::whereIn('id', $mass)->pluck('name')->toArray();
+            $temp = array_map(function($department){
+                return ['department_name' => $department];
+            }, $departments);
+            $pivotData = array_combine($mass, $temp);
+
+            $employee->departments()->sync($pivotData);
         self::set_department_after_edit($employee,$old_department_id);
 
         return response()->json(['success'=>true]);
