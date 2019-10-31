@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Department;
 use App\Http\Requests\DepartmentRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
@@ -64,11 +65,16 @@ class DepartmentController extends Controller
 
     public function destroy($id)
     {
-        $department= Department::findOrFail($id);
-        if($department->amount==0){
-            $department->delete();
-            return response()->json(['success'=>true]);
+        try {
+            $department = Department::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['doesNotExist' => true]);
         }
-        return response()->json(['amount'=>true]);
+        if ($department->amount == 0) {
+            $department->delete();
+            return response()->json(['success' => true]);
+        } else if ($department->amount > 0) {
+            return response()->json(['amount' => true]);
+        }
     }
 }

@@ -45,7 +45,17 @@
             create(){
                 axios.post('../department' ,this.department)
                     .then((response) => {
+                        Swal.fire({
+                            text: 'Отдел успешно добавлен',
+                            type: 'success',
+                            toast: true,
+                            position: 'top-end',
+                            background: '#e4ede6',
+                            showConfirmButton: false,
+                            timer: 3000,
+                        });
                         this.$router.push({path: '/departments'});
+
                 })
                     .catch(error=>{
                         // clear error messages

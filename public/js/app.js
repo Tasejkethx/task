@@ -1886,6 +1886,16 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post('../department', this.department).then(function (response) {
+        Swal.fire({
+          text: 'Отдел успешно добавлен',
+          type: 'success',
+          toast: true,
+          position: 'top-end',
+          background: '#e4ede6',
+          showConfirmButton: false,
+          timer: 3000
+        });
+
         _this.$router.push({
           path: '/departments'
         });
@@ -1975,7 +1985,23 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     editDepartment: function editDepartment() {
-      Axios.put('../../department/' + this.department.id, this.department).then(function (response) {})["catch"](function (error) {
+      var _this = this;
+
+      Axios.put('../../department/' + this.department.id, this.department).then(function (response) {
+        Swal.fire({
+          text: 'Отдел успешно отредактирован',
+          type: 'success',
+          toast: true,
+          position: 'top-end',
+          background: '#e4ede6',
+          showConfirmButton: false,
+          timer: 3000
+        });
+
+        _this.$router.push({
+          path: '/departments'
+        });
+      })["catch"](function (error) {
         // clear error messages
         var errorMessages = document.querySelectorAll('.text-danger');
         errorMessages.forEach(function (el) {
@@ -2000,10 +2026,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     fetch: function fetch() {
-      var _this = this;
+      var _this2 = this;
 
       Axios.get('../../department/' + this.$route.params.id + '/edit').then(function (response) {
-        return _this.department = response.data;
+        return _this2.department = response.data;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2076,20 +2102,39 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(error);
       });
     },
-    deleteDepartment: function deleteDepartment(id) {
-      if (confirm("Вы действительно хотите удалить отдел?")) {
-        Axios["delete"]('../department/' + id).then(function (response) {
-          console.log(response.data);
+    confirmDelete: function confirmDelete(id, name) {
+      var _this2 = this;
 
-          if (response.data.amount === true) {
-            alert("Невозможно удалить отдел, т.к в нем есть сотрудники");
-          }
-        })["catch"](function (error) {
-          return console.log(error);
-        });
-        console.log(this.delstatus);
-        this.fetch();
-      }
+      Swal.fire({
+        title: 'Вы уверены?',
+        text: "Подтвердите удаление " + "'" + name + "'",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Отмена',
+        confirmButtonText: 'Удалить'
+      }).then(function (result) {
+        if (result.value) {
+          Axios["delete"]('../department/' + id).then(function (response) {
+            console.log(response.data);
+
+            if (response.data.amount === true) {
+              Swal.fire('Ошибка!', 'Невозможно удалить отдел в котором есть сотрудники', 'error');
+
+              _this2.fetch();
+            } else if (response.data.success === true) {
+              Swal.fire('Удалено!', 'Отдел ' + "'" + name + "'" + " был успешно удален", 'success');
+
+              _this2.fetch();
+            } else if (response.data.doesNotExist === true) {
+              Swal.fire('Ошибка!', 'Не удалось удалить ' + "'" + name + "'" + " возможно он уже удален", 'error');
+            }
+          })["catch"](function (error) {
+            Swal.fire('Ошибка!', '' + error, 'error');
+          });
+        }
+      });
     }
   }
 });
@@ -38940,7 +38985,10 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            return _vm.deleteDepartment(department.id)
+                            return _vm.confirmDelete(
+                              department.id,
+                              department.name
+                            )
                           }
                         }
                       },
