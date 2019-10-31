@@ -15,6 +15,7 @@ class AddNameToDepartmentEmployee extends Migration
     {
         Schema::table('department_employee', function (Blueprint $table) {
             $table->string('department_name');
+            $table->foreign('department_name')->references('name')->on('departments')->onUpdate('cascade');
         });
     }
 
@@ -26,6 +27,7 @@ class AddNameToDepartmentEmployee extends Migration
     public function down()
     {
         Schema::table('department_employee', function (Blueprint $table) {
+            $table->dropForeign('department_employee_department_name_foreign');
             $table->dropColumn('department_name');
         });
     }
