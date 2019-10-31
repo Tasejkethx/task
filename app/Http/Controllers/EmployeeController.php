@@ -14,7 +14,6 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $employees = Employee::all();
-
         $mass=[];
         foreach ($employees as & $employee){
             foreach(Employee::findOrFail($employee->id)->departments()->get()as $item){

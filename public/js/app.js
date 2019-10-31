@@ -2589,7 +2589,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       employees: {},
       delstatus: {},
-      departments: {}
+      departments: {},
+      departmentNames: ''
     };
   },
   mounted: function mounted() {
@@ -40119,7 +40120,7 @@ var render = function() {
                         staticClass: "col py-2 px-lg-2 border"
                       },
                       _vm._l(employee.department_id, function(dep) {
-                        return dep == department.id
+                        return dep === department.name
                           ? _c("div", { staticClass: "text-center" }, [
                               _c("i", { staticClass: "fas fa-check" })
                             ])

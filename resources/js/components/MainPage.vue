@@ -7,7 +7,7 @@
         </div>
         <div class="row " v-for="employee in employees" :key="employee.id">
             <div class = "col py-2 px-lg-2 border"> {{employee.name}} {{employee.surname}}</div>
-            <div class="col py-2 px-lg-2 border" v-for="department in departments" :key="department.id" >      <div v-for="dep in employee.department_id" v-if="dep==department.id" class="text-center"><i class="fas fa-check"></i></div> </div>
+            <div class="col py-2 px-lg-2 border" v-for="department in departments" :key="department.id" >      <div v-for="dep in employee.department_id" v-if="dep===department.name" class="text-center"><i class="fas fa-check"></i></div> </div>
         </div>
         </div>
         <div v-else class="font-weight-bold"> Список сотрудников пуст...</div>
