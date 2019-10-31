@@ -2113,7 +2113,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2149,8 +2148,6 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           Axios["delete"]('../department/' + id).then(function (response) {
-            console.log(response.data);
-
             if (response.data.amount === true) {
               Swal.fire('Ошибка!', 'Невозможно удалить отдел в котором есть сотрудники', 'error');
 
@@ -2182,12 +2179,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2352,8 +2343,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -2580,14 +2569,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       employees: {},
+      delstatus: {},
       departments: {}
     };
   },
@@ -2609,21 +2595,8 @@ __webpack_require__.r(__webpack_exports__);
         return consoloe.log(error);
       });
     },
-    deleteEmployee: function deleteEmployee(id) {
-      var _this2 = this;
-
-      if (confirm("Вы действительно хотите удалить сотрудника?")) {
-        Axios["delete"]('../employee/' + id).then(function (response) {
-          return _this2.delstatus = response.data['status'];
-        })["catch"](function (error) {
-          return console.log(error);
-        });
-        console.log(this.delstatus);
-        this.fetch();
-      }
-    },
     confirmDelete: function confirmDelete(id) {
-      var _this3 = this;
+      var _this2 = this;
 
       Swal.fire({
         title: 'Вы уверены?',
@@ -2642,7 +2615,7 @@ __webpack_require__.r(__webpack_exports__);
             if (response.data.success === true) {
               Swal.fire('Удалено!', "Сотрудник был удален", 'success');
 
-              _this3.fetch();
+              _this2.fetch();
             } else if (response.data.doesNotExist === true) {
               Swal.fire('Ошибка!', 'Не удалось удалить. Возможно он уже был удален', 'error');
             }
@@ -2682,6 +2655,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2697,7 +2674,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Axios.get('../department').then(function (response) {
-        console.log(response.data);
         _this.departments = response.data;
       })["catch"](function (error) {
         return console.log(error);
@@ -7246,7 +7222,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.myclass[data-v-2bd38d5a]{\n    padding: 2%;\n}\n.flex-center[data-v-2bd38d5a] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.myclass[data-v-2bd38d5a]{\n    padding: 2%;\n}\n", ""]);
 
 // exports
 
@@ -40008,7 +39984,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fas fa-trash-alt" }),
-                          _vm._v(" Удалить ")
+                          _vm._v(" Удалить\n                        ")
                         ]
                       )
                     ],

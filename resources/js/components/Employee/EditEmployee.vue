@@ -29,7 +29,6 @@
                     </div>
                     <span class="mb-2 mt-2" id="sex"></span>
                 </div>
-
                 <div class="mb-3">
                     <label for="salary" class="font-weight-bold"> Заработная плата </label>
                     <input type="text"  class="form-control" id="salary" @input="delete_error_message('salary')" name="salary" v-model="employee.salary" >
@@ -43,7 +42,6 @@
                     <span class="mb-2 mt-2" id="department_id" ></span>
                 </div>
                 <button type='submit' class="btn btn-primary mt-3 mr-2"> Редактировать </button>
-
             </form>
         </div>
     </div>
@@ -67,7 +65,6 @@
         },
         mounted() {
             this.fetch();
-
         },
         methods:{
             delete_error_message(className){
@@ -99,18 +96,18 @@
                             });
                             this.$router.push({path: '/employees'});
                         } else {
-                        Swal.fire({
-                            text: 'Сотрудник успешно отредактирован',
-                            type: 'success',
-                            toast: true,
-                            position: 'top-end',
-                            background: '#e4ede6',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                        this.$router.push({path: '/employees'});
-                            }
-                })
+                            Swal.fire({
+                                text: 'Сотрудник успешно отредактирован',
+                                type: 'success',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#e4ede6',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                            this.$router.push({path: '/employees'});
+                        }
+                    })
                     .catch(error=>{
                         // clear error messages
                         const errorMessages = document.querySelectorAll('.text-danger');

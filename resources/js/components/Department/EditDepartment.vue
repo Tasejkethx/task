@@ -109,7 +109,7 @@
                             });
                             this.$router.push({path: '/departments'});
                         } else {
-                        this.department=response.data
+                            this.department=response.data
                         }
                     })
                     .catch(error=>console.log(error));

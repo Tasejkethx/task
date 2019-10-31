@@ -1,44 +1,40 @@
 <template>
     <div class="container">
         <router-link to="/employees/create" class="btn btn-dark mb-5" ><i class="fas fa-plus"></i> Добавить сотрудника</router-link>
-
         <div class="table-responsive" id="success_message">
             <table class="table table-striped table-sm">
                 <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Имя</th>
-                    <th>Фамилия</th>
-                    <th>Отчество</th>
-                    <th>Пол</th>
-                    <th>Заработная плата</th>
-                    <th>Отделы</th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th>ID</th>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Отчество</th>
+                        <th>Пол</th>
+                        <th>Заработная плата</th>
+                        <th>Отделы</th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr v-for="employee in employees" :key="employee.id">
-                    <td>{{employee.id}} </td>
-                    <td>{{employee.name}} </td>
-                    <td>{{employee.surname}} </td>
-                    <td>{{employee.patronymic}} </td>
-                    <td v-if="employee.sex=='male'">мужчина </td>
-                    <td v-else> женщина </td>
-                    <td>{{employee.salary}}$ </td>
-                    <td >{{employee.department_name}} </td>
-                    <td> <router-link :to="'/employees/edit/' + employee.id" class="btn btn-sm btn-info">
-                        <i class="fas fa-edit"></i> Редактировать</router-link>
-                        <a  href="#" @click.prevent="confirmDelete(employee.id)" class="btn btn-sm btn-danger">
-                            <i class="fas fa-trash-alt"></i> Удалить </a></td>
-                </tr>
+                    <tr v-for="employee in employees" :key="employee.id">
+                        <td>{{employee.id}} </td>
+                        <td>{{employee.name}} </td>
+                        <td>{{employee.surname}} </td>
+                        <td>{{employee.patronymic}} </td>
+                        <td v-if="employee.sex=='male'">мужчина </td>
+                        <td v-else> женщина </td>
+                        <td>{{employee.salary}}$ </td>
+                        <td >{{employee.department_name}} </td>
+                        <td> <router-link :to="'/employees/edit/' + employee.id" class="btn btn-sm btn-info">
+                            <i class="fas fa-edit"></i> Редактировать</router-link>
+                            <a  href="#" @click.prevent="confirmDelete(employee.id)" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash-alt"></i> Удалить
+                            </a>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-
         </div>
-
-
-
-
     </div>
 </template>
 
@@ -47,35 +43,26 @@
         data(){
             return {
                 employees:{},
+                delstatus:{},
                 departments:{},
             }
         },
         mounted() {
             this.fetch();
         },
-        methods:{
-            fetch(){
+        methods: {
+            fetch() {
                 Axios.get('../employee')
-                    .then(response=>this.employees=response.data)
+                    .then(response => this.employees = response.data)
                     .catch(error => console.log(error));
                 Axios.get('../department')
-                    .then(response=>this.departments=response.data)
-                    .catch(error=>consoloe.log(error));
+                    .then(response => this.departments = response.data)
+                    .catch(error => consoloe.log(error));
             },
-            deleteEmployee(id){
-                if (confirm("Вы действительно хотите удалить сотрудника?")) {
-                    Axios.delete('../employee/' + id)
-                        .then(response => this.delstatus = response.data['status'])
-                        .catch(error => console.log(error));
-                    console.log(this.delstatus);
-                    this.fetch();
-                }
-            },
-
-            confirmDelete(id){
+            confirmDelete(id) {
                 Swal.fire({
                     title: 'Вы уверены?',
-                    text: "Подтвердите удаление сотрудника "  ,
+                    text: "Подтвердите удаление сотрудника ",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -85,15 +72,15 @@
                 }).then((result) => {
                     if (result.value) {
                         Axios.delete('../employee/' + id)
-                            .then((response)=> {
+                            .then((response) => {
                                 console.log(response.data);
-                                if (response.data.success===true){
+                                if (response.data.success === true) {
                                     Swal.fire(
                                         'Удалено!',
                                         "Сотрудник был удален",
                                         'success');
                                     this.fetch();
-                                } else if (response.data.doesNotExist===true){
+                                } else if (response.data.doesNotExist === true) {
                                     Swal.fire(
                                         'Ошибка!',
                                         'Не удалось удалить. Возможно он уже был удален',
@@ -101,17 +88,17 @@
                                     );
                                 }
                             })
-                            .catch(error =>{
+                            .catch(error => {
                                 Swal.fire(
                                     'Ошибка!',
-                                    ''+ error,
+                                    '' + error,
                                     'error'
                                 );
                             });
                     }
                 })
             },
-            }
+        }
     }
 </script>
 

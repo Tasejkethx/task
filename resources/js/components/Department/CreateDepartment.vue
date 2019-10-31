@@ -55,7 +55,6 @@
                             timer: 3000,
                         });
                         this.$router.push({path: '/departments'});
-
                 })
                     .catch(error=>{
                         // clear error messages
@@ -80,7 +79,6 @@
                             firstItemDOM.classList.add('border','border-danger');
                         });
                     });
-
             },
         },
 

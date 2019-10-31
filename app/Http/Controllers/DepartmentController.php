@@ -16,7 +16,6 @@ class DepartmentController extends Controller
         if($request->expectsJson()){
             return response()->json($departments);
         }
-      //  return view('department.index');
     }
 
 
@@ -31,9 +30,7 @@ class DepartmentController extends Controller
         $department = new Department([
             'name'=>$request->get('name'),
         ]);
-
         $department->save();
-
         return response()->json(['success'=>true]);
     }
 
@@ -54,7 +51,6 @@ class DepartmentController extends Controller
         } catch (ModelNotFoundException $e) {
                 return response()->json(['doesNotExist' => true]);
             }
-       // return view('department.edit');
     }
 
 
@@ -75,7 +71,6 @@ class DepartmentController extends Controller
     {
         try {
             $department = Department::findOrFail($id);
-
             if ($department->amount == 0) {
                 $department->delete();
                 return response()->json(['success' => true]);

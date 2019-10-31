@@ -14,24 +14,24 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         $employees = Employee::all();
-        $mass=[];
+        $department_ids=[];
+        $department_names=[];
         foreach ($employees as & $employee){
             foreach(Employee::findOrFail($employee->id)->departments()->get()as $item){
-                $mass[]=$item->pivot->department_id;
-                $mass1[]=$item->pivot->department_name;
+                $department_ids[]=$item->pivot->department_id;
+                $department_names[]=$item->pivot->department_name;
             }
-            $employee['department_id'] = $mass;
-            if (count($mass1)>1){
-                $employee['department_name'] = join(', ', $mass1);
-            } else {$employee['department_name']=$mass1[0];}
-            unset($mass);
-            unset($mass1);
+            $employee['department_id'] = $department_ids;
+            if (count($department_names)>1){
+                $employee['department_name'] = join(', ', $department_names);
+            } else {$employee['department_name']=$department_names[0];}
+            unset($department_ids);
+            unset($department_names);
         }
 
         if($request->expectsJson()){
             return response()->json($employees);
         }
-       // return view('employee.index');
     }
 
 
@@ -51,17 +51,17 @@ class EmployeeController extends Controller
             'salary'=>$request->get('salary'),
         ]);
 
-        $mass= $request->get('department_id');
-        self::set_department_after_create($employee, $mass);
+        $department_ids= $request->get('department_id');
+        self::set_department_after_create($employee, $department_ids);
 
         $employee->save();
         $employee=Employee::latest()->first();
 
-        $departments = Department::whereIn('id', $mass)->pluck('name')->toArray();
+        $departments = Department::whereIn('id', $department_ids)->pluck('name')->toArray();
         $temp = array_map(function($department){
             return ['department_name' => $department];
         }, $departments);
-        $pivotData = array_combine($mass, $temp);
+        $pivotData = array_combine($department_ids, $temp);
 
         $employee->departments()->sync($pivotData);
 
@@ -78,13 +78,13 @@ class EmployeeController extends Controller
     public function edit(Request $request, $id)
     {
         try {
-            $mass=[];
+            $department_ids=[];
             $employee = Employee::findOrFail($id);
 
             foreach (Employee::findOrFail($id)->departments()->get() as $item) {
-                $mass[] = $item->pivot->department_id;
+                $department_ids[] = $item->pivot->department_id;
             }
-            $employee['department_id'] = $mass;
+            $employee['department_id'] = $department_ids;
             return response()->json($employee);
         } catch (ModelNotFoundException $e){
             return response()->json(['doesNotExist'=>true]);
@@ -102,21 +102,21 @@ class EmployeeController extends Controller
         $employee->sex =$request->get('sex');
         $employee->salary=$request->get('salary');
 
-        $old_department_id=[];
+        $old_department_ids=[];
         foreach($employee->findOrFail($id)->departments()->get()as $item){
-            $old_department_id[]=$item->pivot->department_id;
+            $old_department_ids[]=$item->pivot->department_id;
         }
 
         $employee->save();
-        $mass= $request->get('department_id');
-            $departments = Department::whereIn('id', $mass)->pluck('name')->toArray();
+            $department_ids= $request->get('department_id');
+            $departments = Department::whereIn('id', $department_ids)->pluck('name')->toArray();
             $temp = array_map(function($department){
                 return ['department_name' => $department];
             }, $departments);
-            $pivotData = array_combine($mass, $temp);
+            $pivotData = array_combine($department_ids, $temp);
 
             $employee->departments()->sync($pivotData);
-        self::set_department_after_edit($employee,$old_department_id);
+        self::set_department_after_edit($employee,$old_department_ids);
 
         return response()->json(['success'=>true]);
         } catch (ModelNotFoundException $e){
@@ -130,14 +130,13 @@ class EmployeeController extends Controller
         try{
         $employee= Employee::findOrFail($id);
 
-        $department_id=[];
+            $department_ids=[];
         foreach($employee->departments()->get()as $item){
-            $department_id[]=$item->pivot->department_id;
+            $department_ids[]=$item->pivot->department_id;
         }
-
         $tmp= clone $employee;
         $employee->delete();
-        self::set_department_after_delete($tmp,$department_id);
+        self::set_department_after_delete($tmp,$department_ids);
 
         return response()->json(['success'=>true]);
 
@@ -163,24 +162,24 @@ class EmployeeController extends Controller
 
     public function set_department_after_delete(Employee $employee, $department_id){
         for($i=0;$i<count($department_id);$i++) {
-            $departm = Department::find($department_id[$i]);
-            if ($departm->amount == 1){
+            $department = Department::find($department_id[$i]);
+            if ($department->amount == 1){
                 Department::findOrFail($department_id[$i])->update([
-                    'amount' => $departm->amount - 1,
+                    'amount' => $department->amount - 1,
                     'max_salary' => 0,
                 ]);
-            } else if ($employee->salary == $departm->max_salary) {
+            } else if ($employee->salary == $department->max_salary) {
                 $mass=[];
-                foreach ($departm->employees()->get()as $item){
+                foreach ($department->employees()->get()as $item){
                     $mass[]=$item->pivot->employee_id;
                 }
                 $max_salary = Employee::whereIn('id',$mass)->max('salary');
                 Department::findOrFail($department_id[$i])->update([
-                    'amount' => $departm->amount - 1,
+                    'amount' => $department->amount - 1,
                     'max_salary' => $max_salary,
                 ]);
             } else {
-                Department::findOrFail($department_id[$i])->update(['amount' => $departm->amount -1]);
+                Department::findOrFail($department_id[$i])->update(['amount' => $department->amount -1]);
             }
         }
     }

@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-
         <div class = "flex-center">
             <form  v-on:submit.prevent="create" id="newForm" >
                 <div class="text-center py-3 mb-2">
@@ -21,7 +20,6 @@
                 <div class="mb-3 mt-3 font-weight-bold"> Пол</div>
                 <div class="d-block my-2 mb-2">
                     <div class="custom-control custom-radio">
-
                         <input type="radio" class="custom-control-input" id="male" name="sex" value="male" @click="delete_error_message('sex')" v-model="employee.sex" >
                         <label  class="custom-control-label" for="male"> Мужчина </label>
                     </div>
@@ -37,7 +35,6 @@
                 </div>
                 <div>
                     <div v-if="departments.length">
-
                         <div class="mb-3 mt-3 font-weight-bold"> Отделения</div>
                         <div class="custom-control custom-checkbox mb-1" v-for="department in departments" :key="department.id">
                             <input type = "checkbox" name="department_id"  @click="delete_error_message('department_id')" class="custom-control-input"  :id="department.id" :value="department.id"  v-model="employee.department_id" />
@@ -47,12 +44,9 @@
                     <span class="mb-2 mt-2" id="department_id" ></span>
                 </div>
                 <button type='submit' class="btn btn-primary mt-3 mr-2"> Создать </button>
-
-
             </form>
         </div>
-        </div>
-
+    </div>
 </template>
 
 <script>
@@ -68,7 +62,6 @@
                     department_id:[],
                 },
                 departments:{},
-
             }
         },
         mounted() {
@@ -145,7 +138,6 @@
                     })
                     .catch(error=>{console.log(error)});
             },
-
         },
     }
 </script>
