@@ -46,16 +46,29 @@
             editDepartment(){
                 Axios.put('../../department/' + this.department.id ,this.department)
                     .then((response) => {
-                        Swal.fire({
-                            text: 'Отдел успешно отредактирован',
-                            type: 'success',
-                            toast: true,
-                            position: 'top-end',
-                            background: '#e4ede6',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                        this.$router.push({path: '/departments'});
+                        if (response.data.doesNotExist === true){
+                            Swal.fire({
+                                text: 'Не удалось найти отдел. Возможно он был удален',
+                                type: 'error',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#f2c7c7',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                            this.$router.push({path: '/departments'});
+                        } else {
+                            Swal.fire({
+                                text: 'Отдел успешно отредактирован',
+                                type: 'success',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#e4ede6',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                            this.$router.push({path: '/departments'});
+                        }
                     })
                     .catch(error=>{
                         // clear error messages
@@ -83,7 +96,22 @@
             },
             fetch() {
                 Axios.get('../../department/'+this.$route.params.id+'/edit')
-                    .then(response=>this.department=response.data)
+                    .then(response=>{
+                        if (response.data.doesNotExist === true){
+                            Swal.fire({
+                                text: 'Не удалось найти отдел. Возможно он был удален',
+                                type: 'error',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#f2c7c7',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                            this.$router.push({path: '/departments'});
+                        } else {
+                        this.department=response.data
+                        }
+                    })
                     .catch(error=>console.log(error));
             },
         },

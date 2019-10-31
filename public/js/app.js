@@ -1988,19 +1988,35 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Axios.put('../../department/' + this.department.id, this.department).then(function (response) {
-        Swal.fire({
-          text: 'Отдел успешно отредактирован',
-          type: 'success',
-          toast: true,
-          position: 'top-end',
-          background: '#e4ede6',
-          showConfirmButton: false,
-          timer: 3000
-        });
+        if (response.data.doesNotExist === true) {
+          Swal.fire({
+            text: 'Не удалось найти отдел. Возможно он был удален',
+            type: 'error',
+            toast: true,
+            position: 'top-end',
+            background: '#f2c7c7',
+            showConfirmButton: false,
+            timer: 3000
+          });
 
-        _this.$router.push({
-          path: '/departments'
-        });
+          _this.$router.push({
+            path: '/departments'
+          });
+        } else {
+          Swal.fire({
+            text: 'Отдел успешно отредактирован',
+            type: 'success',
+            toast: true,
+            position: 'top-end',
+            background: '#e4ede6',
+            showConfirmButton: false,
+            timer: 3000
+          });
+
+          _this.$router.push({
+            path: '/departments'
+          });
+        }
       })["catch"](function (error) {
         // clear error messages
         var errorMessages = document.querySelectorAll('.text-danger');
@@ -2029,7 +2045,23 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       Axios.get('../../department/' + this.$route.params.id + '/edit').then(function (response) {
-        return _this2.department = response.data;
+        if (response.data.doesNotExist === true) {
+          Swal.fire({
+            text: 'Не удалось найти отдел. Возможно он был удален',
+            type: 'error',
+            toast: true,
+            position: 'top-end',
+            background: '#f2c7c7',
+            showConfirmButton: false,
+            timer: 3000
+          });
+
+          _this2.$router.push({
+            path: '/departments'
+          });
+        } else {
+          _this2.department = response.data;
+        }
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2411,19 +2443,35 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Axios.put('../../employee/' + this.employee.id, this.employee).then(function (response) {
-        Swal.fire({
-          text: 'Сотрудник успешно отредактирован',
-          type: 'success',
-          toast: true,
-          position: 'top-end',
-          background: '#e4ede6',
-          showConfirmButton: false,
-          timer: 3000
-        });
+        if (response.data.doesNotExist === true) {
+          Swal.fire({
+            text: 'Не удалось найти сотрудника. Возможно он был удален',
+            type: 'error',
+            toast: true,
+            position: 'top-end',
+            background: '#f2c7c7',
+            showConfirmButton: false,
+            timer: 3000
+          });
 
-        _this.$router.push({
-          path: '/employees'
-        });
+          _this.$router.push({
+            path: '/employees'
+          });
+        } else {
+          Swal.fire({
+            text: 'Сотрудник успешно отредактирован',
+            type: 'success',
+            toast: true,
+            position: 'top-end',
+            background: '#e4ede6',
+            showConfirmButton: false,
+            timer: 3000
+          });
+
+          _this.$router.push({
+            path: '/employees'
+          });
+        }
       })["catch"](function (error) {
         // clear error messages
         var errorMessages = document.querySelectorAll('.text-danger');
@@ -2452,7 +2500,23 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       Axios.get('../../employee/' + this.$route.params.id + '/edit').then(function (response) {
-        return _this2.employee = response.data;
+        if (response.data.doesNotExist === true) {
+          Swal.fire({
+            text: 'Не удалось найти сотрудника. Возможно он был удален',
+            type: 'error',
+            toast: true,
+            position: 'top-end',
+            background: '#f2c7c7',
+            showConfirmButton: false,
+            timer: 3000
+          });
+
+          _this2.$router.push({
+            path: '/employees'
+          });
+        } else {
+          _this2.employee = response.data;
+        }
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2581,7 +2645,7 @@ __webpack_require__.r(__webpack_exports__);
 
               _this3.fetch();
             } else if (response.data.doesNotExist === true) {
-              Swal.fire('Ошибка!', 'Не удалось удалить. Попробуйте обновить страницу', 'error');
+              Swal.fire('Ошибка!', 'Не удалось удалить. Возможно он уже был удален', 'error');
             }
           })["catch"](function (error) {
             Swal.fire('Ошибка!', '' + error, 'error');

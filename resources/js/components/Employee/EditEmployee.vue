@@ -87,6 +87,18 @@
             editEmployee(){
                 Axios.put('../../employee/' + this.employee.id ,this.employee)
                     .then((response) => {
+                        if (response.data.doesNotExist === true){
+                            Swal.fire({
+                                text: 'Не удалось найти сотрудника. Возможно он был удален',
+                                type: 'error',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#f2c7c7',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                            this.$router.push({path: '/employees'});
+                        } else {
                         Swal.fire({
                             text: 'Сотрудник успешно отредактирован',
                             type: 'success',
@@ -97,7 +109,7 @@
                             timer: 3000,
                         });
                         this.$router.push({path: '/employees'});
-
+                            }
                 })
                     .catch(error=>{
                         // clear error messages
@@ -125,7 +137,22 @@
             },
             fetch() {
                 Axios.get('../../employee/'+this.$route.params.id+'/edit')
-                    .then(response=>this.employee=response.data)
+                    .then(response=>{
+                        if (response.data.doesNotExist === true){
+                            Swal.fire({
+                                text: 'Не удалось найти сотрудника. Возможно он был удален',
+                                type: 'error',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#f2c7c7',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                            this.$router.push({path: '/employees'});
+                        } else {
+                            this.employee=response.data
+                        }
+                    })
                     .catch(error=>console.log(error));
                 Axios.get('../../department')
                     .then(response=>this.departments=response.data)

@@ -46,20 +46,28 @@ class DepartmentController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $department = Department::findOrFail($id);
-        if($request->expectsJson()){
-            return response()->json($department);
-        }
+        try {
+            $department = Department::findOrFail($id);
+            if ($request->expectsJson()) {
+                return response()->json($department);
+            }
+        } catch (ModelNotFoundException $e) {
+                return response()->json(['doesNotExist' => true]);
+            }
        // return view('department.edit');
     }
 
 
     public function update(DepartmentRequest $request, $id)
     {
+        try{
         $department = Department::findOrFail($id);
         $department->name=$request->get('name');
         $department->save();
         return response()->json(['success'=>true]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json(['doesNotExist' => true]);
+        }
     }
 
 
@@ -67,14 +75,15 @@ class DepartmentController extends Controller
     {
         try {
             $department = Department::findOrFail($id);
+
+            if ($department->amount == 0) {
+                $department->delete();
+                return response()->json(['success' => true]);
+            } else  {
+                return response()->json(['amount' => true]);
+            }
         } catch (ModelNotFoundException $e) {
             return response()->json(['doesNotExist' => true]);
-        }
-        if ($department->amount == 0) {
-            $department->delete();
-            return response()->json(['success' => true]);
-        } else if ($department->amount > 0) {
-            return response()->json(['amount' => true]);
         }
     }
 }

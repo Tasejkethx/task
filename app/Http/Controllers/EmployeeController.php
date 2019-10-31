@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Department;
 use App\Employee;
 use App\Http\Requests\EmployeeRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -65,21 +66,24 @@ class EmployeeController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $mass=[];
-        $employee = Employee::findOrFail($id);
-        foreach(Employee::findOrFail($id)->departments()->get()as $item){
-            $mass[]=$item->pivot->department_id;
-        }
+        try {
+            $mass=[];
+            $employee = Employee::findOrFail($id);
 
-        $employee['department_id']= $mass;
-        if($request->expectsJson()){
+            foreach (Employee::findOrFail($id)->departments()->get() as $item) {
+                $mass[] = $item->pivot->department_id;
+            }
+            $employee['department_id'] = $mass;
             return response()->json($employee);
+        } catch (ModelNotFoundException $e){
+            return response()->json(['doesNotExist'=>true]);
         }
     }
 
 
     public function update(EmployeeRequest $request, $id)
     {
+        try{
         $employee = Employee::findOrFail($id);
         $employee->name=$request->get('name');
         $employee->surname=$request->get('surname');
@@ -98,11 +102,15 @@ class EmployeeController extends Controller
         self::set_department_after_edit($employee,$old_department_id);
 
         return response()->json(['success'=>true]);
+        } catch (ModelNotFoundException $e){
+            return response()->json(['doesNotExist'=>true]);
+        }
     }
 
 
     public function destroy($id)
     {
+        try{
         $employee= Employee::findOrFail($id);
 
         $department_id=[];
@@ -115,6 +123,10 @@ class EmployeeController extends Controller
         self::set_department_after_delete($tmp,$department_id);
 
         return response()->json(['success'=>true]);
+
+        } catch (ModelNotFoundException $e){
+            return response()->json(['doesNotExist'=>true]);
+        }
     }
 
        /// Update department table after create/edit/delete action
