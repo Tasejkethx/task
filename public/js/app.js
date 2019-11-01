@@ -2156,7 +2156,20 @@ __webpack_require__.r(__webpack_exports__);
 
       this.loadSpinner = true;
       Axios.get('../department').then(function (response) {
-        _this.departments = response.data;
+        if (response.data.doesNotExist === true) {
+          Swal.fire({
+            text: 'Не удалось найти отделы.',
+            type: 'error',
+            toast: true,
+            position: 'top-end',
+            background: '#f2c7c7',
+            showConfirmButton: false,
+            timer: 3000
+          });
+        } else {
+          _this.departments = response.data;
+        }
+
         _this.loadSpinner = false;
       })["catch"](function (error) {
         return console.log(error);
@@ -2672,7 +2685,7 @@ __webpack_require__.r(__webpack_exports__);
       Axios.get('../department').then(function (response) {
         if (response.data.doesNotExist === true) {
           Swal.fire({
-            text: 'Не удалось найти отдел.',
+            text: 'Не удалось найти отделы.',
             type: 'error',
             toast: true,
             position: 'top-end',
@@ -40894,28 +40907,30 @@ var render = function() {
     { staticClass: "myclass" },
     [
       _vm.loadSpinner
-        ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
+        ? _c("i", { staticClass: "flex-center fa fa-spin fa-spinner" })
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "row " },
-        [
-          _c("div", { staticClass: "col py-2 px-lg-2 border" }),
-          _vm._v(" "),
-          _vm._l(_vm.departments, function(department) {
-            return _c(
-              "div",
-              {
-                key: department.id,
-                staticClass: "col py-2 px-lg-2 border text-center"
-              },
-              [_vm._v(" " + _vm._s(department.name) + " ")]
-            )
-          })
-        ],
-        2
-      ),
+      _vm.departments.length
+        ? _c(
+            "div",
+            { staticClass: "row " },
+            [
+              _c("div", { staticClass: "col py-2 px-lg-2 border" }),
+              _vm._v(" "),
+              _vm._l(_vm.departments, function(department) {
+                return _c(
+                  "div",
+                  {
+                    key: department.id,
+                    staticClass: "col py-2 px-lg-2 border text-center"
+                  },
+                  [_vm._v(" " + _vm._s(department.name) + " ")]
+                )
+              })
+            ],
+            2
+          )
+        : _vm._e(),
       _vm._v(" "),
       _vm._l(_vm.employees.data, function(employee) {
         return _c(

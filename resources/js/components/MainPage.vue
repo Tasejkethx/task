@@ -1,7 +1,7 @@
 <template>
     <div class="myclass">
-        <i v-if="loadSpinner" class="fa fa-spin fa-spinner"></i>
-            <div class="row " >
+        <i v-if="loadSpinner" class="flex-center fa fa-spin fa-spinner"></i>
+            <div class="row "  v-if="departments.length">
                 <div class="col py-2 px-lg-2 border">  </div>
                 <div class="col py-2 px-lg-2 border text-center" v-for="department in departments" :key="department.id"> {{department.name}} </div>
             </div>

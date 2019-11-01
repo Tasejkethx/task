@@ -80,7 +80,7 @@
                     .then(response => {
                         if (response.data.doesNotExist===true){
                             Swal.fire({
-                                text: 'Не удалось найти отдел.',
+                                text: 'Не удалось найти отделы.',
                                 type: 'error',
                                 toast: true,
                                 position: 'top-end',

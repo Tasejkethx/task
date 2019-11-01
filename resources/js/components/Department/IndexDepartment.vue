@@ -46,8 +46,21 @@
             fetch() {
                 this.loadSpinner = true;
                 Axios.get('../department')
-                    .then(response => {
-                        this.departments = response.data;
+                    .then(response =>  {
+                        if (response.data.doesNotExist===true){
+                            Swal.fire({
+                                text: 'Не удалось найти отделы.',
+                                type: 'error',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#f2c7c7',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                        }
+                        else{
+                            this.departments = response.data
+                        }
                         this.loadSpinner = false;
                     })
                     .catch(error => console.log(error));
