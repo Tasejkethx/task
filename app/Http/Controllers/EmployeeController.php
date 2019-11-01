@@ -13,7 +13,7 @@ class EmployeeController extends Controller
 
     public function index(Request $request)
     {
-        $employees = Employee::all();
+        $employees = Employee::paginate(5);
         $department_ids=[];
         $department_names=[];
         foreach ($employees as & $employee){

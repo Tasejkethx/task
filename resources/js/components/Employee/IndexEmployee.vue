@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="employee in employees" :key="employee.id">
+                    <tr v-for="employee in employees.data" :key="employee.id">
                         <td>{{employee.id}} </td>
                         <td>{{employee.name}} </td>
                         <td>{{employee.surname}} </td>
@@ -34,6 +34,10 @@
                     </tr>
                 </tbody>
             </table>
+
+            <div class = 'mt-3 flex-center'>
+                <pagination :data="employees" @pagination-change-page="nextPageEmployees" ></pagination>
+            </div>
         </div>
     </div>
 </template>
@@ -43,7 +47,6 @@
         data(){
             return {
                 employees:{},
-                delstatus:{},
                 departments:{},
             }
         },
@@ -57,7 +60,13 @@
                     .catch(error => console.log(error));
                 Axios.get('../department')
                     .then(response => this.departments = response.data)
-                    .catch(error => consoloe.log(error));
+                    .catch(error => console.log(error));
+            },
+            nextPageEmployees(page = 1) {
+                Axios.get('../employee?page=' + page)
+                    .then(response => {
+                        this.employees = response.data;
+                    });
             },
             confirmDelete(id) {
                 Swal.fire({
@@ -73,7 +82,6 @@
                     if (result.value) {
                         Axios.delete('../employee/' + id)
                             .then((response) => {
-                                console.log(response.data);
                                 if (response.data.success === true) {
                                     Swal.fire(
                                         'Удалено!',
@@ -103,5 +111,9 @@
 </script>
 
 <style scoped>
-
+    .flex-center {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
 </style>
