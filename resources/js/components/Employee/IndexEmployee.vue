@@ -56,16 +56,59 @@
         methods: {
             fetch() {
                 Axios.get('../employee')
-                    .then(response => this.employees = response.data)
+                    .then(response => {
+                        if (response.data.doesNotExist===true){
+                            Swal.fire({
+                                text: 'Не удалось найти сотрудников.',
+                                type: 'error',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#f2c7c7',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                        }
+                        else{
+                            this.employees = response.data
+                        }
+                    })
                     .catch(error => console.log(error));
                 Axios.get('../department')
-                    .then(response => this.departments = response.data)
+                    .then(response => {
+                        if (response.data.doesNotExist===true){
+                            Swal.fire({
+                                text: 'Не удалось найти отдел.',
+                                type: 'error',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#f2c7c7',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                        }
+                        else{
+                            this.departments = response.data
+                        }
+                    })
                     .catch(error => console.log(error));
             },
             nextPageEmployees(page = 1) {
                 Axios.get('../employee?page=' + page)
                     .then(response => {
-                        this.employees = response.data;
+                        if (response.data.doesNotExist === true) {
+                            Swal.fire({
+                                text: 'Не удалось найти сотрудников.',
+                                type: 'error',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#f2c7c7',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                        }
+                        else {
+                            this.employees = response.data
+                        }
                     });
             },
             confirmDelete(id) {
@@ -88,7 +131,8 @@
                                         "Сотрудник был удален",
                                         'success');
                                     this.fetch();
-                                } else if (response.data.doesNotExist === true) {
+                                }
+                                else if (response.data.doesNotExist === true) {
                                     Swal.fire(
                                         'Ошибка!',
                                         'Не удалось удалить. Возможно он уже был удален',

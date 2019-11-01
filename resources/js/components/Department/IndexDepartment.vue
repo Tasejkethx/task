@@ -33,26 +33,26 @@
 
 <script>
     export default {
-        data(){
+        data() {
             return {
-                departments:{},
-                delstatus:{},
+                departments: {},
+                delstatus: {},
 
             }
         },
         mounted() {
             this.fetch();
         },
-        methods:{
-            fetch(){
+        methods: {
+            fetch() {
                 Axios.get('../department')
-                    .then(response=>this.departments=response.data)
+                    .then(response => this.departments = response.data)
                     .catch(error => console.log(error));
             },
-            confirmDelete(id,name){
+            confirmDelete(id, name) {
                 Swal.fire({
                     title: 'Вы уверены?',
-                    text: "Подтвердите удаление " + "'"+ name +"'",
+                    text: "Подтвердите удаление " + "'" + name + "'",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',

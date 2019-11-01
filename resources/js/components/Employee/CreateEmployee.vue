@@ -70,60 +70,73 @@
         methods:{
             delete_error_message(className){
                 const formControls= document.getElementById(className);
-                if(formControls.classList.length > 1){
-                    formControls.classList.forEach((element)=>{
-                        if (element === 'border-danger'){
-                            formControls.classList.remove('border','border-danger');
+                if(formControls.classList.length > 1) {
+                    formControls.classList.forEach((element) => {
+                        if (element === 'border-danger') {
+                            formControls.classList.remove('border', 'border-danger');
                         }
                     });
                 }
                 const errorMessages = document.getElementById(className+'-error');
-                if (errorMessages){
+                if (errorMessages) {
                     errorMessages.textContent = '';
                 }
             },
             create(){
                 Axios.post('../employee' , this.employee)
                     .then((response) => {
-                        Swal.fire({
-                            text: 'Сотрудник успешно добавлен',
-                            type: 'success',
-                            toast: true,
-                            position: 'top-end',
-                            background: '#e4ede6',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                        this.$router.push({path: '/employees'});
+                        if (response.data.success === true) {
+                            Swal.fire({
+                                text: 'Сотрудник успешно добавлен',
+                                type: 'success',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#e4ede6',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                            this.$router.push({path: '/employees'});
+                        }
+                        else if (response.data.doesNotExist === true) {
+                            Swal.fire({
+                                text: 'Не удалось создать сорудника. Возможно был удален отдел',
+                                type: 'error',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#e4ede6',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                        }
                     })
-                    .catch(error=>{
+                    .catch(error=> {
                         // clear error messages
                         const errorMessages = document.querySelectorAll('.text-danger');
                         errorMessages.forEach((el) => el.textContent = '');
 
-                        const formControls= document.querySelectorAll('.form-control');
-                        formControls.forEach((elem)=>elem.classList.remove('border','border-danger'));
+                        const formControls = document.querySelectorAll('.form-control');
+                        formControls.forEach((elem) => elem.classList.remove('border', 'border-danger'));
 
                         // show error messages
                         const errors = error.response.data.errors;
-                        Object.keys(errors).forEach((element)=>{
-                            const firstItemDOM =document.getElementById(element);
+                        Object.keys(errors).forEach((element) => {
+                            const firstItemDOM = document.getElementById(element);
                             const firstErrorMessage = errors[element][0];
 
                             const div = document.createElement('div');
                             div.className = "text-danger";
-                            div.id= firstItemDOM.id+'-error';
-                            div.innerHTML = ""+firstErrorMessage;
+                            div.id = firstItemDOM.id + '-error';
+                            div.innerHTML = "" + firstErrorMessage;
 
                             firstItemDOM.insertAdjacentElement("afterend", div);
-                            firstItemDOM.classList.add('border','border-danger');
+                            firstItemDOM.classList.add('border', 'border-danger');
                         });
                     });
             },
             fetch(){
                 Axios.get('../department')
                     .then(response=>{
-                        this.departments=response.data
+                        this.departments=response.data;
                         if (!this.departments.length) {
                             Swal.fire({
                                 title: 'Предупреждение',

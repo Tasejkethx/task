@@ -31,22 +31,22 @@
         methods:{
             delete_error_message(className){
                 const formControls= document.getElementById(className);
-                if(formControls.classList.length > 1){
-                    formControls.classList.forEach((element)=>{
-                        if (element === 'border-danger'){
-                            formControls.classList.remove('border','border-danger');
+                if(formControls.classList.length > 1) {
+                    formControls.classList.forEach((element) => {
+                        if (element === 'border-danger') {
+                            formControls.classList.remove('border', 'border-danger');
                         }
                     });
                 }
                 const errorMessages = document.getElementById(className+'-error');
-                if (errorMessages){
+                if (errorMessages) {
                     errorMessages.textContent = '';
                 }
             },
             editDepartment(){
                 Axios.put('../../department/' + this.department.id ,this.department)
                     .then((response) => {
-                        if (response.data.doesNotExist === true){
+                        if (response.data.doesNotExist === true) {
                             Swal.fire({
                                 text: 'Не удалось найти отдел. Возможно он был удален',
                                 type: 'error',
@@ -57,7 +57,8 @@
                                 timer: 3000,
                             });
                             this.$router.push({path: '/departments'});
-                        } else {
+                        }
+                        else {
                             Swal.fire({
                                 text: 'Отдел успешно отредактирован',
                                 type: 'success',
@@ -97,7 +98,18 @@
             fetch() {
                 Axios.get('../../department/'+this.$route.params.id+'/edit')
                     .then(response=>{
-                        if (response.data.doesNotExist === true){
+                        if (response.data.departmentDoestNotExist===true) {
+                            Swal.fire({
+                                text: 'Возможно выбранный отдел был удален. Обновите страницу',
+                                type: 'error',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#f2c7c7',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                        }
+                        if (response.data.doesNotExist === true) {
                             Swal.fire({
                                 text: 'Не удалось найти отдел. Возможно он был удален',
                                 type: 'error',
@@ -108,7 +120,8 @@
                                 timer: 3000,
                             });
                             this.$router.push({path: '/departments'});
-                        } else {
+                        }
+                        else {
                             this.department=response.data
                         }
                     })

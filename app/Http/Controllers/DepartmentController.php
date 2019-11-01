@@ -12,9 +12,13 @@ class DepartmentController extends Controller
 
     public function index(Request $request)
     {
+        try{
         $departments= Department::all();
         if($request->expectsJson()){
             return response()->json($departments);
+        }
+        } catch (\Exception $e){
+            return response()->json(['doesNotExist'=>true]);
         }
     }
 
@@ -27,11 +31,15 @@ class DepartmentController extends Controller
 
     public function store(DepartmentRequest $request)
     {
+        try{
         $department = new Department([
             'name'=>$request->get('name'),
         ]);
         $department->save();
         return response()->json(['success'=>true]);
+        } catch (\Exception $e){
+            return response()->json(['doesNotExist'=>true]);
+        }
     }
 
 

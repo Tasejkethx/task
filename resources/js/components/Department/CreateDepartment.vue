@@ -30,31 +30,44 @@
         methods:{
             delete_error_message(className){
                 const formControls= document.getElementById(className);
-                if(formControls.classList.length > 1){
-                    formControls.classList.forEach((element)=>{
-                        if (element === 'border-danger'){
-                            formControls.classList.remove('border','border-danger');
+                if(formControls.classList.length > 1) {
+                    formControls.classList.forEach((element) => {
+                        if (element === 'border-danger') {
+                            formControls.classList.remove('border', 'border-danger');
                         }
                     });
                 }
                 const errorMessages = document.getElementById(className+'-error');
-                if (errorMessages){
+                if (errorMessages) {
                     errorMessages.textContent = '';
                 }
             },
             create(){
                 axios.post('../department' ,this.department)
                     .then((response) => {
-                        Swal.fire({
-                            text: 'Отдел успешно добавлен',
-                            type: 'success',
-                            toast: true,
-                            position: 'top-end',
-                            background: '#e4ede6',
-                            showConfirmButton: false,
-                            timer: 3000,
-                        });
-                        this.$router.push({path: '/departments'});
+                        if (response.data.success===true) {
+                            Swal.fire({
+                                text: 'Отдел успешно добавлен',
+                                type: 'success',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#e4ede6',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                            this.$router.push({path: '/departments'});
+                        }
+                        else if (response.data.exception===true) {
+                            Swal.fire({
+                                text: 'Не удалось создать сотрудника.',
+                                type: 'error',
+                                toast: true,
+                                position: 'top-end',
+                                background: '#e4ede6',
+                                showConfirmButton: false,
+                                timer: 3000,
+                            });
+                        }
                 })
                     .catch(error=>{
                         // clear error messages
