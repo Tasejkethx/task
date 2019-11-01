@@ -9,7 +9,7 @@
                     <label for="name" class="font-weight-bold"> Название отдела </label> <br/>
                     <input type="text" class="form-control" id="name" name='name' @input="delete_error_message('name')" v-model="department.name" >
                 </div>
-                <button type='submit' class="btn btn-primary mt-3"> Редактировать </button> <br/>
+                <button type='submit' class="btn btn-primary mt-3" :disabled="loadSpinner"> <i v-if="loadSpinner" class="fa fa-spin fa-spinner"></i> Редактировать </button> <br/>
             </form>
         </div>
     </div>
@@ -23,6 +23,7 @@
                     id:null,
                     name:'',
                 },
+                loadSpinner: false,
             }
         },
         mounted() {
@@ -96,6 +97,7 @@
                     });
             },
             fetch() {
+                this.loadSpinner = true;
                 Axios.get('../../department/'+this.$route.params.id+'/edit')
                     .then(response=>{
                         if (response.data.departmentDoestNotExist===true) {
@@ -122,10 +124,12 @@
                             this.$router.push({path: '/departments'});
                         }
                         else {
-                            this.department=response.data
+                            this.department=response.data;
+                            this.loadSpinner = false;
                         }
                     })
                     .catch(error=>console.log(error));
+
             },
         },
     }

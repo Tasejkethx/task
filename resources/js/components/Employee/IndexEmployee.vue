@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <router-link to="/employees/create" class="btn btn-dark mb-5" ><i class="fas fa-plus"></i> Добавить сотрудника</router-link>
+        <router-link to="/employees/create" class="btn btn-dark mb-5" :disable="loadSpinner">  <i v-if="loadSpinner" class="fa fa-spin fa-spinner"></i> <i v-else class="fas fa-plus"></i> Добавить сотрудника</router-link>
         <div class="table-responsive" id="success_message">
             <table class="table table-striped table-sm">
                 <thead>
@@ -48,6 +48,7 @@
             return {
                 employees:{},
                 departments:{},
+                loadSpinner: false,
             }
         },
         mounted() {
@@ -55,6 +56,7 @@
         },
         methods: {
             fetch() {
+                this.loadSpinner = true;
                 Axios.get('../employee')
                     .then(response => {
                         if (response.data.doesNotExist===true){
@@ -71,6 +73,7 @@
                         else{
                             this.employees = response.data
                         }
+                        this.loadSpinner = false;
                     })
                     .catch(error => console.log(error));
                 Axios.get('../department')
@@ -91,8 +94,10 @@
                         }
                     })
                     .catch(error => console.log(error));
+
             },
             nextPageEmployees(page = 1) {
+                this.loadSpinner = true;
                 Axios.get('../employee?page=' + page)
                     .then(response => {
                         if (response.data.doesNotExist === true) {
@@ -110,6 +115,7 @@
                             this.employees = response.data
                         }
                     });
+                this.loadSpinner = false;
             },
             confirmDelete(id) {
                 Swal.fire({

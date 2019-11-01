@@ -41,7 +41,7 @@
                     </div>
                     <span class="mb-2 mt-2" id="department_id" ></span>
                 </div>
-                <button type='submit' class="btn btn-primary mt-3 mr-2"> Редактировать </button>
+                <button type='submit' class="btn btn-primary mt-3 mr-2" :disabled="loadSpinner"> <i v-if="loadSpinner" class="fa fa-spin fa-spinner"></i> Редактировать </button>
             </form>
         </div>
     </div>
@@ -61,6 +61,7 @@
                     department_id:[],
                 },
                 departments:{},
+                loadSpinner: false,
             }
         },
         mounted() {
@@ -144,6 +145,7 @@
                     });
             },
             fetch() {
+                this.loadSpinner = true;
                 Axios.get('../../employee/'+this.$route.params.id+'/edit')
                     .then(response=>{
                         if (response.data.doesNotExist === true){
@@ -158,7 +160,8 @@
                             });
                             this.$router.push({path: '/employees'});
                         } else {
-                            this.employee=response.data
+                            this.employee=response.data;
+                            this.loadSpinner = false;;
                         }
                     })
                     .catch(error=>console.log(error));

@@ -1,6 +1,6 @@
 <template>
     <div class="myclass">
-
+        <i v-if="loadSpinner" class="fa fa-spin fa-spinner"></i>
             <div class="row " >
                 <div class="col py-2 px-lg-2 border">  </div>
                 <div class="col py-2 px-lg-2 border text-center" v-for="department in departments" :key="department.id"> {{department.name}} </div>
@@ -26,6 +26,7 @@
             return{
                 employees:{},
                 departments:{},
+                loadSpinner: false,
             }
         },
         mounted() {
@@ -33,6 +34,7 @@
         },
         methods: {
             fetch() {
+                this.loadSpinner = true;
                 Axios.get('../department')
                     .then((response) => {
                         if (response.data.doesNotExist===true){
@@ -67,6 +69,7 @@
                         else {
                             this.employees = response.data
                         }
+                        this.loadSpinner=false;
                     })
                     .catch(error => console.log(error));
             },
@@ -83,10 +86,10 @@
                                 showConfirmButton: false,
                                 timer: 3000,
                             });
-                        } else {
+                        }
+                        else {
                             this.employees = response.data
                         }
-
                     });
             },
         },

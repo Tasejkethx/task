@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <router-link to = "/departments/create" class="btn btn-dark mb-5" ><i class="fas fa-plus"></i> Добавить отдел</router-link>
+        <router-link to = "/departments/create" class="btn btn-dark mb-5" :disabled="loadSpinner"> <i v-if="loadSpinner" class="fa fa-spin fa-spinner"></i> <i  v-else class="fas fa-plus"></i> Добавить отдел</router-link>
         <div class="table-responsive">
             <table class="table table-striped table-sm">
                 <thead>
@@ -36,8 +36,7 @@
         data() {
             return {
                 departments: {},
-                delstatus: {},
-
+                loadSpinner: false,
             }
         },
         mounted() {
@@ -45,9 +44,14 @@
         },
         methods: {
             fetch() {
+                this.loadSpinner = true;
                 Axios.get('../department')
-                    .then(response => this.departments = response.data)
+                    .then(response => {
+                        this.departments = response.data;
+                        this.loadSpinner = false;
+                    })
                     .catch(error => console.log(error));
+
             },
             confirmDelete(id, name) {
                 Swal.fire({
@@ -91,7 +95,7 @@
                                 );
                             });
                     }
-                })
+                });
             },
         }
     }

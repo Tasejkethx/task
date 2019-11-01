@@ -1972,7 +1972,8 @@ __webpack_require__.r(__webpack_exports__);
       department: {
         id: null,
         name: ''
-      }
+      },
+      loadSpinner: false
     };
   },
   mounted: function mounted() {
@@ -2056,6 +2057,7 @@ __webpack_require__.r(__webpack_exports__);
     fetch: function fetch() {
       var _this2 = this;
 
+      this.loadSpinner = true;
       Axios.get('../../department/' + this.$route.params.id + '/edit').then(function (response) {
         if (response.data.departmentDoestNotExist === true) {
           Swal.fire({
@@ -2085,6 +2087,7 @@ __webpack_require__.r(__webpack_exports__);
           });
         } else {
           _this2.department = response.data;
+          _this2.loadSpinner = false;
         }
       })["catch"](function (error) {
         return console.log(error);
@@ -2141,7 +2144,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       departments: {},
-      delstatus: {}
+      loadSpinner: false
     };
   },
   mounted: function mounted() {
@@ -2151,8 +2154,10 @@ __webpack_require__.r(__webpack_exports__);
     fetch: function fetch() {
       var _this = this;
 
+      this.loadSpinner = true;
       Axios.get('../department').then(function (response) {
-        return _this.departments = response.data;
+        _this.departments = response.data;
+        _this.loadSpinner = false;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2265,7 +2270,8 @@ __webpack_require__.r(__webpack_exports__);
         salary: null,
         department_id: []
       },
-      departments: {}
+      departments: {},
+      loadSpinner: false
     };
   },
   mounted: function mounted() {
@@ -2345,6 +2351,7 @@ __webpack_require__.r(__webpack_exports__);
     fetch: function fetch() {
       var _this2 = this;
 
+      this.loadSpinner = true;
       Axios.get('../department').then(function (response) {
         _this2.departments = response.data;
 
@@ -2361,6 +2368,8 @@ __webpack_require__.r(__webpack_exports__);
             });
           });
         }
+
+        _this2.loadSpinner = false;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2440,7 +2449,8 @@ __webpack_require__.r(__webpack_exports__);
         salary: null,
         department_id: []
       },
-      departments: {}
+      departments: {},
+      loadSpinner: false
     };
   },
   mounted: function mounted() {
@@ -2536,6 +2546,7 @@ __webpack_require__.r(__webpack_exports__);
     fetch: function fetch() {
       var _this2 = this;
 
+      this.loadSpinner = true;
       Axios.get('../../employee/' + this.$route.params.id + '/edit').then(function (response) {
         if (response.data.doesNotExist === true) {
           Swal.fire({
@@ -2553,6 +2564,8 @@ __webpack_require__.r(__webpack_exports__);
           });
         } else {
           _this2.employee = response.data;
+          _this2.loadSpinner = false;
+          ;
         }
       })["catch"](function (error) {
         return console.log(error);
@@ -2625,7 +2638,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       employees: {},
-      departments: {}
+      departments: {},
+      loadSpinner: false
     };
   },
   mounted: function mounted() {
@@ -2635,6 +2649,7 @@ __webpack_require__.r(__webpack_exports__);
     fetch: function fetch() {
       var _this = this;
 
+      this.loadSpinner = true;
       Axios.get('../employee').then(function (response) {
         if (response.data.doesNotExist === true) {
           Swal.fire({
@@ -2649,6 +2664,8 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           _this.employees = response.data;
         }
+
+        _this.loadSpinner = false;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2674,6 +2691,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.loadSpinner = true;
       Axios.get('../employee?page=' + page).then(function (response) {
         if (response.data.doesNotExist === true) {
           Swal.fire({
@@ -2689,6 +2707,7 @@ __webpack_require__.r(__webpack_exports__);
           _this2.employees = response.data;
         }
       });
+      this.loadSpinner = false;
     },
     confirmDelete: function confirmDelete(id) {
       var _this3 = this;
@@ -2758,7 +2777,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       employees: {},
-      departments: {}
+      departments: {},
+      loadSpinner: false
     };
   },
   mounted: function mounted() {
@@ -2768,6 +2788,7 @@ __webpack_require__.r(__webpack_exports__);
     fetch: function fetch() {
       var _this = this;
 
+      this.loadSpinner = true;
       Axios.get('../department').then(function (response) {
         if (response.data.doesNotExist === true) {
           Swal.fire({
@@ -2799,6 +2820,8 @@ __webpack_require__.r(__webpack_exports__);
         } else {
           _this.employees = response.data;
         }
+
+        _this.loadSpinner = false;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -39780,8 +39803,16 @@ var render = function() {
           _vm._v(" "),
           _c(
             "button",
-            { staticClass: "btn btn-primary mt-3", attrs: { type: "submit" } },
-            [_vm._v(" Редактировать ")]
+            {
+              staticClass: "btn btn-primary mt-3",
+              attrs: { type: "submit", disabled: _vm.loadSpinner }
+            },
+            [
+              _vm.loadSpinner
+                ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
+                : _vm._e(),
+              _vm._v(" Редактировать ")
+            ]
           ),
           _vm._v(" "),
           _c("br")
@@ -39829,9 +39860,14 @@ var render = function() {
         "router-link",
         {
           staticClass: "btn btn-dark mb-5",
-          attrs: { to: "/departments/create" }
+          attrs: { to: "/departments/create", disabled: _vm.loadSpinner }
         },
-        [_c("i", { staticClass: "fas fa-plus" }), _vm._v(" Добавить отдел")]
+        [
+          _vm.loadSpinner
+            ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
+            : _c("i", { staticClass: "fas fa-plus" }),
+          _vm._v(" Добавить отдел")
+        ]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "table-responsive" }, [
@@ -40278,9 +40314,14 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-primary mt-3 mr-2",
-              attrs: { type: "submit" }
+              attrs: { type: "submit", disabled: _vm.loadSpinner }
             },
-            [_vm._v(" Создать ")]
+            [
+              _vm.loadSpinner
+                ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
+                : _vm._e(),
+              _vm._v(" Создать ")
+            ]
           )
         ]
       )
@@ -40653,9 +40694,14 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-primary mt-3 mr-2",
-              attrs: { type: "submit" }
+              attrs: { type: "submit", disabled: _vm.loadSpinner }
             },
-            [_vm._v(" Редактировать ")]
+            [
+              _vm.loadSpinner
+                ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
+                : _vm._e(),
+              _vm._v(" Редактировать ")
+            ]
           )
         ]
       )
@@ -40701,10 +40747,12 @@ var render = function() {
         "router-link",
         {
           staticClass: "btn btn-dark mb-5",
-          attrs: { to: "/employees/create" }
+          attrs: { to: "/employees/create", disable: _vm.loadSpinner }
         },
         [
-          _c("i", { staticClass: "fas fa-plus" }),
+          _vm.loadSpinner
+            ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
+            : _c("i", { staticClass: "fas fa-plus" }),
           _vm._v(" Добавить сотрудника")
         ]
       ),
@@ -40845,6 +40893,10 @@ var render = function() {
     "div",
     { staticClass: "myclass" },
     [
+      _vm.loadSpinner
+        ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "div",
         { staticClass: "row " },
