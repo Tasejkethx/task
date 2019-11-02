@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmployeeRequest extends FormRequest
+class   EmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,11 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|string|max:30',
-            'surname'=>'required|string|max:30',
-            'patronymic'=>'required|string|max:30',
+            'name'=>'required|alpha|max:30',
+            'surname'=>'required|alpha|max:30',
+            'patronymic'=>'required|alpha|max:30',
             'sex' =>'required|in:male,female',
-            'salary'=>'required|numeric',
+            'salary'=>'required|numeric|max:10',
             'department_id'=>'required',
         ];
     }
@@ -38,17 +38,18 @@ class EmployeeRequest extends FormRequest
         return [
             'name.required'=>'Введите имя',
             'name.max'=>'Слишком длинное имя',
-            'name.string'=>'Имя может содержать только буквы',
+            'name.alpha'=>'Имя может содержать только буквы',
             'surname.required'=>'Введите фамилию',
             'surname.max'=>'Слишком длинная фамилия',
-            'surname.string'=>'Фамилия может содержать только буквы',
+            'surname.alpha'=>'Фамилия может содержать только буквы',
             'patronymic.required'=>'Введите отчество',
             'patronymic.max'=>'Слишком длинное отчетсво',
-            'patronymic.string'=>'Отчество может содержать только буквы',
+            'patronymic.alpha'=>'Отчество может содержать только буквы',
             'sex.required'=>'Укажите ваш пол',
             'salary.required'=>'Введите заработную плату',
             'department_id.required'=>'Укажите отделения в которых работает сотрудник',
             'salary.numeric'=>'Введите число',
+            'salary.max'=>'Ты столько не зарабатываешь)',
         ];
     }
 }

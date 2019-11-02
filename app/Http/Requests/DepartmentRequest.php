@@ -24,7 +24,7 @@ class DepartmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|unique:departments',
+            'name'=>'required|unique:departments|max:50',
         ];
     }
 
@@ -33,6 +33,7 @@ class DepartmentRequest extends FormRequest
         return [
             'name.required'=>'Введите название отдела',
             'name.unique'=>'Такой отдел уже есть',
+            'name.max'=>'Слишком длинное название отдела',
         ];
     }
 }
