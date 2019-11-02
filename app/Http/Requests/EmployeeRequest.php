@@ -28,7 +28,7 @@ class   EmployeeRequest extends FormRequest
             'surname'=>'required|alpha|max:30',
             'patronymic'=>'required|alpha|max:30',
             'sex' =>'required|in:male,female',
-            'salary'=>'required|numeric|max:10',
+            'salary'=>'required|numeric|min:0|max:9999999',
             'department_id'=>'required',
         ];
     }
@@ -50,6 +50,7 @@ class   EmployeeRequest extends FormRequest
             'department_id.required'=>'Укажите отделения в которых работает сотрудник',
             'salary.numeric'=>'Введите число',
             'salary.max'=>'Ты столько не зарабатываешь)',
+            'salary.min'=>'Введите число больше 0',
         ];
     }
 }
