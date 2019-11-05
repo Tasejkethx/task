@@ -1,15 +1,7 @@
 
  `git clone`
 - configure your db connection in the .env file
-example
-```
-DB_CONNECTION=mysql
-DB_HOST=db
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=root
-DB_PASSWORD=root
-```
+
  `composer install`
  `php artisan key:generate`
  
@@ -37,6 +29,7 @@ docker:
 Spinner при загрузке данных;
 Пагинация;
 Требования из тз;
+Затраченное время: ~10ч;
 Выгружен проект на хостинг http://nipplees8.parkingby.icu
 
 
