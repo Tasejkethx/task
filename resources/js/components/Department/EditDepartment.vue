@@ -16,6 +16,7 @@
 </template>
 
 <script>
+    import SwalAlerts from "../../Swal";
     export default {
         data(){
             return{
@@ -48,27 +49,11 @@
                 Axios.put('../../department/' + this.department.id ,this.department)
                     .then((response) => {
                         if (response.data.doesNotExist === true) {
-                            Swal.fire({
-                                text: 'Не удалось найти отдел. Возможно он был удален',
-                                type: 'error',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#f2c7c7',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                          SwalAlerts.departmentNotFound();
                             this.$router.push({path: '/departments'});
                         }
                         else {
-                            Swal.fire({
-                                text: 'Отдел успешно отредактирован',
-                                type: 'success',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#e4ede6',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                           SwalAlerts.departmentSuccessUpdated();
                             this.$router.push({path: '/departments'});
                         }
                     })
@@ -101,26 +86,10 @@
                 Axios.get('../../department/'+this.$route.params.id+'/edit')
                     .then(response=>{
                         if (response.data.departmentDoestNotExist===true) {
-                            Swal.fire({
-                                text: 'Возможно выбранный отдел был удален. Обновите страницу',
-                                type: 'error',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#f2c7c7',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                            SwalAlerts.departmentNotFound();
                         }
                         if (response.data.doesNotExist === true) {
-                            Swal.fire({
-                                text: 'Не удалось найти отдел. Возможно он был удален',
-                                type: 'error',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#f2c7c7',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                           SwalAlerts.departmentNotFound();
                             this.$router.push({path: '/departments'});
                         }
                         else {

@@ -43,6 +43,7 @@
 </template>
 
 <script>
+    import SwalAlerts from "../../Swal";
     export default {
         data(){
             return {
@@ -60,17 +61,9 @@
                 Axios.get('../employee')
                     .then(response => {
                         if (response.data.doesNotExist===true){
-                            Swal.fire({
-                                text: 'Не удалось найти сотрудников.',
-                                type: 'error',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#f2c7c7',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                          SwalAlerts.errorMessage();
                         }
-                        else{
+                        else {
                             this.employees = response.data
                         }
                         this.loadSpinner = false;
@@ -79,17 +72,9 @@
                 Axios.get('../department')
                     .then(response => {
                         if (response.data.doesNotExist===true){
-                            Swal.fire({
-                                text: 'Не удалось найти отделы.',
-                                type: 'error',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#f2c7c7',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                            SwalAlerts.errorMessage();
                         }
-                        else{
+                        else {
                             this.departments = response.data
                         }
                     })
@@ -101,15 +86,7 @@
                 Axios.get('../employee?page=' + page)
                     .then(response => {
                         if (response.data.doesNotExist === true) {
-                            Swal.fire({
-                                text: 'Не удалось найти сотрудников.',
-                                type: 'error',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#f2c7c7',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                            SwalAlerts.errorMessage();
                         }
                         else {
                             this.employees = response.data

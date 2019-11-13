@@ -32,6 +32,7 @@
 </template>
 
 <script>
+    import SwalAlerts from "../../Swal";
     export default {
         data() {
             return {
@@ -48,15 +49,7 @@
                 Axios.get('../department')
                     .then(response =>  {
                         if (response.data.doesNotExist===true){
-                            Swal.fire({
-                                text: 'Не удалось найти отделы.',
-                                type: 'error',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#f2c7c7',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                          SwalAlerts.errorMessage();
                         }
                         else{
                             this.departments = response.data

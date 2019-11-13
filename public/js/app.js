@@ -1838,6 +1838,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Swal */ "./resources/js/Swal.js");
 //
 //
 //
@@ -1855,6 +1856,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1887,29 +1889,13 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post('../department', this.department).then(function (response) {
         if (response.data.success === true) {
-          Swal.fire({
-            text: 'Отдел успешно добавлен',
-            type: 'success',
-            toast: true,
-            position: 'top-end',
-            background: '#e4ede6',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentSuccessAdded();
 
           _this.$router.push({
             path: '/departments'
           });
         } else if (response.data.exception === true) {
-          Swal.fire({
-            text: 'Не удалось создать сотрудника.',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#e4ede6',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
         }
       })["catch"](function (error) {
         // clear error messages
@@ -1949,6 +1935,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Swal */ "./resources/js/Swal.js");
 //
 //
 //
@@ -1966,6 +1953,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2002,29 +1990,13 @@ __webpack_require__.r(__webpack_exports__);
 
       Axios.put('../../department/' + this.department.id, this.department).then(function (response) {
         if (response.data.doesNotExist === true) {
-          Swal.fire({
-            text: 'Не удалось найти отдел. Возможно он был удален',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#f2c7c7',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentNotFound();
 
           _this.$router.push({
             path: '/departments'
           });
         } else {
-          Swal.fire({
-            text: 'Отдел успешно отредактирован',
-            type: 'success',
-            toast: true,
-            position: 'top-end',
-            background: '#e4ede6',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentSuccessUpdated();
 
           _this.$router.push({
             path: '/departments'
@@ -2060,27 +2032,11 @@ __webpack_require__.r(__webpack_exports__);
       this.loadSpinner = true;
       Axios.get('../../department/' + this.$route.params.id + '/edit').then(function (response) {
         if (response.data.departmentDoestNotExist === true) {
-          Swal.fire({
-            text: 'Возможно выбранный отдел был удален. Обновите страницу',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#f2c7c7',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentNotFound();
         }
 
         if (response.data.doesNotExist === true) {
-          Swal.fire({
-            text: 'Не удалось найти отдел. Возможно он был удален',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#f2c7c7',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentNotFound();
 
           _this2.$router.push({
             path: '/departments'
@@ -2107,6 +2063,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Swal */ "./resources/js/Swal.js");
 //
 //
 //
@@ -2140,6 +2097,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2157,15 +2115,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loadSpinner = true;
       Axios.get('../department').then(function (response) {
         if (response.data.doesNotExist === true) {
-          Swal.fire({
-            text: 'Не удалось найти отделы.',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#f2c7c7',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
         } else {
           _this.departments = response.data;
         }
@@ -2221,6 +2171,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Swal */ "./resources/js/Swal.js");
 //
 //
 //
@@ -2272,6 +2223,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2313,29 +2265,13 @@ __webpack_require__.r(__webpack_exports__);
 
       Axios.post('../employee', this.employee).then(function (response) {
         if (response.data.success === true) {
-          Swal.fire({
-            text: 'Сотрудник успешно добавлен',
-            type: 'success',
-            toast: true,
-            position: 'top-end',
-            background: '#e4ede6',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].employeeSuccessAdded();
 
           _this.$router.push({
             path: '/employees'
           });
         } else if (response.data.doesNotExist === true) {
-          Swal.fire({
-            text: 'Не удалось создать сорудника. Возможно был удален отдел',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#e4ede6',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].employeeFailAdded();
         }
       })["catch"](function (error) {
         // clear error messages
@@ -2401,6 +2337,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Swal */ "./resources/js/Swal.js");
 //
 //
 //
@@ -2450,6 +2387,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2492,41 +2430,17 @@ __webpack_require__.r(__webpack_exports__);
 
       Axios.put('../../employee/' + this.employee.id, this.employee).then(function (response) {
         if (response.data.departmentDoestNotExist === true) {
-          Swal.fire({
-            text: 'Не удалось найти отдел. Возможно он был удален',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#f2c7c7',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentNotFound();
         }
 
         if (response.data.doesNotExist === true) {
-          Swal.fire({
-            text: 'Не удалось найти сотрудника. Возможно он был удален',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#f2c7c7',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].employeeNotFound();
 
           _this.$router.push({
             path: '/employees'
           });
         } else if (response.data.success === true) {
-          Swal.fire({
-            text: 'Сотрудник успешно отредактирован',
-            type: 'success',
-            toast: true,
-            position: 'top-end',
-            background: '#e4ede6',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].employeeSuccessUpdated();
 
           _this.$router.push({
             path: '/employees'
@@ -2562,15 +2476,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loadSpinner = true;
       Axios.get('../../employee/' + this.$route.params.id + '/edit').then(function (response) {
         if (response.data.doesNotExist === true) {
-          Swal.fire({
-            text: 'Не удалось найти сотрудника. Возможно он был удален',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#f2c7c7',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].employeeNotFound();
 
           _this2.$router.push({
             path: '/employees'
@@ -2609,6 +2515,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Swal */ "./resources/js/Swal.js");
 //
 //
 //
@@ -2653,6 +2560,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2671,15 +2579,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loadSpinner = true;
       Axios.get('../employee').then(function (response) {
         if (response.data.doesNotExist === true) {
-          Swal.fire({
-            text: 'Не удалось найти сотрудников.',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#f2c7c7',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
         } else {
           _this.employees = response.data;
         }
@@ -2690,15 +2590,7 @@ __webpack_require__.r(__webpack_exports__);
       });
       Axios.get('../department').then(function (response) {
         if (response.data.doesNotExist === true) {
-          Swal.fire({
-            text: 'Не удалось найти отделы.',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#f2c7c7',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
         } else {
           _this.departments = response.data;
         }
@@ -2713,15 +2605,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loadSpinner = true;
       Axios.get('../employee?page=' + page).then(function (response) {
         if (response.data.doesNotExist === true) {
-          Swal.fire({
-            text: 'Не удалось найти сотрудников.',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#f2c7c7',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
         } else {
           _this2.employees = response.data;
         }
@@ -2777,6 +2661,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Swal */ "./resources/js/Swal.js");
 //
 //
 //
@@ -2799,6 +2684,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2817,15 +2703,7 @@ __webpack_require__.r(__webpack_exports__);
       this.loadSpinner = true;
       Axios.get('../department').then(function (response) {
         if (response.data.doesNotExist === true) {
-          Swal.fire({
-            text: 'Не удалось найти отдел.',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#f2c7c7',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
         } else {
           _this.departments = response.data;
         }
@@ -2834,15 +2712,7 @@ __webpack_require__.r(__webpack_exports__);
       });
       Axios.get('../employee').then(function (response) {
         if (response.data.doesNotExist === true) {
-          Swal.fire({
-            text: 'Не удалось найти сотрудников.',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#f2c7c7',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
         } else {
           _this.employees = response.data;
         }
@@ -2858,15 +2728,7 @@ __webpack_require__.r(__webpack_exports__);
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       Axios.get('../employee?page=' + page).then(function (response) {
         if (response.data.doesNotExist === true) {
-          Swal.fire({
-            text: 'Не удалось найти сотрудников.',
-            type: 'error',
-            toast: true,
-            position: 'top-end',
-            background: '#f2c7c7',
-            showConfirmButton: false,
-            timer: 3000
-          });
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
         } else {
           _this2.employees = response.data;
         }
@@ -40264,8 +40126,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.employee.departments.id,
-                                expression: "employee.departments.id"
+                                value: _vm.employee.department_id,
+                                expression: "employee.department_id"
                               }
                             ],
                             staticClass: "custom-control-input",
@@ -40276,21 +40138,19 @@ var render = function() {
                             },
                             domProps: {
                               value: department.id,
-                              checked: Array.isArray(
-                                _vm.employee.departments.id
-                              )
+                              checked: Array.isArray(_vm.employee.department_id)
                                 ? _vm._i(
-                                    _vm.employee.departments.id,
+                                    _vm.employee.department_id,
                                     department.id
                                   ) > -1
-                                : _vm.employee.departments.id
+                                : _vm.employee.department_id
                             },
                             on: {
                               click: function($event) {
                                 return _vm.delete_error_message("department_id")
                               },
                               change: function($event) {
-                                var $$a = _vm.employee.departments.id,
+                                var $$a = _vm.employee.department_id,
                                   $$el = $event.target,
                                   $$c = $$el.checked ? true : false
                                 if (Array.isArray($$a)) {
@@ -40299,22 +40159,22 @@ var render = function() {
                                   if ($$el.checked) {
                                     $$i < 0 &&
                                       _vm.$set(
-                                        _vm.employee.departments,
-                                        "id",
+                                        _vm.employee,
+                                        "department_id",
                                         $$a.concat([$$v])
                                       )
                                   } else {
                                     $$i > -1 &&
                                       _vm.$set(
-                                        _vm.employee.departments,
-                                        "id",
+                                        _vm.employee,
+                                        "department_id",
                                         $$a
                                           .slice(0, $$i)
                                           .concat($$a.slice($$i + 1))
                                       )
                                   }
                                 } else {
-                                  _vm.$set(_vm.employee.departments, "id", $$c)
+                                  _vm.$set(_vm.employee, "department_id", $$c)
                                 }
                               }
                             }
@@ -56034,6 +55894,158 @@ module.exports = function(module) {
 	}
 	return module;
 };
+
+
+/***/ }),
+
+/***/ "./resources/js/Swal.js":
+/*!******************************!*\
+  !*** ./resources/js/Swal.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SwalAlerts; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var SwalAlerts =
+/*#__PURE__*/
+function () {
+  function SwalAlerts() {
+    _classCallCheck(this, SwalAlerts);
+  }
+
+  _createClass(SwalAlerts, null, [{
+    key: "employeeSuccessAdded",
+
+    /* eslint no-undef:0 */
+    value: function employeeSuccessAdded() {
+      Swal.fire({
+        text: 'Сотрудник успешно добавлен',
+        type: 'success',
+        toast: true,
+        position: 'top-end',
+        background: '#e4ede6',
+        showConfirmButton: false,
+        timer: 3000
+      });
+    }
+  }, {
+    key: "employeeFailAdded",
+    value: function employeeFailAdded() {
+      Swal.fire({
+        text: 'Не удалось создать сотрудника. Возможно был удален отдел',
+        type: 'error',
+        toast: true,
+        position: 'top-end',
+        background: '#e4ede6',
+        showConfirmButton: false,
+        timer: 3000
+      });
+    }
+  }, {
+    key: "departmentNotFound",
+    value: function departmentNotFound() {
+      Swal.fire({
+        text: 'Не удалось найти отдел.',
+        type: 'error',
+        toast: true,
+        position: 'top-end',
+        background: '#f2c7c7',
+        showConfirmButton: false,
+        timer: 3000
+      });
+    }
+  }, {
+    key: "employeeNotFound",
+    value: function employeeNotFound() {
+      Swal.fire({
+        text: 'Не удалось найти сотрудника. Возможно он был удален',
+        type: 'error',
+        toast: true,
+        position: 'top-end',
+        background: '#f2c7c7',
+        showConfirmButton: false,
+        timer: 3000
+      });
+    }
+  }, {
+    key: "employeeSuccessUpdated",
+    value: function employeeSuccessUpdated() {
+      Swal.fire({
+        text: 'Сотрудник успешно отредактирован',
+        type: 'success',
+        toast: true,
+        position: 'top-end',
+        background: '#e4ede6',
+        showConfirmButton: false,
+        timer: 3000
+      });
+    }
+  }, {
+    key: "errorMessage",
+    value: function errorMessage() {
+      Swal.fire({
+        text: 'Ошибка',
+        type: 'error',
+        toast: true,
+        position: 'top-end',
+        background: '#f2c7c7',
+        showConfirmButton: false,
+        timer: 3000
+      });
+    }
+  }, {
+    key: "departmentSuccessAdded",
+    value: function departmentSuccessAdded() {
+      Swal.fire({
+        text: 'Отдел успешно добавлен',
+        type: 'success',
+        toast: true,
+        position: 'top-end',
+        background: '#e4ede6',
+        showConfirmButton: false,
+        timer: 3000
+      });
+    }
+  }, {
+    key: "departmentSuccessUpdated",
+    value: function departmentSuccessUpdated() {
+      Swal.fire({
+        text: 'Отдел успешно отредактирован',
+        type: 'success',
+        toast: true,
+        position: 'top-end',
+        background: '#e4ede6',
+        showConfirmButton: false,
+        timer: 3000
+      });
+    }
+  }, {
+    key: "dialogDepartmentDelete",
+    value: function dialogDepartmentDelete(id, name) {
+      Swal.fire({
+        title: 'Вы уверены?',
+        text: 'Подтвердите удаление ' + "'" + name + "'",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Отмена',
+        confirmButtonText: 'Удалить'
+      });
+    }
+  }]);
+
+  return SwalAlerts;
+}();
+
 
 
 /***/ }),

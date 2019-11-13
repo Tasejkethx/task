@@ -16,6 +16,7 @@
 </template>
 
 <script>
+    import SwalAlerts from "../../Swal";
     export default {
         data(){
             return{
@@ -46,27 +47,11 @@
                 axios.post('../department' ,this.department)
                     .then((response) => {
                         if (response.data.success===true) {
-                            Swal.fire({
-                                text: 'Отдел успешно добавлен',
-                                type: 'success',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#e4ede6',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                         SwalAlerts.departmentSuccessAdded();
                             this.$router.push({path: '/departments'});
                         }
                         else if (response.data.exception===true) {
-                            Swal.fire({
-                                text: 'Не удалось создать сотрудника.',
-                                type: 'error',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#e4ede6',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                           SwalAlerts.errorMessage();
                         }
                 })
                     .catch(error=>{

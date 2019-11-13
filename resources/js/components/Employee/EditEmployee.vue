@@ -48,6 +48,7 @@
 </template>
 
 <script>
+    import SwalAlerts from "../../Swal";
     export default {
         data(){
             return{
@@ -86,37 +87,13 @@
                 Axios.put('../../employee/' + this.employee.id ,this.employee)
                     .then((response) => {
                         if (response.data.departmentDoestNotExist===true){
-                            Swal.fire({
-                                text: 'Не удалось найти отдел. Возможно он был удален',
-                                type: 'error',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#f2c7c7',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                            SwalAlerts.departmentNotFound();
                         }
                         if (response.data.doesNotExist === true){
-                            Swal.fire({
-                                text: 'Не удалось найти сотрудника. Возможно он был удален',
-                                type: 'error',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#f2c7c7',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                            SwalAlerts.employeeNotFound();
                             this.$router.push({path: '/employees'});
                         } else if (response.data.success===true){
-                            Swal.fire({
-                                text: 'Сотрудник успешно отредактирован',
-                                type: 'success',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#e4ede6',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                           SwalAlerts.employeeSuccessUpdated();
                             this.$router.push({path: '/employees'});
                         }
                     })
@@ -149,15 +126,7 @@
                 Axios.get('../../employee/'+this.$route.params.id+'/edit')
                     .then(response=>{
                         if (response.data.doesNotExist === true){
-                            Swal.fire({
-                                text: 'Не удалось найти сотрудника. Возможно он был удален',
-                                type: 'error',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#f2c7c7',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                            SwalAlerts.employeeNotFound();
                             this.$router.push({path: '/employees'});
                         } else {
                             this.employee=response.data;

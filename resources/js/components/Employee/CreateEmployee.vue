@@ -37,7 +37,7 @@
                     <div v-if="departments.length">
                         <div class="mb-3 mt-3 font-weight-bold"> Отделения</div>
                         <div class="custom-control custom-checkbox mb-1" v-for="department in departments" :key="department.id">
-                            <input type = "checkbox" name="department_id"  @click="delete_error_message('department_id')" class="custom-control-input"  :id="department.id" :value="department.id"  v-model="employee.departments.id" />
+                            <input type = "checkbox" name="department_id"  @click="delete_error_message('department_id')" class="custom-control-input"  :id="department.id" :value="department.id"  v-model="employee.department_id" />
                             <label class="custom-control-label" :for="department.id"> {{department.name}}</label>
                         </div>
                     </div>
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+    import SwalAlerts from "../../Swal";
     export default {
         data(){
             return{
@@ -87,27 +88,11 @@
                 Axios.post('../employee' , this.employee)
                     .then((response) => {
                         if (response.data.success === true) {
-                            Swal.fire({
-                                text: 'Сотрудник успешно добавлен',
-                                type: 'success',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#e4ede6',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                            SwalAlerts.employeeSuccessAdded();
                             this.$router.push({path: '/employees'});
                         }
                         else if (response.data.doesNotExist === true) {
-                            Swal.fire({
-                                text: 'Не удалось создать сорудника. Возможно был удален отдел',
-                                type: 'error',
-                                toast: true,
-                                position: 'top-end',
-                                background: '#e4ede6',
-                                showConfirmButton: false,
-                                timer: 3000,
-                            });
+                         SwalAlerts.employeeFailAdded();
                         }
                     })
                     .catch(error=> {
