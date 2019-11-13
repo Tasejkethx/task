@@ -12,7 +12,7 @@
                         <th> </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody v-if="departments.length">
                     <tr v-for="department in departments" :key="departments.id">
                         <td> {{department.id}}</td>
                         <td> {{department.name}}</td>
