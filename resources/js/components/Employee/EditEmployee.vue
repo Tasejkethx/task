@@ -161,7 +161,12 @@
                             this.$router.push({path: '/employees'});
                         } else {
                             this.employee=response.data;
-                            this.loadSpinner = false;;
+                            let mass = [];
+                            this.employee.departments.forEach((element)=>{
+                               mass.push(element.id);
+                            });
+                            this.employee.department_id = mass;
+                            this.loadSpinner = false;
                         }
                     })
                     .catch(error=>console.log(error));

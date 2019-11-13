@@ -24,7 +24,8 @@
                         <td v-if="employee.sex=='male'">мужчина </td>
                         <td v-else> женщина </td>
                         <td>{{employee.salary}}$ </td>
-                        <td >{{employee.department_name}} </td>
+                       <td> {{getDepartmentNames(employee.departments)}}</td>
+
                         <td> <router-link :to="'/employees/edit/' + employee.id" class="btn btn-sm btn-info">
                             <i class="fas fa-edit"></i> Редактировать</router-link>
                             <a  href="#" @click.prevent="confirmDelete(employee.id)" class="btn btn-sm btn-danger">
@@ -34,7 +35,6 @@
                     </tr>
                 </tbody>
             </table>
-
             <div class = 'mt-3 flex-center'>
                 <pagination :data="employees" @pagination-change-page="nextPageEmployees" ></pagination>
             </div>
@@ -116,6 +116,13 @@
                         }
                     });
                 this.loadSpinner = false;
+            },
+            getDepartmentNames(employee){
+                let mass=[];
+                employee.forEach(function(element){
+                    mass.push(element.name);
+                });
+                return mass.join(', ');
             },
             confirmDelete(id) {
                 Swal.fire({

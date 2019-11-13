@@ -8,7 +8,7 @@
             <div class="row " v-for="employee in employees.data" :key="employee.id">
             <div class = "col py-2 px-lg-2 border"> {{employee.name}} {{employee.surname}}</div>
             <div class="col py-2 px-lg-2 border" v-for="department in departments" :key="department.id" >
-                <div v-for="dep in employee.department_id" v-if="dep===department.id" class="text-center">
+                <div v-for="dep in employee.departments" v-if="dep.id==department.id" class="text-center">
                     <i class="fas fa-check"></i>
                 </div>
             </div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Department;
 use App\Employee;
 use App\Http\Requests\EmployeeRequest;
+use App\Http\Resources\EmployeeCollection;
+use App\Http\Resources\EmployeeResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -13,6 +15,7 @@ class EmployeeController extends Controller
 
     public function index(Request $request)
     {
+        /*
         try{
         $employees = Employee::paginate(5);
         $department_ids=[];
@@ -38,6 +41,8 @@ class EmployeeController extends Controller
         }catch (\Exception $e){
             return response()->json(['doesNotExist'=>true]);
         }
+        */
+        return EmployeeResource::collection(Employee::paginate(1));
     }
 
 
@@ -85,6 +90,7 @@ class EmployeeController extends Controller
 
     public function edit(Request $request, $id)
     {
+        /*
         try {
             $department_ids=[];
             $employee = Employee::findOrFail($id);
@@ -97,6 +103,8 @@ class EmployeeController extends Controller
         } catch (ModelNotFoundException $e){
             return response()->json(['doesNotExist'=>true]);
         }
+        */
+        return new EmployeeResource(Employee::findOrFail($id));
     }
 
 

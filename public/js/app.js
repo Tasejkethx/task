@@ -2577,8 +2577,14 @@ __webpack_require__.r(__webpack_exports__);
           });
         } else {
           _this2.employee = response.data;
+          var mass = [];
+
+          _this2.employee.departments.forEach(function (element) {
+            mass.push(element.id);
+          });
+
+          _this2.employee.department_id = mass;
           _this2.loadSpinner = false;
-          ;
         }
       })["catch"](function (error) {
         return console.log(error);
@@ -2721,6 +2727,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
       this.loadSpinner = false;
+    },
+    getDepartmentNames: function getDepartmentNames(employee) {
+      var mass = [];
+      employee.forEach(function (element) {
+        mass.push(element.name);
+      });
+      return mass.join(', ');
     },
     confirmDelete: function confirmDelete(id) {
       var _this3 = this;
@@ -40251,8 +40264,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.employee.department_id,
-                                expression: "employee.department_id"
+                                value: _vm.employee.departments.id,
+                                expression: "employee.departments.id"
                               }
                             ],
                             staticClass: "custom-control-input",
@@ -40263,19 +40276,21 @@ var render = function() {
                             },
                             domProps: {
                               value: department.id,
-                              checked: Array.isArray(_vm.employee.department_id)
+                              checked: Array.isArray(
+                                _vm.employee.departments.id
+                              )
                                 ? _vm._i(
-                                    _vm.employee.department_id,
+                                    _vm.employee.departments.id,
                                     department.id
                                   ) > -1
-                                : _vm.employee.department_id
+                                : _vm.employee.departments.id
                             },
                             on: {
                               click: function($event) {
                                 return _vm.delete_error_message("department_id")
                               },
                               change: function($event) {
-                                var $$a = _vm.employee.department_id,
+                                var $$a = _vm.employee.departments.id,
                                   $$el = $event.target,
                                   $$c = $$el.checked ? true : false
                                 if (Array.isArray($$a)) {
@@ -40284,22 +40299,22 @@ var render = function() {
                                   if ($$el.checked) {
                                     $$i < 0 &&
                                       _vm.$set(
-                                        _vm.employee,
-                                        "department_id",
+                                        _vm.employee.departments,
+                                        "id",
                                         $$a.concat([$$v])
                                       )
                                   } else {
                                     $$i > -1 &&
                                       _vm.$set(
-                                        _vm.employee,
-                                        "department_id",
+                                        _vm.employee.departments,
+                                        "id",
                                         $$a
                                           .slice(0, $$i)
                                           .concat($$a.slice($$i + 1))
                                       )
                                   }
                                 } else {
-                                  _vm.$set(_vm.employee, "department_id", $$c)
+                                  _vm.$set(_vm.employee.departments, "id", $$c)
                                 }
                               }
                             }
@@ -40799,7 +40814,11 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(employee.salary) + "$ ")]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(employee.department_name) + " ")]),
+                  _c("td", [
+                    _vm._v(
+                      " " + _vm._s(_vm.getDepartmentNames(employee.departments))
+                    )
+                  ]),
                   _vm._v(" "),
                   _c(
                     "td",
@@ -40951,8 +40970,8 @@ var render = function() {
               return _c(
                 "div",
                 { key: department.id, staticClass: "col py-2 px-lg-2 border" },
-                _vm._l(employee.department_id, function(dep) {
-                  return dep === department.id
+                _vm._l(employee.departments, function(dep) {
+                  return dep.id == department.id
                     ? _c("div", { staticClass: "text-center" }, [
                         _c("i", { staticClass: "fas fa-check" })
                       ])
