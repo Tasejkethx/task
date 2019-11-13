@@ -49,7 +49,7 @@ class   EmployeeRequest extends FormRequest
             'salary.required'=>'Введите заработную плату',
             'department_id.required'=>'Укажите отделения в которых работает сотрудник',
             'salary.numeric'=>'Введите число',
-            'salary.max'=>'Ты столько не зарабатываешь)',
+            'salary.max'=>'Слишком большое число',
             'salary.min'=>'Введите число больше 0',
         ];
     }
