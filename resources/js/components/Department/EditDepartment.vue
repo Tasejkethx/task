@@ -48,12 +48,12 @@
             editDepartment(){
                 Axios.put('../../department/' + this.department.id ,this.department)
                     .then((response) => {
-                        if (response.data.doesNotExist === true) {
-                          SwalAlerts.departmentNotFound();
+                        if (response.data.id > 0) {
+                            SwalAlerts.departmentSuccessUpdated();
                             this.$router.push({path: '/departments'});
                         }
-                        else {
-                           SwalAlerts.departmentSuccessUpdated();
+                        else  {
+                            SwalAlerts.departmentNotFound();
                             this.$router.push({path: '/departments'});
                         }
                     })

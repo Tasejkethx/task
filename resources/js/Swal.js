@@ -95,17 +95,4 @@ export default class SwalAlerts {
       timer: 3000
     })
   }
-
-  static dialogDepartmentDelete (id, name) {
-    Swal.fire({
-      title: 'Вы уверены?',
-      text: 'Подтвердите удаление ' + "'" + name + "'",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      cancelButtonText: 'Отмена',
-      confirmButtonText: 'Удалить'
-    })
-  }
 }

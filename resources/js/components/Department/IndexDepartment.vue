@@ -73,19 +73,20 @@
                     if (result.value) {
                         Axios.delete('../department/' + id)
                             .then((response) => {
-                                if (response.data.amount === true) {
+                                console.log(response.data);
+                                if (response.data == 2) {
                                     Swal.fire(
                                         'Ошибка!',
                                         'Невозможно удалить отдел в котором есть сотрудники',
                                         'error');
                                     this.fetch();
-                                } else if (response.data.success === true) {
+                                } else if (response.data == 1) {
                                     Swal.fire(
                                         'Удалено!',
                                         'Отдел ' + "'" + name + "'" + " был успешно удален",
                                         'success');
                                     this.fetch();
-                                } else if (response.data.doesNotExist === true) {
+                                } else if (response.data == 0) {
                                     Swal.fire(
                                         'Ошибка!',
                                         'Не удалось удалить ' + "'" + name + "'" + " возможно он уже удален",

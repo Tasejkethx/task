@@ -87,12 +87,12 @@
             create(){
                 Axios.post('../employee' , this.employee)
                     .then((response) => {
-                        if (response.data.success === true) {
+                        if (response.data.id > 0) {
                             SwalAlerts.employeeSuccessAdded();
                             this.$router.push({path: '/employees'});
                         }
-                        else if (response.data.doesNotExist === true) {
-                         SwalAlerts.employeeFailAdded();
+                        else  {
+                            SwalAlerts.employeeFailAdded();
                         }
                     })
                     .catch(error=> {

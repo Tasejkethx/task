@@ -115,14 +115,15 @@
                     if (result.value) {
                         Axios.delete('../employee/' + id)
                             .then((response) => {
-                                if (response.data.success === true) {
+                                console.log(response.data);
+                                if (response.data == 1) {
                                     Swal.fire(
                                         'Удалено!',
                                         "Сотрудник был удален",
                                         'success');
                                     this.fetch();
                                 }
-                                else if (response.data.doesNotExist === true) {
+                                else if (response.data == 0) {
                                     Swal.fire(
                                         'Ошибка!',
                                         'Не удалось удалить. Возможно он уже был удален',

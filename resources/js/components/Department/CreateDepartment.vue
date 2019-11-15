@@ -44,13 +44,14 @@
                 }
             },
             create(){
-                axios.post('../department' ,this.department)
+                Axios.post('../department' ,this.department)
                     .then((response) => {
-                        if (response.data.success===true) {
+                        console.log(response.data);
+                        if (response.data.id > 0) {
                          SwalAlerts.departmentSuccessAdded();
                             this.$router.push({path: '/departments'});
                         }
-                        else if (response.data.exception===true) {
+                        else  {
                            SwalAlerts.errorMessage();
                         }
                 })

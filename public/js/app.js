@@ -1887,14 +1887,16 @@ __webpack_require__.r(__webpack_exports__);
     create: function create() {
       var _this = this;
 
-      axios.post('../department', this.department).then(function (response) {
-        if (response.data.success === true) {
+      Axios.post('../department', this.department).then(function (response) {
+        console.log(response.data);
+
+        if (response.data.id > 0) {
           _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentSuccessAdded();
 
           _this.$router.push({
             path: '/departments'
           });
-        } else if (response.data.exception === true) {
+        } else {
           _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
         }
       })["catch"](function (error) {
@@ -1989,14 +1991,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Axios.put('../../department/' + this.department.id, this.department).then(function (response) {
-        if (response.data.doesNotExist === true) {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentNotFound();
+        if (response.data.id > 0) {
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentSuccessUpdated();
 
           _this.$router.push({
             path: '/departments'
           });
         } else {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentSuccessUpdated();
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentNotFound();
 
           _this.$router.push({
             path: '/departments'
@@ -2140,15 +2142,17 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           Axios["delete"]('../department/' + id).then(function (response) {
-            if (response.data.amount === true) {
+            console.log(response.data);
+
+            if (response.data == 2) {
               Swal.fire('Ошибка!', 'Невозможно удалить отдел в котором есть сотрудники', 'error');
 
               _this2.fetch();
-            } else if (response.data.success === true) {
+            } else if (response.data == 1) {
               Swal.fire('Удалено!', 'Отдел ' + "'" + name + "'" + " был успешно удален", 'success');
 
               _this2.fetch();
-            } else if (response.data.doesNotExist === true) {
+            } else if (response.data == 0) {
               Swal.fire('Ошибка!', 'Не удалось удалить ' + "'" + name + "'" + " возможно он уже удален", 'error');
             }
           })["catch"](function (error) {
@@ -2264,13 +2268,13 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Axios.post('../employee', this.employee).then(function (response) {
-        if (response.data.success === true) {
+        if (response.data.id > 0) {
           _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].employeeSuccessAdded();
 
           _this.$router.push({
             path: '/employees'
           });
-        } else if (response.data.doesNotExist === true) {
+        } else {
           _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].employeeFailAdded();
         }
       })["catch"](function (error) {
@@ -2429,6 +2433,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Axios.put('../../employee/' + this.employee.id, this.employee).then(function (response) {
+        console.log(response.data);
+
         if (response.data.departmentDoestNotExist === true) {
           _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentNotFound();
         }
@@ -2475,7 +2481,9 @@ __webpack_require__.r(__webpack_exports__);
 
       this.loadSpinner = true;
       Axios.get('../../employee/' + this.$route.params.id + '/edit').then(function (response) {
-        if (response.data.doesNotExist === true) {
+        console.log(response.data);
+
+        if (response.data == 0) {
           _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].employeeNotFound();
 
           _this2.$router.push({
@@ -2634,11 +2642,13 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           Axios["delete"]('../employee/' + id).then(function (response) {
-            if (response.data.success === true) {
+            console.log(response.data);
+
+            if (response.data == 1) {
               Swal.fire('Удалено!', "Сотрудник был удален", 'success');
 
               _this3.fetch();
-            } else if (response.data.doesNotExist === true) {
+            } else if (response.data == 0) {
               Swal.fire('Ошибка!', 'Не удалось удалить. Возможно он уже был удален', 'error');
             }
           })["catch"](function (error) {
@@ -56025,20 +56035,6 @@ function () {
         background: '#e4ede6',
         showConfirmButton: false,
         timer: 3000
-      });
-    }
-  }, {
-    key: "dialogDepartmentDelete",
-    value: function dialogDepartmentDelete(id, name) {
-      Swal.fire({
-        title: 'Вы уверены?',
-        text: 'Подтвердите удаление ' + "'" + name + "'",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        cancelButtonText: 'Отмена',
-        confirmButtonText: 'Удалить'
       });
     }
   }]);

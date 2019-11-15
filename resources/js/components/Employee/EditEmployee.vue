@@ -86,6 +86,7 @@
             editEmployee(){
                 Axios.put('../../employee/' + this.employee.id ,this.employee)
                     .then((response) => {
+                        console.log(response.data);
                         if (response.data.departmentDoestNotExist===true){
                             SwalAlerts.departmentNotFound();
                         }
@@ -125,7 +126,8 @@
                 this.loadSpinner = true;
                 Axios.get('../../employee/'+this.$route.params.id+'/edit')
                     .then(response=>{
-                        if (response.data.doesNotExist === true){
+                        console.log(response.data);
+                        if (response.data  == 0){
                             SwalAlerts.employeeNotFound();
                             this.$router.push({path: '/employees'});
                         } else {
