@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Department;
 use App\Http\Requests\DepartmentRequest;
-use App\Http\Resources\DepartmentCollection;
 use App\Http\Resources\DepartmentResource;
 use Illuminate\Http\Request;
 
@@ -17,7 +16,7 @@ class DepartmentController extends Controller
 
     public function index()
     {
-       return new DepartmentCollection($this->department->all());
+       return DepartmentResource::collection($this->department->all());
     }
 
 

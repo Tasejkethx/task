@@ -17,43 +17,35 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        return EmployeeResource::collection($this->employee->paginate(3));
-    }
-
-    public function create()
-    {
-        //
+        return EmployeeResource::collection($this->employee->paginate(5));
     }
 
     public function store(EmployeeRequest $request)
     {
-        $employee = new Employee($request->only(['name','surname','patronymic','sex','salary']));
-        $department_ids= $request->get('department_id');
-        $this->employee->set_department_after_create($employee, $department_ids);
+        $employee = new Employee($request->only(['name', 'surname', 'patronymic', 'sex', 'salary']));
+        $this->employee->set_department_after_create($employee, $request->get('department_id'));
         $employee->save();
-        $employee->departments()->sync($department_ids);
+        $employee->departments()->sync($request->get('department_id'));
         return new EmployeeResource($employee);
     }
 
-    public function show(Employee $employee)
-    {
-        //
-    }
-
-    public function edit(Request $request,  $id)
+    public function edit(Request $request, $id)
     {
         return new EmployeeResource($this->employee->findOrFail($id));
     }
 
     public function update(EmployeeRequest $request, $id)
     {
-         $this->employee->update($id, $request);
-
+        $employee = $this->employee->findOrFail($id);
+        $employee->update($request->only(['name', 'surname', 'patronymic', 'sex', 'salary']));
+        $this->employee->set_department_after_edit($employee, $request->get('department_id'));
+        $employee->departments()->sync($request->get('department_id'));
+        return new EmployeeResource($employee);
     }
 
     public function destroy($id)
     {
-      return $this->employee->destroy($id);
+        return $this->employee->destroy($id);
     }
 
 }
