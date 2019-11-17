@@ -41,7 +41,9 @@
                     </div>
                     <span class="mb-2 mt-2" id="department_id" ></span>
                 </div>
-                <button type='submit' class="btn btn-primary mt-3 mr-2" :disabled="loadSpinner"> <i v-if="loadSpinner" class="fa fa-spin fa-spinner"></i> Редактировать </button>
+                <div class="button-wrapper-send-form mt-2">
+                    <button type='submit' class="btn btn-primary mt-3 mr-2 form-width-button" :disabled="loadSpinner"> <i v-if="loadSpinner" class="fa fa-spin fa-spinner"></i> Редактировать </button>
+                </div>
             </form>
         </div>
     </div>
@@ -87,14 +89,12 @@
                 Axios.put('../../employee/' + this.employee.id ,this.employee)
                     .then((response) => {
                         console.log(response.data);
-                        if (response.data.departmentDoestNotExist===true){
-                            SwalAlerts.departmentNotFound();
-                        }
-                        if (response.data.doesNotExist === true){
-                            SwalAlerts.employeeNotFound();
+                        if (response.data.id > 0) {
+                            SwalAlerts.employeeSuccessUpdated();
                             this.$router.push({path: '/employees'});
-                        } else if (response.data.success===true){
-                           SwalAlerts.employeeSuccessUpdated();
+                        }
+                        else  {
+                            SwalAlerts.employeeNotFound();
                             this.$router.push({path: '/employees'});
                         }
                     })
@@ -140,10 +140,17 @@
                             this.loadSpinner = false;
                         }
                     })
-                    .catch(error=>console.log(error));
+                    .catch(error => {
+                        SwalAlerts.errorMessage(error);
+                        this.$router.push({path: '/employees'});
+                    });
                 Axios.get('../../department')
                     .then(response=>this.departments=response.data)
-                    .catch(error=>console.log(error));
+                    .catch(error=> {
+                            SwalAlerts.errorMessage(error);
+                            this.$router.push({path: '/employees'});
+                        }
+                    );
             },
 
         },
@@ -153,6 +160,13 @@
 <style scoped>
     .flex-center {
         align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+    .form-width-button{
+        width: calc(100% - 80px);
+    }
+    .button-wrapper-send-form{
         display: flex;
         justify-content: center;
     }

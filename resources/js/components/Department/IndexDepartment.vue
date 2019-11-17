@@ -48,12 +48,7 @@
                 this.loadSpinner = true;
                 Axios.get('../department')
                     .then(response =>  {
-                        if (response.data.doesNotExist===true){
-                          SwalAlerts.errorMessage();
-                        }
-                        else{
-                            this.departments = response.data
-                        }
+                        this.departments = response.data;
                         this.loadSpinner = false;
                     })
                     .catch(error => console.log(error));

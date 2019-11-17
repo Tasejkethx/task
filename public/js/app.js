@@ -1856,6 +1856,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1955,6 +1957,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2033,22 +2037,14 @@ __webpack_require__.r(__webpack_exports__);
 
       this.loadSpinner = true;
       Axios.get('../../department/' + this.$route.params.id + '/edit').then(function (response) {
-        if (response.data.departmentDoestNotExist === true) {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentNotFound();
-        }
-
-        if (response.data.doesNotExist === true) {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentNotFound();
-
-          _this2.$router.push({
-            path: '/departments'
-          });
-        } else {
-          _this2.department = response.data;
-          _this2.loadSpinner = false;
-        }
+        _this2.department = response.data;
+        _this2.loadSpinner = false;
       })["catch"](function (error) {
-        return console.log(error);
+        _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage(error);
+
+        _this2.$router.push({
+          path: '/departments'
+        });
       });
     }
   }
@@ -2116,12 +2112,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.loadSpinner = true;
       Axios.get('../department').then(function (response) {
-        if (response.data.doesNotExist === true) {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
-        } else {
-          _this.departments = response.data;
-        }
-
+        _this.departments = response.data;
         _this.loadSpinner = false;
       })["catch"](function (error) {
         return console.log(error);
@@ -2176,6 +2167,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Swal */ "./resources/js/Swal.js");
+//
+//
 //
 //
 //
@@ -2391,6 +2384,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2435,18 +2430,14 @@ __webpack_require__.r(__webpack_exports__);
       Axios.put('../../employee/' + this.employee.id, this.employee).then(function (response) {
         console.log(response.data);
 
-        if (response.data.departmentDoestNotExist === true) {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentNotFound();
-        }
-
-        if (response.data.doesNotExist === true) {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].employeeNotFound();
+        if (response.data.id > 0) {
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].employeeSuccessUpdated();
 
           _this.$router.push({
             path: '/employees'
           });
-        } else if (response.data.success === true) {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].employeeSuccessUpdated();
+        } else {
+          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].employeeNotFound();
 
           _this.$router.push({
             path: '/employees'
@@ -2501,12 +2492,20 @@ __webpack_require__.r(__webpack_exports__);
           _this2.loadSpinner = false;
         }
       })["catch"](function (error) {
-        return console.log(error);
+        _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage(error);
+
+        _this2.$router.push({
+          path: '/employees'
+        });
       });
       Axios.get('../../department').then(function (response) {
         return _this2.departments = response.data;
       })["catch"](function (error) {
-        return console.log(error);
+        _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage(error);
+
+        _this2.$router.push({
+          path: '/employees'
+        });
       });
     }
   }
@@ -2586,22 +2585,13 @@ __webpack_require__.r(__webpack_exports__);
 
       this.loadSpinner = true;
       Axios.get('../employee').then(function (response) {
-        if (response.data.doesNotExist === true) {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
-        } else {
-          _this.employees = response.data;
-        }
-
+        _this.employees = response.data;
         _this.loadSpinner = false;
       })["catch"](function (error) {
         return console.log(error);
       });
       Axios.get('../department').then(function (response) {
-        if (response.data.doesNotExist === true) {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
-        } else {
-          _this.departments = response.data;
-        }
+        _this.departments = response.data;
       })["catch"](function (error) {
         return console.log(error);
       });
@@ -2612,11 +2602,7 @@ __webpack_require__.r(__webpack_exports__);
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.loadSpinner = true;
       Axios.get('../employee?page=' + page).then(function (response) {
-        if (response.data.doesNotExist === true) {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
-        } else {
-          _this2.employees = response.data;
-        }
+        _this2.employees = response.data;
       });
       this.loadSpinner = false;
     },
@@ -2671,30 +2657,36 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Swal */ "./resources/js/Swal.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2711,25 +2703,16 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.loadSpinner = true;
-      Axios.get('../department').then(function (response) {
-        if (response.data.doesNotExist === true) {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
-        } else {
-          _this.departments = response.data;
-        }
-      })["catch"](function (error) {
-        return console.log(error);
-      });
-      Axios.get('../employee').then(function (response) {
-        if (response.data.doesNotExist === true) {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
-        } else {
-          _this.employees = response.data;
-        }
+      Promise.all([Axios.get('../department'), Axios.get('../employee')]).then(function (_ref) {
+        var _ref2 = _slicedToArray(_ref, 2),
+            departmentResponse = _ref2[0],
+            employeeResponse = _ref2[1];
 
+        _this.departments = departmentResponse.data;
+        _this.employees = employeeResponse.data;
         _this.loadSpinner = false;
       })["catch"](function (error) {
-        return console.log(error);
+        console.log(error);
       });
     },
     nextPageEmployees: function nextPageEmployees() {
@@ -2737,11 +2720,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       Axios.get('../employee?page=' + page).then(function (response) {
-        if (response.data.doesNotExist === true) {
-          _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].errorMessage();
-        } else {
-          _this2.employees = response.data;
-        }
+        _this2.employees = response.data;
       });
     }
   }
@@ -7206,7 +7185,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.flex-center[data-v-72e48be0] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.flex-center[data-v-72e48be0] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n.form-width-button[data-v-72e48be0]{\n    width: calc(100% - 80px);\n}\n.button-wrapper-send-form[data-v-72e48be0]{\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -7225,7 +7204,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.flex-center[data-v-82095dc4] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.flex-center[data-v-82095dc4] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n.form-width-button[data-v-82095dc4]{\n    width: calc(100% - 80px);\n}\n.button-wrapper-send-form[data-v-82095dc4]{\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -7244,7 +7223,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.flex-center[data-v-705c3160] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.flex-center[data-v-705c3160] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n.form-width-button[data-v-705c3160]{\n    width: calc(100% - 80px);\n}\n.button-wrapper-send-form[data-v-705c3160]{\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -7263,7 +7242,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.flex-center[data-v-09279a44] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.flex-center[data-v-09279a44] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n.form-width-button[data-v-09279a44]{\n    width: calc(100% - 80px);\n}\n.button-wrapper-send-form[data-v-09279a44]{\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -39601,14 +39580,7 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary mt-3",
-                attrs: { type: "submit" }
-              },
-              [_vm._v(" Создать ")]
-            )
+            _vm._m(1)
           ])
         ]
       )
@@ -39622,6 +39594,21 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "text-center py-3 mb-2" }, [
       _c("h4", [_vm._v(" Добавление нового отдела")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "button-wrapper-send-form mt-2" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary mt-3 form-width-button",
+          attrs: { type: "submit" }
+        },
+        [_vm._v(" Создать ")]
+      )
     ])
   }
 ]
@@ -39699,21 +39686,23 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary mt-3",
-              attrs: { type: "submit", disabled: _vm.loadSpinner }
-            },
-            [
-              _vm.loadSpinner
-                ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
-                : _vm._e(),
-              _vm._v(" Редактировать ")
-            ]
-          ),
-          _vm._v(" "),
-          _c("br")
+          _c("div", { staticClass: "button-wrapper-send-form mt-2" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mt-3 form-width-button",
+                attrs: { type: "submit", disabled: _vm.loadSpinner }
+              },
+              [
+                _vm.loadSpinner
+                  ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
+                  : _vm._e(),
+                _vm._v(" Редактировать ")
+              ]
+            ),
+            _vm._v(" "),
+            _c("br")
+          ])
         ]
       )
     ])
@@ -40212,19 +40201,21 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary mt-3 mr-2",
-              attrs: { type: "submit", disabled: _vm.loadSpinner }
-            },
-            [
-              _vm.loadSpinner
-                ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
-                : _vm._e(),
-              _vm._v(" Создать ")
-            ]
-          )
+          _c("div", { staticClass: "button-wrapper-send-form mt-2" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mt-3 mr-2 form-width-button",
+                attrs: { type: "submit", disabled: _vm.loadSpinner }
+              },
+              [
+                _vm.loadSpinner
+                  ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
+                  : _vm._e(),
+                _vm._v(" Создать ")
+              ]
+            )
+          ])
         ]
       )
     ])
@@ -40592,19 +40583,21 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary mt-3 mr-2",
-              attrs: { type: "submit", disabled: _vm.loadSpinner }
-            },
-            [
-              _vm.loadSpinner
-                ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
-                : _vm._e(),
-              _vm._v(" Редактировать ")
-            ]
-          )
+          _c("div", { staticClass: "button-wrapper-send-form mt-2" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mt-3 mr-2 form-width-button",
+                attrs: { type: "submit", disabled: _vm.loadSpinner }
+              },
+              [
+                _vm.loadSpinner
+                  ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
+                  : _vm._e(),
+                _vm._v(" Редактировать ")
+              ]
+            )
+          ])
         ]
       )
     ])
@@ -56000,9 +55993,9 @@ function () {
     }
   }, {
     key: "errorMessage",
-    value: function errorMessage() {
+    value: function errorMessage(errorText) {
       Swal.fire({
-        text: 'Ошибка',
+        text: errorText,
         type: 'error',
         toast: true,
         position: 'top-end',

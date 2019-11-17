@@ -21,8 +21,6 @@
 </template>
 
 <script>
-    import SwalAlerts from "../Swal";
-
     export default {
         data(){
             return{
@@ -37,37 +35,21 @@
         methods: {
             fetch() {
                 this.loadSpinner = true;
-                Axios.get('../department')
-                    .then((response) => {
-                        if (response.data.doesNotExist===true){
-                           SwalAlerts.errorMessage();
-                        }
-                        else {
-                            this.departments = response.data;
-                        }
+                Promise.all([Axios.get('../department'),  Axios.get('../employee')])
+                    .then(([departmentResponse, employeeResponse]) => {
+                        this.departments = departmentResponse.data;
+                        this.employees = employeeResponse.data;
+                        this.loadSpinner = false;
                     })
-                    .catch(error => console.log(error));
-                Axios.get('../employee')
-                    .then(response => {
-                        if (response.data.doesNotExist===true){
-                            SwalAlerts.errorMessage();
-                        }
-                        else {
-                            this.employees = response.data
-                        }
-                        this.loadSpinner=false;
-                    })
-                    .catch(error => console.log(error));
+                    .catch(error=> {
+                        console.log(error);
+                    });
+
             },
             nextPageEmployees(page = 1) {
                 Axios.get('../employee?page=' + page)
                     .then(response => {
-                        if (response.data.doesNotExist===true){
-                            SwalAlerts.errorMessage();
-                        }
-                        else {
-                            this.employees = response.data
-                        }
+                        this.employees = response.data
                     });
             },
         },

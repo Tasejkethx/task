@@ -43,7 +43,9 @@
                     </div>
                     <span class="mb-2 mt-2" id="department_id" ></span>
                 </div>
-                <button type='submit' class="btn btn-primary mt-3 mr-2" :disabled="loadSpinner"> <i v-if="loadSpinner" class="fa fa-spin fa-spinner"></i> Создать </button>
+                <div class="button-wrapper-send-form mt-2">
+                    <button type='submit' class="btn btn-primary mt-3 mr-2 form-width-button" :disabled="loadSpinner"> <i v-if="loadSpinner" class="fa fa-spin fa-spinner"></i> Создать </button>
+                </div>
             </form>
         </div>
     </div>
@@ -147,6 +149,13 @@
 <style scoped>
     .flex-center {
         align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+    .form-width-button{
+        width: calc(100% - 80px);
+    }
+    .button-wrapper-send-form{
         display: flex;
         justify-content: center;
     }

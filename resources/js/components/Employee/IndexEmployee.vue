@@ -60,23 +60,13 @@
                 this.loadSpinner = true;
                 Axios.get('../employee')
                     .then(response => {
-                        if (response.data.doesNotExist===true){
-                          SwalAlerts.errorMessage();
-                        }
-                        else {
-                            this.employees = response.data
-                        }
+                        this.employees = response.data;
                         this.loadSpinner = false;
                     })
                     .catch(error => console.log(error));
                 Axios.get('../department')
                     .then(response => {
-                        if (response.data.doesNotExist===true){
-                            SwalAlerts.errorMessage();
-                        }
-                        else {
                             this.departments = response.data
-                        }
                     })
                     .catch(error => console.log(error));
 
@@ -85,12 +75,7 @@
                 this.loadSpinner = true;
                 Axios.get('../employee?page=' + page)
                     .then(response => {
-                        if (response.data.doesNotExist === true) {
-                            SwalAlerts.errorMessage();
-                        }
-                        else {
                             this.employees = response.data
-                        }
                     });
                 this.loadSpinner = false;
             },

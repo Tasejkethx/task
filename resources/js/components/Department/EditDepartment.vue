@@ -9,7 +9,9 @@
                     <label for="name" class="font-weight-bold"> Название отдела </label> <br/>
                     <input type="text" class="form-control" id="name" name='name' @input="delete_error_message('name')" v-model="department.name" >
                 </div>
-                <button type='submit' class="btn btn-primary mt-3" :disabled="loadSpinner"> <i v-if="loadSpinner" class="fa fa-spin fa-spinner"></i> Редактировать </button> <br/>
+                <div class="button-wrapper-send-form mt-2">
+                    <button type='submit' class="btn btn-primary mt-3 form-width-button" :disabled="loadSpinner"> <i v-if="loadSpinner" class="fa fa-spin fa-spinner"></i> Редактировать </button> <br/>
+                </div>
             </form>
         </div>
     </div>
@@ -85,19 +87,13 @@
                 this.loadSpinner = true;
                 Axios.get('../../department/'+this.$route.params.id+'/edit')
                     .then(response=>{
-                        if (response.data.departmentDoestNotExist===true) {
-                            SwalAlerts.departmentNotFound();
-                        }
-                        if (response.data.doesNotExist === true) {
-                           SwalAlerts.departmentNotFound();
-                            this.$router.push({path: '/departments'});
-                        }
-                        else {
                             this.department=response.data;
                             this.loadSpinner = false;
-                        }
                     })
-                    .catch(error=>console.log(error));
+                    .catch(error=>{
+                        SwalAlerts.errorMessage(error);
+                        this.$router.push({path: '/departments'});
+                    });
 
             },
         },
@@ -107,6 +103,13 @@
 <style scoped>
     .flex-center {
         align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+    .form-width-button{
+        width: calc(100% - 80px);
+    }
+    .button-wrapper-send-form{
         display: flex;
         justify-content: center;
     }

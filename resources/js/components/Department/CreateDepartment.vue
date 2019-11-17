@@ -8,7 +8,9 @@
                 <div class="mb-3">
                     <label for="name" class="font-weight-bold"> Название отдела </label>
                     <input class="form-control" type="text" id="name" name='name' @input="delete_error_message('name')" v-model="department.name">
-                    <button type='submit' class="btn btn-primary mt-3"> Создать </button>
+                    <div class="button-wrapper-send-form mt-2">
+                        <button type='submit' class="btn btn-primary mt-3 form-width-button"> Создать </button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -87,6 +89,13 @@
 <style scoped>
     .flex-center {
         align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+    .form-width-button{
+        width: calc(100% - 80px);
+    }
+    .button-wrapper-send-form{
         display: flex;
         justify-content: center;
     }

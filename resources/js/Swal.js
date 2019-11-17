@@ -60,9 +60,9 @@ export default class SwalAlerts {
     })
   }
 
-  static errorMessage () {
+  static errorMessage (errorText) {
     Swal.fire({
-      text: 'Ошибка',
+      text: errorText,
       type: 'error',
       toast: true,
       position: 'top-end',
