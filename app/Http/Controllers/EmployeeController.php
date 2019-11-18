@@ -10,9 +10,11 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function __construct(EmployeeRepository $employee)
+    protected $employee;
+
+    public function __construct(Employee $employee)
     {
-        $this->employee = $employee;
+        $this->employee = new EmployeeRepository($employee);
     }
 
     public function index()

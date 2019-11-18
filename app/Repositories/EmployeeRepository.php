@@ -9,24 +9,35 @@ use App\Employee;
 
 
 
-class EmployeeRepository
+class EmployeeRepository implements RepositoryInterface
 {
+    protected $model;
 
-    public function paginate($index){
-        return Employee::paginate($index);
+    public function __construct(Employee $model)
+    {
+        $this->model = $model;
+    }
+
+    public function all()
+    {
+        $this->model->all();
+    }
+
+    public function paginate($size){
+        return $this->model->paginate($size);
     }
 
     public function findOrFail($id){
-        return Employee::findOrFail($id);
+        return $this->model->findOrFail($id);
     }
 
     public function destroy($id){
-        $employee = Employee::findOrFail($id);
+        $employee = $this->model->findOrFail($id);
         foreach($employee->departments()->get()as $item) {
             $department_ids[] = $item->pivot->department_id;
         }
         $tmp= clone $employee;
-        $status = Employee::destroy($id);
+        $status = $this->model->destroy($id);
         self::set_department_after_delete($tmp, $department_ids);
         return $status;
     }
