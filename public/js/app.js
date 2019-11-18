@@ -1858,6 +1858,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -1917,10 +1918,10 @@ __webpack_require__.r(__webpack_exports__);
           var firstItemDOM = document.getElementById(element);
           var firstErrorMessage = errors[element][0];
           var div = document.createElement('div');
-          div.className = "text-danger";
+          div.className = 'text-danger';
           div.id = firstItemDOM.id + '-error';
-          div.innerHTML = "" + firstErrorMessage;
-          firstItemDOM.insertAdjacentElement("afterend", div);
+          div.innerHTML = '' + firstErrorMessage;
+          firstItemDOM.insertAdjacentElement('afterend', div);
           firstItemDOM.classList.add('border', 'border-danger');
         });
       });
@@ -1940,6 +1941,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Swal */ "./resources/js/Swal.js");
+//
+//
+//
+//
 //
 //
 //
@@ -2024,10 +2029,10 @@ __webpack_require__.r(__webpack_exports__);
           var firstItemDOM = document.getElementById(element);
           var firstErrorMessage = errors[element][0];
           var div = document.createElement('div');
-          div.className = "text-danger";
+          div.className = 'text-danger';
           div.id = firstItemDOM.id + '-error';
-          div.innerHTML = "" + firstErrorMessage;
-          firstItemDOM.insertAdjacentElement("afterend", div);
+          div.innerHTML = '' + firstErrorMessage;
+          firstItemDOM.insertAdjacentElement('afterend', div);
           firstItemDOM.classList.add('border', 'border-danger');
         });
       });
@@ -2061,7 +2066,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Swal */ "./resources/js/Swal.js");
 //
 //
 //
@@ -2095,7 +2099,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2123,7 +2131,7 @@ __webpack_require__.r(__webpack_exports__);
 
       Swal.fire({
         title: 'Вы уверены?',
-        text: "Подтвердите удаление " + "'" + name + "'",
+        text: 'Подтвердите удаление ' + '\'' + name + '\'',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -2140,11 +2148,11 @@ __webpack_require__.r(__webpack_exports__);
 
               _this2.fetch();
             } else if (response.data == 1) {
-              Swal.fire('Удалено!', 'Отдел ' + "'" + name + "'" + " был успешно удален", 'success');
+              Swal.fire('Удалено!', 'Отдел ' + '\'' + name + '\'' + ' был успешно удален', 'success');
 
               _this2.fetch();
             } else if (response.data == 0) {
-              Swal.fire('Ошибка!', 'Не удалось удалить ' + "'" + name + "'" + " возможно он уже удален", 'error');
+              Swal.fire('Ошибка!', 'Не удалось удалить ' + '\'' + name + '\'' + ' возможно он уже удален', 'error');
             }
           })["catch"](function (error) {
             Swal.fire('Ошибка!', '' + error, 'error');
@@ -2167,6 +2175,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Swal */ "./resources/js/Swal.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2286,10 +2305,10 @@ __webpack_require__.r(__webpack_exports__);
           var firstItemDOM = document.getElementById(element);
           var firstErrorMessage = errors[element][0];
           var div = document.createElement('div');
-          div.className = "text-danger";
+          div.className = 'text-danger';
           div.id = firstItemDOM.id + '-error';
-          div.innerHTML = "" + firstErrorMessage;
-          firstItemDOM.insertAdjacentElement("afterend", div);
+          div.innerHTML = '' + firstErrorMessage;
+          firstItemDOM.insertAdjacentElement('afterend', div);
           firstItemDOM.classList.add('border', 'border-danger');
         });
       });
@@ -2304,7 +2323,7 @@ __webpack_require__.r(__webpack_exports__);
         if (!_this2.departments.length) {
           Swal.fire({
             title: 'Предупреждение',
-            text: "Сперва добавьте отделы",
+            text: 'Сперва добавьте отделы',
             type: 'warning',
             confirmButtonColor: '#3085d6',
             confirmButtonText: 'Ок'
@@ -2335,6 +2354,16 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Swal */ "./resources/js/Swal.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2459,10 +2488,10 @@ __webpack_require__.r(__webpack_exports__);
           var firstItemDOM = document.getElementById(element);
           var firstErrorMessage = errors[element][0];
           var div = document.createElement('div');
-          div.className = "text-danger";
+          div.className = 'text-danger';
           div.id = firstItemDOM.id + '-error';
-          div.innerHTML = "" + firstErrorMessage;
-          firstItemDOM.insertAdjacentElement("afterend", div);
+          div.innerHTML = '' + firstErrorMessage;
+          firstItemDOM.insertAdjacentElement('afterend', div);
           firstItemDOM.classList.add('border', 'border-danger');
         });
       });
@@ -2522,7 +2551,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Swal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../Swal */ "./resources/js/Swal.js");
 //
 //
 //
@@ -2567,7 +2595,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2618,7 +2650,7 @@ __webpack_require__.r(__webpack_exports__);
 
       Swal.fire({
         title: 'Вы уверены?',
-        text: "Подтвердите удаление сотрудника ",
+        text: 'Подтвердите удаление сотрудника ',
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -2631,7 +2663,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(response.data);
 
             if (response.data == 1) {
-              Swal.fire('Удалено!', "Сотрудник был удален", 'success');
+              Swal.fire('Удалено!', 'Сотрудник был удален', 'success');
 
               _this3.fetch();
             } else if (response.data == 0) {
@@ -2665,6 +2697,8 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+//
+//
 //
 //
 //
@@ -7185,7 +7219,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.flex-center[data-v-72e48be0] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n.form-width-button[data-v-72e48be0]{\n    width: calc(100% - 80px);\n}\n.button-wrapper-send-form[data-v-72e48be0]{\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.flex-center[data-v-72e48be0] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n.form-width-button[data-v-72e48be0] {\n    width: calc(100% - 80px);\n}\n.button-wrapper-send-form[data-v-72e48be0] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -7204,7 +7238,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.flex-center[data-v-82095dc4] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n.form-width-button[data-v-82095dc4]{\n    width: calc(100% - 80px);\n}\n.button-wrapper-send-form[data-v-82095dc4]{\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.flex-center[data-v-82095dc4] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n.form-width-button[data-v-82095dc4] {\n    width: calc(100% - 80px);\n}\n.button-wrapper-send-form[data-v-82095dc4] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -7223,7 +7257,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.flex-center[data-v-705c3160] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n.form-width-button[data-v-705c3160]{\n    width: calc(100% - 80px);\n}\n.button-wrapper-send-form[data-v-705c3160]{\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.flex-center[data-v-705c3160] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n.form-width-button[data-v-705c3160] {\n    width: calc(100% - 80px);\n}\n.button-wrapper-send-form[data-v-705c3160] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -7242,7 +7276,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.flex-center[data-v-09279a44] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n.form-width-button[data-v-09279a44]{\n    width: calc(100% - 80px);\n}\n.button-wrapper-send-form[data-v-09279a44]{\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.flex-center[data-v-09279a44] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n.form-width-button[data-v-09279a44] {\n    width: calc(100% - 80px);\n}\n.button-wrapper-send-form[data-v-09279a44] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -7280,7 +7314,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.myclass[data-v-2bd38d5a]{\n    padding: 2%;\n}\n.flex-center[data-v-2bd38d5a] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.myclass[data-v-2bd38d5a] {\n    padding: 2%;\n}\n.flex-center[data-v-2bd38d5a] {\n    -webkit-box-align: center;\n            align-items: center;\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -39607,7 +39641,7 @@ var staticRenderFns = [
           staticClass: "btn btn-primary mt-3 form-width-button",
           attrs: { type: "submit" }
         },
-        [_vm._v(" Создать ")]
+        [_vm._v(" Создать")]
       )
     ])
   }
@@ -39697,7 +39731,7 @@ var render = function() {
                 _vm.loadSpinner
                   ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
                   : _vm._e(),
-                _vm._v(" Редактировать ")
+                _vm._v(" Редактировать\n                ")
               ]
             ),
             _vm._v(" "),
@@ -39753,7 +39787,7 @@ var render = function() {
           _vm.loadSpinner
             ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
             : _c("i", { staticClass: "fas fa-plus" }),
-          _vm._v(" Добавить отдел")
+          _vm._v(" Добавить отдел\n    ")
         ]
       ),
       _vm._v(" "),
@@ -39787,7 +39821,7 @@ var render = function() {
                           },
                           [
                             _c("i", { staticClass: "fas fa-edit" }),
-                            _vm._v(" Редактировать")
+                            _vm._v(" Редактировать\n                    ")
                           ]
                         ),
                         _vm._v(" "),
@@ -40212,7 +40246,7 @@ var render = function() {
                 _vm.loadSpinner
                   ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
                   : _vm._e(),
-                _vm._v(" Создать ")
+                _vm._v(" Создать\n                ")
               ]
             )
           ])
@@ -40594,7 +40628,7 @@ var render = function() {
                 _vm.loadSpinner
                   ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
                   : _vm._e(),
-                _vm._v(" Редактировать ")
+                _vm._v(" Редактировать\n                ")
               ]
             )
           ])
@@ -40648,7 +40682,7 @@ var render = function() {
           _vm.loadSpinner
             ? _c("i", { staticClass: "fa fa-spin fa-spinner" })
             : _c("i", { staticClass: "fas fa-plus" }),
-          _vm._v(" Добавить сотрудника")
+          _vm._v(" Добавить сотрудника\n    ")
         ]
       ),
       _vm._v(" "),
@@ -40663,19 +40697,19 @@ var render = function() {
               "tbody",
               _vm._l(_vm.employees.data, function(employee) {
                 return _c("tr", { key: employee.id }, [
-                  _c("td", [_vm._v(_vm._s(employee.id) + " ")]),
+                  _c("td", [_vm._v(_vm._s(employee.id))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(employee.name) + " ")]),
+                  _c("td", [_vm._v(_vm._s(employee.name))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(employee.surname) + " ")]),
+                  _c("td", [_vm._v(_vm._s(employee.surname))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(employee.patronymic) + " ")]),
+                  _c("td", [_vm._v(_vm._s(employee.patronymic))]),
                   _vm._v(" "),
                   employee.sex == "male"
-                    ? _c("td", [_vm._v("мужчина ")])
-                    : _c("td", [_vm._v(" женщина ")]),
+                    ? _c("td", [_vm._v("мужчина")])
+                    : _c("td", [_vm._v(" женщина")]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(employee.salary) + "$ ")]),
+                  _c("td", [_vm._v(_vm._s(employee.salary) + "$")]),
                   _vm._v(" "),
                   _c("td", [
                     _vm._v(
@@ -40694,7 +40728,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fas fa-edit" }),
-                          _vm._v(" Редактировать")
+                          _vm._v(" Редактировать\n                    ")
                         ]
                       ),
                       _vm._v(" "),
@@ -40712,7 +40746,7 @@ var render = function() {
                         },
                         [
                           _c("i", { staticClass: "fas fa-trash-alt" }),
-                          _vm._v(" Удалить\n                        ")
+                          _vm._v(" Удалить\n                    ")
                         ]
                       )
                     ],
@@ -40810,7 +40844,11 @@ var render = function() {
                     key: department.id,
                     staticClass: "col py-2 px-lg-2 border text-center"
                   },
-                  [_vm._v(" " + _vm._s(department.name) + " ")]
+                  [
+                    _vm._v(
+                      "\n            " + _vm._s(department.name) + "\n        "
+                    )
+                  ]
                 )
               })
             ],

@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
-    protected $guarded=[];
+    protected $guarded = [];
 
-    public function employees(){
+    public function employees()
+    {
         return $this->belongsToMany(Employee::class);
     }
 }

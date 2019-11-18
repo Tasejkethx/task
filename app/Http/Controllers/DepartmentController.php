@@ -16,15 +16,8 @@ class DepartmentController extends Controller
 
     public function index()
     {
-       return DepartmentResource::collection($this->department->all());
+        return DepartmentResource::collection($this->department->all());
     }
-
-
-    public function create()
-    {
-        //
-    }
-
 
     public function store(DepartmentRequest $request)
     {
@@ -33,18 +26,10 @@ class DepartmentController extends Controller
         return new DepartmentResource($department);
     }
 
-
-    public function show(Department $department)
-    {
-        //
-    }
-
-
     public function edit(Request $request, $id)
     {
         return new DepartmentResource(Department::findOrFail($id));
     }
-
 
     public function update(DepartmentRequest $request, $id)
     {
@@ -53,11 +38,12 @@ class DepartmentController extends Controller
         return new DepartmentResource($department);
     }
 
-
     public function destroy($id)
     {
-        if (sizeof($this->department->findOrFail($id)->employees)===0) {
+        if (sizeof($this->department->findOrFail($id)->employees) === 0) {
             return $this->department->destroy($id);
-        } else return 2;
+        } else {
+            return 2;
+        }
     }
 }
