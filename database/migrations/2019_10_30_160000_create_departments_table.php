@@ -16,8 +16,6 @@ class CreateDepartmentsTable extends Migration
         Schema::create('departments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->unique();
-            $table->integer('amount')->default(0);
-            $table->double('max_salary',15,2)->default(0);
             $table->timestamps();
         });
     }
