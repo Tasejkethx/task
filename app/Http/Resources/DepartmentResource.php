@@ -16,10 +16,10 @@ class DepartmentResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=>$this->id,
-            'name'=>$this->name,
-            'amount'=>$this->amount,
-            'max_salary'=>$this->max_salary,
+            'id' => $this->id,
+            'name' => $this->name,
+            'amount' => count($this->employees()->get()),
+            'max_salary' => $x = $this->employees()->get()->max('salary') ?? $x ?? 0,
         ];
 
 

@@ -25,7 +25,6 @@ class EmployeeController extends Controller
     public function store(EmployeeRequest $request)
     {
         $employee = new Employee($request->only(['name', 'surname', 'patronymic', 'sex', 'salary']));
-        $this->employee->set_department_after_create($employee, $request->get('department_id'));
         $employee->save();
         $employee->departments()->sync($request->get('department_id'));
         return new EmployeeResource($employee);
@@ -40,7 +39,6 @@ class EmployeeController extends Controller
     {
         $employee = $this->employee->findOrFail($id);
         $employee->update($request->only(['name', 'surname', 'patronymic', 'sex', 'salary']));
-        $this->employee->set_department_after_edit($employee, $request->get('department_id'));
         $employee->departments()->sync($request->get('department_id'));
         return new EmployeeResource($employee);
     }
