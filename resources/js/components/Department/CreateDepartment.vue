@@ -28,7 +28,6 @@
       },
       create() {
         Axios.post('../department', this.department).then((response) => {
-          console.log(response.data);
           if (response.data.id > 0) {
             SwalAlerts.departmentSuccessAdded();
             this.$router.push({path: '/departments'});
@@ -47,7 +46,7 @@
 
 <style scoped>
     .form-width-button {
-        width: calc(25% - 80px);
+        width: calc(35% - 60px);
     }
 
     .button-wrapper-send-form {

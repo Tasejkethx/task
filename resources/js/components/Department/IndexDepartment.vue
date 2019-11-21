@@ -70,7 +70,6 @@
         }).then((result) => {
           if (result.value) {
             Axios.delete('../department/' + id).then((response) => {
-              console.log(response.data);
               if (response.data == 2) {
                 Swal.fire(
                     'Ошибка!',

@@ -1870,8 +1870,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Axios.post('../department', this.department).then(function (response) {
-        console.log(response.data);
-
         if (response.data.id > 0) {
           _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].departmentSuccessAdded();
 
@@ -2058,8 +2056,6 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         if (result.value) {
           Axios["delete"]('../department/' + id).then(function (response) {
-            console.log(response.data);
-
             if (response.data == 2) {
               Swal.fire('Ошибка!', 'Невозможно удалить отдел в котором есть сотрудники', 'error');
 
@@ -2283,8 +2279,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       Axios.put('../../employee/' + this.employee.id, this.employee).then(function (response) {
-        console.log(response.data);
-
         if (response.data.id > 0) {
           _Swal__WEBPACK_IMPORTED_MODULE_0__["default"].employeeSuccessUpdated();
 
@@ -7124,7 +7118,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-width-button[data-v-72e48be0] {\n    width: calc(25% - 80px);\n}\n.button-wrapper-send-form[data-v-72e48be0] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.form-width-button[data-v-72e48be0] {\n    width: calc(35% - 60px);\n}\n.button-wrapper-send-form[data-v-72e48be0] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -7143,7 +7137,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-width-button[data-v-82095dc4] {\n    width: calc(25% - 80px);\n}\n.button-wrapper-send-form[data-v-82095dc4] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.form-width-button[data-v-82095dc4] {\n    width: calc(35% - 60px);\n}\n.button-wrapper-send-form[data-v-82095dc4] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -7181,7 +7175,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-width-button[data-v-705c3160] {\n    width: calc(25% - 80px);\n}\n.button-wrapper-send-form[data-v-705c3160] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.form-width-button[data-v-705c3160] {\n    width: calc(35% - 60px);\n}\n.button-wrapper-send-form[data-v-705c3160] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 
@@ -7200,7 +7194,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.form-width-button[data-v-09279a44] {\n    width: calc(25% - 80px);\n}\n.button-wrapper-send-form[data-v-09279a44] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
+exports.push([module.i, "\n.form-width-button[data-v-09279a44] {\n    width: calc(35% - 60px);\n}\n.button-wrapper-send-form[data-v-09279a44] {\n    display: -webkit-box;\n    display: flex;\n    -webkit-box-pack: center;\n            justify-content: center;\n}\n", ""]);
 
 // exports
 

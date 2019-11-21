@@ -44,7 +44,6 @@
     methods: {
       editEmployee() {
         Axios.put('../../employee/' + this.employee.id, this.employee).then((response) => {
-          console.log(response.data);
           if (response.data.id > 0) {
             SwalAlerts.employeeSuccessUpdated();
             this.$router.push({path: '/employees'});
@@ -88,7 +87,7 @@
 
 <style scoped>
     .form-width-button {
-        width: calc(25% - 80px);
+        width: calc(35% - 60px);
     }
 
     .button-wrapper-send-form {
