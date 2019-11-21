@@ -1,6 +1,6 @@
 export default class SwalAlerts {
     /* eslint no-undef:0 */
-    static employeeSuccessAdded () {
+    static employeeSuccessAdded() {
         Swal.fire({
             text: 'Сотрудник успешно добавлен',
             type: 'success',
@@ -9,10 +9,10 @@ export default class SwalAlerts {
             background: '#e4ede6',
             showConfirmButton: false,
             timer: 3000,
-        })
+        });
     }
 
-    static employeeFailAdded () {
+    static employeeFailAdded() {
         Swal.fire({
             text: 'Не удалось создать сотрудника. Возможно был удален отдел',
             type: 'error',
@@ -21,10 +21,10 @@ export default class SwalAlerts {
             background: '#e4ede6',
             showConfirmButton: false,
             timer: 3000,
-        })
+        });
     }
 
-    static departmentNotFound () {
+    static departmentNotFound() {
         Swal.fire({
             text: 'Не удалось найти отдел.',
             type: 'error',
@@ -33,10 +33,10 @@ export default class SwalAlerts {
             background: '#f2c7c7',
             showConfirmButton: false,
             timer: 3000,
-        })
+        });
     }
 
-    static employeeNotFound () {
+    static employeeNotFound() {
         Swal.fire({
             text: 'Не удалось найти сотрудника. Возможно он был удален',
             type: 'error',
@@ -45,10 +45,10 @@ export default class SwalAlerts {
             background: '#f2c7c7',
             showConfirmButton: false,
             timer: 3000,
-        })
+        });
     }
 
-    static employeeSuccessUpdated () {
+    static employeeSuccessUpdated() {
         Swal.fire({
             text: 'Сотрудник успешно отредактирован',
             type: 'success',
@@ -57,10 +57,10 @@ export default class SwalAlerts {
             background: '#e4ede6',
             showConfirmButton: false,
             timer: 3000,
-        })
+        });
     }
 
-    static errorMessage (errorText) {
+    static errorMessage(errorText) {
         Swal.fire({
             text: errorText,
             type: 'error',
@@ -69,10 +69,10 @@ export default class SwalAlerts {
             background: '#f2c7c7',
             showConfirmButton: false,
             timer: 3000,
-        })
+        });
     }
 
-    static departmentSuccessAdded () {
+    static departmentSuccessAdded() {
         Swal.fire({
             text: 'Отдел успешно добавлен',
             type: 'success',
@@ -81,10 +81,10 @@ export default class SwalAlerts {
             background: '#e4ede6',
             showConfirmButton: false,
             timer: 3000,
-        })
+        });
     }
 
-    static departmentSuccessUpdated () {
+    static departmentSuccessUpdated() {
         Swal.fire({
             text: 'Отдел успешно отредактирован',
             type: 'success',
@@ -93,6 +93,6 @@ export default class SwalAlerts {
             background: '#e4ede6',
             showConfirmButton: false,
             timer: 3000,
-        })
+        });
     }
 }

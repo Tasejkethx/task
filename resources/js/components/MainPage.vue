@@ -24,37 +24,37 @@
 
 <script>
   export default {
-    data () {
+    data() {
       return {
         employees: {},
         departments: {},
         loadSpinner: false,
-      }
+      };
     },
-    mounted () {
-      this.fetch()
+    mounted() {
+      this.fetch();
     },
     methods: {
-      fetch () {
-        this.loadSpinner = true
+      fetch() {
+        this.loadSpinner = true;
         Promise.all([Axios.get('../department'), Axios.get('../employee')]).
-          then(([departmentResponse, employeeResponse]) => {
-            this.departments = departmentResponse.data
-            this.employees = employeeResponse.data
-            this.loadSpinner = false
-          }).
-          catch(error => {
-            console.log(error)
-          })
+            then(([departmentResponse, employeeResponse]) => {
+              this.departments = departmentResponse.data;
+              this.employees = employeeResponse.data;
+              this.loadSpinner = false;
+            }).
+            catch(error => {
+              console.log(error);
+            });
 
       },
-      nextPageEmployees (page = 1) {
+      nextPageEmployees(page = 1) {
         Axios.get('../employee?page=' + page).then(response => {
-          this.employees = response.data
-        })
+          this.employees = response.data;
+        });
       },
     },
-  }
+  };
 </script>
 
 <style scoped>

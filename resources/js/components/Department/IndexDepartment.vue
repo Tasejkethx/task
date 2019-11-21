@@ -1,7 +1,7 @@
 <template>
     <div class="container">
-        <router-link to="/departments/create" class="btn btn-dark mb-5" :disabled="loadSpinner"><i v-if="loadSpinner"
-                                                                                                   class="fa fa-spin fa-spinner"></i>
+        <router-link to="/departments/create" class="btn btn-dark mb-5" :disabled="loadSpinner">
+            <i v-if="loadSpinner" class="fa fa-spin fa-spinner"></i>
             <i v-else class="fas fa-plus"></i> Добавить отдел
         </router-link>
         <div class="table-responsive">
@@ -39,25 +39,25 @@
 <script>
 
   export default {
-    data () {
+    data() {
       return {
         departments: {},
         loadSpinner: false,
-      }
+      };
     },
-    mounted () {
-      this.fetch()
+    mounted() {
+      this.fetch();
     },
     methods: {
-      fetch () {
-        this.loadSpinner = true
+      fetch() {
+        this.loadSpinner = true;
         Axios.get('../department').then(response => {
-          this.departments = response.data
-          this.loadSpinner = false
-        }).catch(error => console.log(error))
+          this.departments = response.data;
+          this.loadSpinner = false;
+        }).catch(error => console.log(error));
 
       },
-      confirmDelete (id, name) {
+      confirmDelete(id, name) {
         Swal.fire({
           title: 'Вы уверены?',
           text: 'Подтвердите удаление ' + '\'' + name + '\'',
@@ -70,38 +70,38 @@
         }).then((result) => {
           if (result.value) {
             Axios.delete('../department/' + id).then((response) => {
-              console.log(response.data)
+              console.log(response.data);
               if (response.data == 2) {
                 Swal.fire(
-                  'Ошибка!',
-                  'Невозможно удалить отдел в котором есть сотрудники',
-                  'error')
-                this.fetch()
+                    'Ошибка!',
+                    'Невозможно удалить отдел в котором есть сотрудники',
+                    'error');
+                this.fetch();
               } else if (response.data == 1) {
                 Swal.fire(
-                  'Удалено!',
-                  'Отдел ' + '\'' + name + '\'' + ' был успешно удален',
-                  'success')
-                this.fetch()
+                    'Удалено!',
+                    'Отдел ' + '\'' + name + '\'' + ' был успешно удален',
+                    'success');
+                this.fetch();
               } else if (response.data == 0) {
                 Swal.fire(
-                  'Ошибка!',
-                  'Не удалось удалить ' + '\'' + name + '\'' + ' возможно он уже удален',
-                  'error',
-                )
+                    'Ошибка!',
+                    'Не удалось удалить ' + '\'' + name + '\'' + ' возможно он уже удален',
+                    'error',
+                );
               }
             }).catch(error => {
               Swal.fire(
-                'Ошибка!',
-                '' + error,
-                'error',
-              )
-            })
+                  'Ошибка!',
+                  '' + error,
+                  'error',
+              );
+            });
           }
-        })
+        });
       },
     },
-  }
+  };
 </script>
 
 <style scoped>

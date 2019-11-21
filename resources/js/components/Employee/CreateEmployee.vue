@@ -1,72 +1,30 @@
 <template>
     <div class="container">
-        <div class="flex-center">
-            <form v-on:submit.prevent="create" id="newForm">
-                <div class="text-center py-3 mb-2">
-                    <h4 id="new_employee"> Добавление нового сотрудника</h4>
-                </div>
-                <div class="mb-3">
-                    <label class="font-weight-bold" for="name"> Имя </label>
-                    <input type="text" class="form-control" @input="delete_error_message('name')" id="name" name='name'
-                           v-model="employee.name">
-                </div>
-                <div class="mb-3">
-                    <label class="font-weight-bold" for="surname"> Фамилия </label>
-                    <input type="text" class="form-control" id="surname" @input="delete_error_message('surname')"
-                           name="surname" v-model="employee.surname">
-                </div>
-                <div class="mb-3">
-                    <label class="font-weight-bold" for="patronymic"> Отчество </label>
-                    <input type="text" class="form-control" id="patronymic" @input="delete_error_message('patronymic')"
-                           name="patronymic" v-model="employee.patronymic">
-                </div>
-                <div class="mb-3 mt-3 font-weight-bold"> Пол</div>
-                <div class="d-block my-2 mb-2">
-                    <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" id="male" name="sex" value="male"
-                               @click="delete_error_message('sex')" v-model="employee.sex">
-                        <label class="custom-control-label" for="male"> Мужчина </label>
-                    </div>
-                    <div class="custom-control custom-radio">
-                        <input type="radio" class="custom-control-input" id="female" name="sex" value="female"
-                               @click="delete_error_message('sex')" v-model="employee.sex">
-                        <label class="custom-control-label" for="female"> Женщина </label>
-                    </div>
-                    <span class="mb-2 mt-2" id="sex"></span>
-                </div>
-                <div class="mb-3 mt-3">
-                    <label class="font-weight-bold" for="salary"> Заработная плата </label>
-                    <input type="text" class="form-control" id="salary" @input="delete_error_message('salary')"
-                           name="salary" v-model="employee.salary">
-                </div>
-                <div>
-                    <div v-if="departments.length">
-                        <div class="mb-3 mt-3 font-weight-bold"> Отделения</div>
-                        <div class="custom-control custom-checkbox mb-1" v-for="department in departments"
-                             :key="department.id">
-                            <input type="checkbox" name="department_id" @click="delete_error_message('department_id')"
-                                   class="custom-control-input" :id="department.id" :value="department.id"
-                                   v-model="employee.department_id"/>
-                            <label class="custom-control-label" :for="department.id"> {{department.name}}</label>
-                        </div>
-                    </div>
-                    <span class="mb-2 mt-2" id="department_id"></span>
-                </div>
-                <div class="button-wrapper-send-form mt-2">
-                    <button type='submit' class="btn btn-primary mt-3 mr-2 form-width-button" :disabled="loadSpinner"><i
-                        v-if="loadSpinner" class="fa fa-spin fa-spinner"></i> Создать
-                    </button>
-                </div>
-            </form>
+        <employee-form-component
+            :name.sync="employee.name"
+            :surname.sync="employee.surname"
+            :patronymic.sync="employee.patronymic"
+            :sex.sync="employee.sex"
+            :salary.sync="employee.salary"
+            :department_id.sync="employee.department_id"
+            :departments="departments"
+        >
+        </employee-form-component>
+        <div class="button-wrapper-send-form mt-2">
+            <button type='submit' class="btn btn-primary mt-3 mr-2 form-width-button" :disabled="loadSpinner"
+                    @click="create"><i
+                v-if="loadSpinner" class="fa fa-spin fa-spinner"></i> Создать
+            </button>
         </div>
     </div>
 </template>
 
 <script>
-  import SwalAlerts from '../../Swal'
+  import SwalAlerts from '../../Swal';
+  import validationErrors from '../../validationErrors';
 
   export default {
-    data () {
+    data() {
       return {
         employee: {
           name: null,
@@ -76,64 +34,30 @@
           salary: null,
           department_id: [],
         },
-        departments: {},
+        departments: [],
         loadSpinner: false,
-      }
+      };
     },
-    mounted () {
-      this.fetch()
+    mounted() {
+      this.fetch();
     },
     methods: {
-      delete_error_message (className) {
-        const formControls = document.getElementById(className)
-        if (formControls.classList.length > 1) {
-          formControls.classList.forEach((element) => {
-            if (element === 'border-danger') {
-              formControls.classList.remove('border', 'border-danger')
-            }
-          })
-        }
-        const errorMessages = document.getElementById(className + '-error')
-        if (errorMessages) {
-          errorMessages.textContent = ''
-        }
-      },
-      create () {
+      create() {
         Axios.post('../employee', this.employee).then((response) => {
           if (response.data.id > 0) {
-            SwalAlerts.employeeSuccessAdded()
-            this.$router.push({ path: '/employees' })
+            SwalAlerts.employeeSuccessAdded();
+            this.$router.push({path: '/employees'});
           } else {
-            SwalAlerts.employeeFailAdded()
+            SwalAlerts.employeeFailAdded();
           }
         }).catch(error => {
-          // clear error messages
-          const errorMessages = document.querySelectorAll('.text-danger')
-          errorMessages.forEach((el) => el.textContent = '')
-
-          const formControls = document.querySelectorAll('.form-control')
-          formControls.forEach((elem) => elem.classList.remove('border', 'border-danger'))
-
-          // show error messages
-          const errors = error.response.data.errors
-          Object.keys(errors).forEach((element) => {
-            const firstItemDOM = document.getElementById(element)
-            const firstErrorMessage = errors[element][0]
-
-            const div = document.createElement('div')
-            div.className = 'text-danger'
-            div.id = firstItemDOM.id + '-error'
-            div.innerHTML = '' + firstErrorMessage
-
-            firstItemDOM.insertAdjacentElement('afterend', div)
-            firstItemDOM.classList.add('border', 'border-danger')
-          })
-        })
+          validationErrors.showErrors(error);
+        });
       },
-      fetch () {
-        this.loadSpinner = true
+      fetch() {
+        this.loadSpinner = true;
         Axios.get('../department').then(response => {
-          this.departments = response.data
+          this.departments = response.data;
           if (!this.departments.length) {
             Swal.fire({
               title: 'Предупреждение',
@@ -142,26 +66,19 @@
               confirmButtonColor: '#3085d6',
               confirmButtonText: 'Ок',
             }).then((result) => {
-              this.$router.push({ path: '/employees' })
-            })
+              this.$router.push({path: '/employees'});
+            });
           }
-          this.loadSpinner = false
-        }).catch(error => {console.log(error)})
-
+          this.loadSpinner = false;
+        }).catch(error => {console.log(error);});
       },
     },
-  }
+  };
 </script>
 
 <style scoped>
-    .flex-center {
-        align-items: center;
-        display: flex;
-        justify-content: center;
-    }
-
     .form-width-button {
-        width: calc(100% - 80px);
+        width: calc(25% - 80px);
     }
 
     .button-wrapper-send-form {

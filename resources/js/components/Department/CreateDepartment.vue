@@ -1,99 +1,53 @@
 <template>
     <div class="container">
-        <div class="flex-center">
-            <form v-on:submit.prevent="create" id="newForm">
-                <div class="text-center py-3 mb-2">
-                    <h4> Добавление нового отдела</h4>
-                </div>
-                <div class="mb-3">
-                    <label for="name" class="font-weight-bold"> Название отдела </label>
-                    <input class="form-control" type="text" id="name" name='name' @input="delete_error_message('name')"
-                           v-model="department.name">
-                    <div class="button-wrapper-send-form mt-2">
-                        <button type='submit' class="btn btn-primary mt-3 form-width-button"> Создать</button>
-                    </div>
-                </div>
-            </form>
+        <department-form-component
+            v-model="department.name"
+        >
+        </department-form-component>
+        <div class="button-wrapper-send-form mt-2">
+            <button class="btn btn-primary mt-3 form-width-button" @click="create"> Создать</button>
         </div>
     </div>
 </template>
 
 <script>
-  import SwalAlerts from '../../Swal'
+  import SwalAlerts from '../../Swal';
+  import validationErrors from '../../validationErrors';
 
   export default {
-    data () {
+    data() {
       return {
         department: {
-          name: null,
+          name: '',
         },
-      }
-    },
-    mounted () {
-
+      };
     },
     methods: {
-      delete_error_message (className) {
-        const formControls = document.getElementById(className)
-        if (formControls.classList.length > 1) {
-          formControls.classList.forEach((element) => {
-            if (element === 'border-danger') {
-              formControls.classList.remove('border', 'border-danger')
-            }
-          })
-        }
-        const errorMessages = document.getElementById(className + '-error')
-        if (errorMessages) {
-          errorMessages.textContent = ''
-        }
+      getName: function(myName) {
+        this.name = myName;
       },
-      create () {
+      create() {
         Axios.post('../department', this.department).then((response) => {
-          console.log(response.data)
+          console.log(response.data);
           if (response.data.id > 0) {
-            SwalAlerts.departmentSuccessAdded()
-            this.$router.push({ path: '/departments' })
+            SwalAlerts.departmentSuccessAdded();
+            this.$router.push({path: '/departments'});
           } else {
-            SwalAlerts.errorMessage()
+            SwalAlerts.errorMessage();
           }
         }).catch(error => {
-          // clear error messages
-          const errorMessages = document.querySelectorAll('.text-danger')
-          errorMessages.forEach((el) => el.textContent = '')
+          validationErrors.showErrors(error);
+        });
 
-          const formControls = document.querySelectorAll('.form-control')
-          formControls.forEach((elem) => elem.classList.remove('border', 'border-danger'))
-
-          // show error messages
-          const errors = error.response.data.errors
-          Object.keys(errors).forEach((element) => {
-            const firstItemDOM = document.getElementById(element)
-            const firstErrorMessage = errors[element][0]
-
-            const div = document.createElement('div')
-            div.className = 'text-danger'
-            div.id = firstItemDOM.id + '-error'
-            div.innerHTML = '' + firstErrorMessage
-
-            firstItemDOM.insertAdjacentElement('afterend', div)
-            firstItemDOM.classList.add('border', 'border-danger')
-          })
-        })
       },
-    },
 
-  }
+    },
+  };
 </script>
 
 <style scoped>
-    .flex-center {
-        align-items: center;
-        display: flex;
-        justify-content: center;
-    }
-
     .form-width-button {
-        width: calc(100% - 80px);
+        width: calc(25% - 80px);
     }
 
     .button-wrapper-send-form {
