@@ -5,16 +5,14 @@ namespace App\Http\Controllers;
 use App\Employee;
 use App\Http\Requests\EmployeeRequest;
 use App\Http\Resources\EmployeeResource;
-use App\Repositories\EmployeeRepository;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    protected $employee;
 
     public function __construct(Employee $employee)
     {
-        $this->employee = new EmployeeRepository($employee);
+        $this->employee=$employee;
     }
 
     public function index()
