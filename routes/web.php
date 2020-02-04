@@ -15,5 +15,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('employee', 'EmployeeController', ['only' => ['index','edit','update','store','destroy']])->middleware('cors');
-Route::resource('department', 'DepartmentController', ['only' => ['index','edit','update','store','destroy']])->middleware('cors');
+Route::resource('employee', 'EmployeeController', ['only' => ['index','edit','update','store','destroy']]);
+Route::resource('department', 'DepartmentController', ['only' => ['index','edit','update','store','destroy']]);
