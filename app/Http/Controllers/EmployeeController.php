@@ -17,7 +17,7 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        return EmployeeResource::collection($this->employee->paginate(5));
+        return EmployeeResource::collection($this->employee->with('departments')->paginate(5));
     }
 
     public function store(EmployeeRequest $request)
