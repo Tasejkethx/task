@@ -16,7 +16,7 @@ class DepartmentController extends Controller
 
     public function index()
     {
-        return DepartmentResource::collection($this->department->all());
+        return DepartmentResource::collection($this->department->all()->load('employees'));
     }
 
     public function store(DepartmentRequest $request)
