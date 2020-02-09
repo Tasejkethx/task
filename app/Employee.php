@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
-    protected $guarded = [];
+    protected $fillable = [
+        'name', 'surname', 'patronymic', 'sex' , 'salary'
+    ];
 
     public function departments()
     {
