@@ -28,7 +28,7 @@ class   EmployeeRequest extends FormRequest
             'surname'=>'required|alpha|max:30',
             'patronymic'=>'required|alpha|max:30',
             'sex' =>'required|in:male,female',
-            'salary'=>'required|numeric|min:0|max:9999999',
+            'salary'=>'required|numeric|between:0,9999999',
             'department_id'=>'required',
         ];
     }
@@ -36,21 +36,20 @@ class   EmployeeRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'=>'Введите имя',
-            'name.max'=>'Слишком длинное имя',
-            'name.alpha'=>'Имя может содержать только буквы',
-            'surname.required'=>'Введите фамилию',
-            'surname.max'=>'Слишком длинная фамилия',
-            'surname.alpha'=>'Фамилия может содержать только буквы',
-            'patronymic.required'=>'Введите отчество',
-            'patronymic.max'=>'Слишком длинное отчетсво',
-            'patronymic.alpha'=>'Отчество может содержать только буквы',
-            'sex.required'=>'Укажите ваш пол',
-            'salary.required'=>'Введите заработную плату',
-            'department_id.required'=>'Укажите отделения в которых работает сотрудник',
+            'name.required'=>'Введите :attribute',
+            'name.max'=>':attribute должно содержать менее :max символов',
+            'name.alpha'=>':attribute может содержать только буквы',
+            'surname.required'=>'Введите :attribute',
+            'surname.max'=>':attribute должна содержать менее :max символов',
+            'surname.alpha'=>':attribute может содержать только буквы',
+            'patronymic.required'=>'Введите :attribute',
+            'patronymic.max'=>':attribute должно содержать менее :max символов',
+            'patronymic.alpha'=>':attribute может содержать только буквы',
+            'sex.required'=>'Укажите :attribute',
+            'salary.required'=>'Введите :attribute',
+            'department_id.required'=>'Укажите :attribute',
             'salary.numeric'=>'Введите число',
-            'salary.max'=>'Слишком большое число',
-            'salary.min'=>'Введите число больше 0',
+            'salary.between'=>':attribute должна быть в диапазоне :min - :max',
         ];
     }
 }

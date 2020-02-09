@@ -32,8 +32,8 @@ class DepartmentRequest extends FormRequest
     {
         return [
             'name.required'=>'Введите название отдела',
-            'name.unique'=>'Такой отдел уже есть',
-            'name.max'=>'Слишком длинное название отдела',
+            'name.unique'=>'Такой отдел уже существует',
+            'name.max'=>'Название отдела должно быть меньше :max символов',
         ];
     }
 }

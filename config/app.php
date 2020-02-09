@@ -177,7 +177,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Pallares\LaravelNuxt\LaravelNuxtServiceProvider::class,
-
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
