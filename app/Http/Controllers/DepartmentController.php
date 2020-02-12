@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
+    private $department;
+
     public function __construct(Department $department)
     {
         $this->department = $department;
@@ -16,7 +18,16 @@ class DepartmentController extends Controller
 
     public function index()
     {
-        return DepartmentResource::collection($this->department->all()->load('employees'));
+        return DepartmentResource::collection($this->department
+            ->select('*')
+            ->selectSub(function ($query) {
+                $query->from('employees')
+                    ->join('department_employee', 'employees.id', '=', 'department_employee.employee_id')
+                    ->selectRaw('max(salary)')
+                    ->whereRaw('department_employee.department_id = departments.id');
+            }, 'max_salary')
+            ->withCount('employees')
+            ->get());
     }
 
     public function store(DepartmentRequest $request)

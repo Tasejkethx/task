@@ -18,8 +18,8 @@ class DepartmentResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'amount' => count($this->employees),
-            'max_salary' => $this->employees->max('salary') ?? 0,
+            'amount' => $this->employees_count,
+            'max_salary' => $this->max_salary,
         ];
     }
 }
